@@ -1,3 +1,5 @@
+const MovingObject = require('./movingObject');
+
 class Player extends MovingObject {
     constructor(pos, vel, size) {
         super(pos, vel, size);
