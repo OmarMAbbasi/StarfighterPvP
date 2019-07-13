@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 const app = express();
 const bodyParser = require('body-parser');
-const Score = require('./models/Score');
+const Score = require('./models/player');
 
 mongoose
     .connect(db, { useNewUrlParser: true })
