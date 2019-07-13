@@ -27,8 +27,8 @@ app.get("/", (req, res) => {
     res.send("Sup Dawg");
 });
 
-const players = require("./routes/api/players");
-app.use('/api/players', players)
+const scores = require("./routes/api/scores");
+app.use('/api/scores', scores)
 
 const port = process.env.PORT || 5000;
 
