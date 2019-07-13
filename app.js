@@ -3,13 +3,30 @@ const mongoose = require("mongoose");
 const db = require("./config/keys").mongoURI;
 const app = express();
 const path = require("path");
+const bodyParser = require('body-parser');
+const Score = require('./models/Score');
 
 mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
 	.catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("Sup Dawg"));
+
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+    const score = new Score({
+        tag: 'Sam',
+        score: 1000,
+    })
+    score.save();
+    res.send("Sup Dawg");
+});
 
 const port = process.env.PORT || 5000;
 
