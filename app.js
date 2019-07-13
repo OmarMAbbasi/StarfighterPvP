@@ -20,11 +20,6 @@ app.use(
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-	const highscore = new Score({
-		tag: "Sam",
-		highscore: 1000
-	});
-	highscore.save();
 	res.send("Sup Dawg");
 });
 
