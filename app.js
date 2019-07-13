@@ -5,7 +5,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const Score = require('./models/Score');
 
-
 mongoose
     .connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to MongoDB successfully"))
