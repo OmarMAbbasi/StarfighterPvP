@@ -1,0 +1,37 @@
+{
+    entities: {
+        players: [
+            {
+                id: 1,
+                pos: [x, y],
+                score: 1000,
+                image: 'ship.svg',
+                color: 'red'
+            }
+        ],
+            hazards: [
+                {
+                    pos: [x, y],
+                    image: 'hazard.png'
+                }
+            ],
+                bullets: [
+                    {
+                        pos: [x, y],
+                        image: 'bullet.svg',
+                        color: 'red'
+                    }
+                ]
+    },
+    ui: {
+        timeLeft: 120,
+            roundsLeft: 5
+    }
+    inputs: {
+        w: true,
+        a: false,
+        s: false,
+        d: true,
+        fire: true
+    }
+}
