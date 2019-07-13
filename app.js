@@ -3,33 +3,33 @@ const mongoose = require("mongoose");
 const db = require("./config/keys").mongoURI;
 const app = express();
 const path = require("path");
-const bodyParser = require('body-parser');
-const Score = require('./models/Score');
-
+const bodyParser = require("body-parser");
+const Score = require("./models/Score");
 
 mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
 	.catch(err => console.log(err));
 
-
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(
+	bodyParser.urlencoded({
+		extended: false
+	})
+);
 
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    const highscore = new Score({
-        tag: 'Sam',
-        highscore: 1000,
-    })
-    highscore.save();
-    res.send("Sup Dawg");
+	const highscore = new Score({
+		tag: "Sam",
+		highscore: 1000
+	});
+	highscore.save();
+	res.send("Sup Dawg");
 });
 
 const scores = require("./routes/api/scores");
-app.use('/api/scores', scores)
+app.use("/api/scores", scores);
 
 const port = process.env.PORT || 5000;
 
@@ -41,4 +41,3 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 	});
 }
-
