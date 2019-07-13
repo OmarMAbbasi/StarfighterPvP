@@ -12,7 +12,6 @@ mongoose
 	.catch(err => console.log(err));
 
 
-
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -20,13 +19,16 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    const score = new Score({
+    const highscore = new Score({
         tag: 'Sam',
-        score: 1000,
+        highscore: 1000,
     })
-    score.save();
+    highscore.save();
     res.send("Sup Dawg");
 });
+
+const scores = require("./routes/api/scores");
+app.use('/api/scores', scores)
 
 const port = process.env.PORT || 5000;
 
