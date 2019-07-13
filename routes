@@ -1,0 +1,21 @@
+
+//frontend routes and components
+* Root
+    * App
+        * Board
+* /starfighter
+    * home: board will be here, and game will be played here
+* starfighter/newgame
+    * new game form: create a nickname, join a room, start game
+* starfighter.highscores
+    * high score board at the end of the game, also will have play again feature
+
+//backend routes
+* POST /player
+    * create a new user and set a nickname for the game
+* DELETE /player 
+    * end the game, player is erased
+* POST /game
+    * create and manage a new game from start to finish
+* DELETE /game
+    * end the game 
