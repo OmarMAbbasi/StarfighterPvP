@@ -3,6 +3,17 @@ const mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 const app = express();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//adding the highscores route
+const players = require("./routes/api/players");
+app.use('api/players', players)
+
+
+
+
 mongoose
     .connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to MongoDB successfully"))
