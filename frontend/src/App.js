@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Canvas from './components/game';
+import GameContainer from './components/game_container';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <Canvas />
+        <GameContainer />
         {/* <a
           className="App-link"
           href="https://reactjs.org"
