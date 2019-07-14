@@ -6,12 +6,12 @@ import SocketTest from "./components/sockettest";
 function App() {
 	return (
 		<div className="App">
+			<SocketTest />
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
 				</p>
-				<SocketTest />
 				<a
 					className="App-link"
 					href="https://reactjs.org"
