@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import SocketTest from "./components/sockettest";
 
 function App() {
 	return (
@@ -10,6 +11,7 @@ function App() {
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
 				</p>
+				<SocketTest />
 				<a
 					className="App-link"
 					href="https://reactjs.org"
@@ -22,7 +24,5 @@ function App() {
 		</div>
 	);
 }
-
-
 
 export default App;

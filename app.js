@@ -27,9 +27,9 @@ app.get("/", (req, res) => {
 const players = require("./routes/api/players");
 app.use("/api/players", players);
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("frontend/build"));
@@ -38,3 +38,15 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
+//websockets
+
+var serv = require("http").Server(app);
+var io = (module.exports.io = require("socket.io")(serv, {}));
+const SocketManager = require("./frontend/src/SocketManager.js");
+
+
+io.on("connection", SocketManager);
+
+app.listen(PORT, () => {
+	console.log("Connected to socket:" + PORT);
+});
