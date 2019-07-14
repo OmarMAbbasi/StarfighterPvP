@@ -16,6 +16,9 @@ export default class SocketTest extends Component {
 	openSocket = () => {
 		const socket = io(socketURL);
 		SocketTest.on("connect", () => {
+            socket.id = Math.random();
+            socket.x = 0
+            socket.y = 0
 			console.log("Connected");
 		});
 

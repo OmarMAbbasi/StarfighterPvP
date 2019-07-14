@@ -44,9 +44,5 @@ var serv = require("http").Server(app);
 var io = (module.exports.io = require("socket.io")(serv, {}));
 const SocketManager = require("./frontend/src/SocketManager.js");
 
-
 io.on("connection", SocketManager);
 
-app.listen(PORT, () => {
-	console.log("Connected to socket:" + PORT);
-});
