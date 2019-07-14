@@ -4,7 +4,7 @@ import MovingObject from '../classes/movingObject';
 
 const mapSTP = state => {
     let test = new MovingObject([400, 400], [25, 25], 15)
-    debugger
+    
     return ({
         // players: state.players,
         hazards: [test],

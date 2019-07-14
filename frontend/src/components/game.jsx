@@ -14,7 +14,6 @@ class Canvas extends React.Component {
         const canvas = this.canvasRef.current;
         const ctx = canvas.getContext('2d');
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        debugger
         if (this.props !== {})  {
             // this.state.players.forEach((player) => player.draw(ctx))
             this.props.hazards.forEach((hazard) => hazard.draw(ctx))
