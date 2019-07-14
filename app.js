@@ -1,35 +1,48 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const db = require("./config/keys").mongoURI;
-const app = express();
+
+//! Off while dev websockets
+// const mongoose = require("mongoose");
+// const db = require("./config/keys").mongoURI;
+// const app = express();
+
+const app = require("http").createServer();
 const path = require("path");
+
 const bodyParser = require("body-parser");
 
 // const player = require("./models/player");
 
-mongoose
-	.connect(db, { useNewUrlParser: true })
-	.then(() => console.log("Connected to MongoDB successfully"))
-	.catch(err => console.log(err));
+//websockets
+// var serv = require("http").createServer();
+var io = (module.exports.io = require("socket.io")(app));
+const SocketManager = require("./frontend/src/SocketManager.js");
 
-app.use(
-	bodyParser.urlencoded({
-		extended: false
-	})
-);
+io.on("connection", SocketManager);
+//! Off while dev websockets
+// mongoose
+// 	.connect(db, { useNewUrlParser: true })
+// 	.then(() => console.log("Connected to MongoDB successfully"))
+// 	.catch(err => console.log(err));
 
-app.use(bodyParser.json());
+// app.use(
+// 	bodyParser.urlencoded({
+// 		extended: false
+// 	})
+// );
 
-app.get("/", (req, res) => {
-	res.send("Sup Dawg");
-});
+// app.use(bodyParser.json());
 
-const players = require("./routes/api/players");
-app.use("/api/players", players);
+// app.get("/", (req, res) => {
+// 	res.send("Sup Dawg");
+// });
 
-const port = process.env.PORT || 5000;
+// const players = require("./routes/api/players");
+// app.use("/api/players", players);
+//! Off
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("frontend/build"));
@@ -37,4 +50,3 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 	});
 }
-
