@@ -4,6 +4,7 @@ const db = require("./config/keys").mongoURI;
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
+
 // const player = require("./models/player");
 
 mongoose
@@ -37,13 +38,3 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
-//socket.io websockets
-
-//Imports
-const serv = require("http").Server(app);
-const io = require("socket.io")(serv, {});
-
-//Sockets
-io.sockets.on("connection", function(socket) {
-	console.log("socket connection");
-});
