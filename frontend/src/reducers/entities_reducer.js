@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import scoresReducer from './scores_reducer';
+import playersReducer from './players_reducer';
+import hazardsReducer from './hazards_reducer';
+import bulletsReducer from './bullets_reducer';
 
 export default combineReducers({
-    scores: scoresReducer
+    players: playersReducer,
+    hazards: hazardsReducer,
+    bullets: bulletsReducer
 });

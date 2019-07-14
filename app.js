@@ -4,6 +4,7 @@ const db = require("./config/keys").mongoURI;
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
+
 // const player = require("./models/player");
 
 mongoose
@@ -36,3 +37,4 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 	});
 }
+

@@ -16,7 +16,6 @@
 		"redux": "^4.0.4",
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.3.0",
-		"socket.io": "^2.2.0",
 		"webpack": "^4.35.3",
 		"webpack-cli": "^3.3.5"
 	},
