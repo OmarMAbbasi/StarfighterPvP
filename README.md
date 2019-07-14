@@ -59,8 +59,11 @@ Technological Challenges:
 * Figuring out how to tailor the collision logic to work for triangular spaceshipsand other non-circular objects
 
 ## Things Accomplished Over the Weekend
-* Created the model and routes, allowing us to create players using Postman
+* Created the Player model and routes, and testing and confirming that functionality in Postman
+* Connect the backend and the frontend with Axios api calls
+* Built out the entire Redux Cycle so we could see our state on the window and use it in our components
 * Get web sockets up and running
+* Draw out the game board with Canvas and integrate it into a React component
 * Write this readMe
 
 ## Group Members and Work Breakdown
