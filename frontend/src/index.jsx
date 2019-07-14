@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -14,3 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(<Root store={store} />, root);
 })
 
+=======
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+
+document.addEventListener("DOMContentLoaded", () => {
+	ReactDOM.render(<App />, document.getElementById("root"));
+});
+>>>>>>> a90e53c9ee637a61a54b92a54af82c6488693975
