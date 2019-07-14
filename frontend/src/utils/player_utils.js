@@ -8,6 +8,6 @@ export const fetchPlayer = data => {
     return axios.post('/api/players', data)
 }
 
-export const destroyPlayer = data => {
-    return axios.delete('/api/player', data)
+export const destroyPlayer = playerId => {
+    return axios.delete('/api/players', playerId)
 }

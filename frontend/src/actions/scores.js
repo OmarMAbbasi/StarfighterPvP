@@ -1,24 +1,35 @@
-import * as scoreAPIUtils from  '../utils/score_utils';
+import * as playerAPIUtils from  '../utils/player_utils';
 
-export const RECEIVE_ALL_SCORES = "RECEIVE_ALL_SCORES";
-export const RECEIVE_SCORE = "RECEIVE_PLAYER";
+export const RECEIVE_ALL_PLAYERS = "RECEIVE_ALL_PLAYERS";
+export const RECEIVE_PLAYER = "RECEIVE_PLAYER";
+export const REMOVE_PLAYER = "RECEIVE_PLAYER";
 
-export const receiveAllScores= scores => ({
-    type: RECEIVE_ALL_SCORES,
-    scores
+export const receiveAllPlayers= players => ({
+    type: RECEIVE_ALL_PLAYERS,
+    players
 });
 
-export const receiveScore = score => ({
-    type: RECEIVE_SCORE,
-    score
+export const receivePlayer = player => ({
+    type: RECEIVE_PLAYER,
+    player
 });
 
-export const fetchScores = () => dispatch => (
-    scoreAPIUtils.fetchScores()
-        .then(scores => dispatch(receiveAllScores(scores)))
+export const removePlayer = player => ({
+    type: REMOVE_PLAYER,
+    player
+});
+
+export const fetchPlayers = () => dispatch => (
+    playerAPIUtils.fetchPlayers()
+        .then(players => dispatch(receiveAllPlayers(players)))
 );
 
-export const createScore = () => dispatch => (
-    scoreAPIUtils.createScore()
-        .then(score => dispatch(receiveScore(score)))
+export const createPlayer = player => dispatch => (
+    playerAPIUtils.createPlayer(player)
+        .then(player => dispatch(receivePlayer(player)))
+);
+
+export const deletePlayer = playerId => dispatch => (
+    playerAPIUtils.deletePlayer(playerId)
+        .then(player => dispatch(removePlayer(player)))
 );
