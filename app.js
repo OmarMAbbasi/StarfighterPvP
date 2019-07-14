@@ -4,11 +4,7 @@ const db = require("./config/keys").mongoURI;
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
-<<<<<<< HEAD
-// const players = require("./models/player");
-=======
 // const player = require("./models/player");
->>>>>>> a90e53c9ee637a61a54b92a54af82c6488693975
 
 mongoose
 	.connect(db, { useNewUrlParser: true })
