@@ -1,3 +1,5 @@
+// const Util = require('../utils/')
+
 class MovingObject {
     constructor(pos, vel, size) {
         this.pos = pos;
@@ -6,7 +8,7 @@ class MovingObject {
     }
 
     checkCollision(other) {
-
+        const ctrPointDist = Util.dist(this.pos, other.pos);
     }
 
     applyPowerups(powerups) {
