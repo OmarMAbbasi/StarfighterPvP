@@ -1,9 +1,13 @@
 import axios from 'axios';
 
-export const fetchScores = () => {
-    return axios.get('/api/scores')
+export const fetchPlayers = () => {
+    return axios.get('/api/players')
 };
 
-export const createScore = data => {
-    return axios.post('/api/scores', data)
+export const fetchPlayer = data => {
+    return axios.post('/api/players', data)
+}
+
+export const destroyPlayer = data => {
+    return axios.delete('/api/player', data)
 }
