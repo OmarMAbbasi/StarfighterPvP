@@ -32,7 +32,13 @@ class SocketTest extends Component {
 			// socket.y = 0;
 			console.log("Ayyy! Websockets!");
 		});
+		socket.emit("c2s", {
+			event: "Client Talks to Server"
+		});
 
+		socket.on("s2c", data => {
+			console.log(data.event);
+		});
 		this.setState({ socket: { socket } });
 	};
 
