@@ -36,3 +36,14 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 	});
 }
+
+//socket.io websockets
+
+//Imports
+const serv = require("http").Server(app);
+const io = require("socket.io")(serv, {});
+
+//Sockets
+io.sockets.on("connection", function(socket) {
+	console.log("socket connection");
+});
