@@ -1,5 +1,5 @@
 export const RECEIVE_HAZARDS = 'RECEIVE_HAZARDS';
-export const DESTROY_HAZARD = 'DESTROY_HAZARD';
+export const REMOVE_HAZARD = 'REMOVE_HAZARD';
 
 
 export const receiveHazards = hazards => ({
@@ -8,6 +8,6 @@ export const receiveHazards = hazards => ({
 });
 
 export const destroyHazard = hazard => ({
-    type: DESTROY_HAZARD,
+    type: REMOVE_HAZARD,
     hazard
 });
