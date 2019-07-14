@@ -3,9 +3,9 @@ const express = require("express");
 //! Off while dev websockets
 // const mongoose = require("mongoose");
 // const db = require("./config/keys").mongoURI;
-// const app = express();
+const app = express();
 
-const app = require("http").createServer();
+const serv = require("http").Server(app);
 const path = require("path");
 
 const bodyParser = require("body-parser");
@@ -14,7 +14,7 @@ const bodyParser = require("body-parser");
 
 //websockets
 // var serv = require("http").createServer();
-var io = (module.exports.io = require("socket.io")(app));
+var io = (module.exports.io = require("socket.io")(serv));
 const SocketManager = require("./frontend/src/SocketManager.js");
 
 io.on("connection", SocketManager);
@@ -32,9 +32,11 @@ io.on("connection", SocketManager);
 
 // app.use(bodyParser.json());
 
-// app.get("/", (req, res) => {
-// 	res.send("Sup Dawg");
-// });
+app.get("/", (req, res) => {
+	// res.send("Sup Dawg");
+	res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+});
+app.use(express.static("frontend/build"));
 
 // const players = require("./routes/api/players");
 // app.use("/api/players", players);
