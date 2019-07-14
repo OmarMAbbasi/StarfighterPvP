@@ -1,4 +1,4 @@
-import * as playerAPIUtils from  '../utils/player_utils';
+import * as playerAPIUtils from  '../utils/player_api_utils';
 
 export const RECEIVE_ALL_PLAYERS = "RECEIVE_ALL_PLAYERS";
 export const RECEIVE_PLAYER = "RECEIVE_PLAYER";
