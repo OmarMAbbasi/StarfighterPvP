@@ -11,7 +11,13 @@ Additionally, the top scores will be displayed for anyone playing the game to se
 ## Functionality & MVP
 
 ## Technologies and Technological Challenges
-The game utilizes the MongoDB
+The game utilizes MongoDB to store scores, routing was accomplished using Express.js, frontend was created using a combination of React and Canvas, and finally, backend was developed using Node.js. Multiplayer functionality was added using Socket.io.
+
+Challenges include:
+* Allowing multiple games to be played by multiple groups of players using Socket.io.
+* Creating powerups that can affect players and game rules separately.
+*
+*
 
 ## Things Accomplished Over the Weekend
 
