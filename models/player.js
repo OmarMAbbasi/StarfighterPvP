@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ScoreSchema = new Schema({
+const PlayerSchema = new Schema({
     tag: {
         type: String,
         required: true
@@ -16,4 +16,4 @@ const ScoreSchema = new Schema({
     }
 });
 
-module.exports = User = mongoose.model('scores', ScoreSchema);
+module.exports = Player = mongoose.model('players', PlayerSchema);
