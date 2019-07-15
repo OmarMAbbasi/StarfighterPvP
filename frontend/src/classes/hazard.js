@@ -1,9 +1,8 @@
 const MovingObject = require('./movingObject');
 
-const HAZARD_RADIUS = 30;
 class Hazard extends MovingObject {
-    constructor(pos, radius = 30, points = 100) {
-        super(pos, radius);
+    constructor(points = 100) {
+        super();
         this.points = points;
     }
 }

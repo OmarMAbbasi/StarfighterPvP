@@ -1,5 +1,6 @@
 const Player = require('./player');
 const Hazard = require('./hazard');
+const Constants = require('./constants');
 
 const FPS = 30;
 const HAZARD_COUNT = 10;
@@ -9,8 +10,6 @@ const ROUND_LENGTH = 10;
 class Game {
   constructor(hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
     // set game parameters
-    this.width = 1600;
-    this.height = 900;
     this.rounds = numRounds;
     this.roundLength = roundLength;
 
@@ -23,10 +22,9 @@ class Game {
     // create hazards array and populate with initial hazards
     this.hazards = [];
     for (let i = 0; i < HAZARD_COUNT; i++) {
-      let hazard = new Hazard(
-        [Math.random() * this.width, Math.random() * this.height]
-      );
+      const hazard = new Hazard(100)
       this.hazards.push(hazard);
+      console.log(hazard)
     }
 
     // create empty bullets array
@@ -59,7 +57,8 @@ class Game {
   update() {
     const deltaTime = (Date.now() - this.lastUpdate) / 1000;
     this.timer -= deltaTime;
-    console.log(`timer: ${this.timer}`);
+
+
   }
 
   selectPowerups() {
