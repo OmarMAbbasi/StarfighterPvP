@@ -1,5 +1,4 @@
 const Util = require("../utils/game_util");
-const redShip = require('../style/images/redshipfire.png')
 const { WIDTH, HEIGHT } = require('./constants');
 
 class MovingObject {
@@ -41,25 +40,10 @@ class MovingObject {
     }
   }
 
-  draw(ctx) {
-	  ctx.fillStyle = "#00FF00";
-
-	  ctx.beginPath();
-
-	  ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI, true);
-	  // ctx.arc(this.pos[0], this.pos[1], this.size, 0, 2 * Math.PI, true);
-	  ctx.fill();
-	  let img = new Image();
-	  img.onload = () => (
-		  ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35)
-	  );
-	  img.src = redShip;
-  }
-
   randomPosition(radius) {
     let x, y;
 
-    if (this.randomDirection == 1) {
+    if (this.randomDirection === 1) {
       if (this.vel.x > 0) {
         x = -radius;
       } else {

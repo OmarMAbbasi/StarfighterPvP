@@ -1,6 +1,7 @@
 const MovingObject = require('./movingObject');
+const redShip = require('../style/images/redshipfire.png')
 
-const PLAYER_RADIUS = 25;
+const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 30;
 const ROTATE_SPEED = 90;
 
@@ -75,6 +76,22 @@ class Player extends MovingObject {
     var sin = Math.sin(ang);
     this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
     this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
+  }
+
+  draw(ctx) {
+      ctx.fillStyle = "#00FF00";
+      ctx.beginPath();
+      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
+      ctx.fill();
+      ctx.closePath();
+      // ctx.translate(this.pos.x / 2, this.pos.y / 2)
+      // ctx.rotate(20 * Math.PI / 180);
+      let img = new Image();
+      img.onload = () => (
+          ctx.drawImage(img, this.pos.x-17, this.pos.y-17, 35, 35)
+      );
+      img.src = redShip;
+      // let rotateDir = Math.atan(this.dir.x / this.dir.y );
   }
 }
 
