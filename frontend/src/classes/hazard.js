@@ -1,7 +1,8 @@
 const MovingObject = require('./movingObject');
+
 class Hazard extends MovingObject {
-    constructor(pos, vel, size, points) {
-        super(pos, vel, size);
+    constructor(points = 100) {
+        super();
         this.points = points;
     }
 }
