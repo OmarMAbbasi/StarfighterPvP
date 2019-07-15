@@ -6,7 +6,7 @@ class MovingObject {
 		this.pos = pos;
 		//*{x: 0, y: 0}
 		this.vel = vel;
-		this.radius = radius;e
+		this.radius = radius;
 	}
 
 	checkCollision(other) {
