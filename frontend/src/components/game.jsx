@@ -9,7 +9,11 @@ class Canvas extends React.Component {
 		super(props);
 		this.state = {
 			socket: null,
-			hazards: this.props.hazards
+			hazards: this.props.hazards,
+			w: false,
+			s: false,
+			a: false,
+			d: false
 		};
 		// this.state = this.props;
 		this.openSocket = this.openSocket.bind(this);
@@ -18,6 +22,7 @@ class Canvas extends React.Component {
 
 	openSocket = () => {
 		let socket = io(socketURL);
+		socket.on("joinGame");
 		this.setState({ socket: { socket } });
 
 		//!Socket Tests
@@ -31,7 +36,6 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-			debugger;
 			let hazards = this.state.hazards;
 			// this.setState({ hazards: hazards });
 			const canvas = this.canvasRef.current;
@@ -53,6 +57,21 @@ class Canvas extends React.Component {
 			}
 		});
 	};
+
+	_handleKeyDown(event) {
+		switch (event.keyCode) {
+			case 87:
+				this.setState({ w: true });
+			case 83:
+				this.setState({ s: true });
+			case 65:
+				this.setState({ a: true });
+			case 68:
+				this.setState({ w: true });
+			default:
+				break;
+		}
+	}
 
 	// updatePos = () => {
 	// 	socket = io(socketURL);
