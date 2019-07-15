@@ -2,7 +2,7 @@ import React from "react";
 import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 
-const socketURL = process.env.SERVER_URL;
+const socketURL = process.env.MONGO_URI || "http://localhost:5000";
 
 class Canvas extends React.Component {
 	constructor(props) {
