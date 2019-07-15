@@ -67,8 +67,8 @@ We used many technologies to construct this game, the full MERN Stack. On the ba
 * Write this readMe proposal
 * create a splash page
 
-## Group Members and Work Breakdown for entire Project
-* Sam Walker: components with canvas, game logic, model, readMe's
-* Michael Du: Game logic,  web sockets, components
-* Matt DeShaw: readMe's, redux, routes, game over and splash components, styling/animation 
-* Omar Abassi: Game logic, version control, web socket-canvas integration, configuration
+## Group Members and Work Breakdown (tasks in chronological from the start to the end of the project)
+* Sam Walker: player model/components with canvas (weekend), game logic/game component (mon, tues), readMe (tues)
+* Michael Du: web sockets/game logic (weekend), web sockets/components (mon tues), styling (tues)
+* Matt DeShaw: routes/redux/splash component (weekend), game over component/styling/canvas (mon, tues), readMe (tues)
+* Omar Abassi: version control/configuration (friday), game logic/web sockets (weekend), web sockets-canvas integration (mon, tues)
