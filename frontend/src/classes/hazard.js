@@ -1,4 +1,5 @@
 const MovingObject = require('./movingObject');
+const Bullet = require('./bullet');
 const Hazard1 = require('../style/images/asteroid1.png');
 const Hazard2 = require('../style/images/asteroid2.png');
 const HAZARDS = [Hazard1, Hazard2];
@@ -10,6 +11,15 @@ class Hazard extends MovingObject {
     constructor(pos, radius, points = 100) {
         super(pos, { x: 0, y: 0 }, radius)
         this.points = points;
+        this.health = 100;
+    }
+
+    collideWith(obj) {
+        if (this.isCollidedWith(obj)) {
+            if (obj instanceof Bullet) {
+                this.takeDamage(obj.damage);
+            }
+        }
     }
 
     draw(ctx) {

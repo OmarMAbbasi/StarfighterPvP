@@ -1,6 +1,7 @@
 const MovingObject = require('./movingObject');
 const redShip = require('../style/images/redshipfire.png');
 const Bullet = require('./bullet');
+const Hazard = require('./hazard');
 
 const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 30;
@@ -30,6 +31,7 @@ class Player extends MovingObject {
       } else if (obj instanceof Bullet) {
         this.takeDamage(obj.damage);
       }
+    }
   }
 
   addScore(points) {
