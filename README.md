@@ -67,14 +67,8 @@ Technological Challenges:
 * Write this readMe proposal
 * create a splash page
 
-## Group Members and Work Breakdown Over the Weekend
-* Sam Walker: Model, readMe, Canvas, components
-* Michael Du: Game logic, web sockets, sample state
-* Matt DeShaw: Routes, Redux, Axios, readMe
-* Omar Abassi: Web sockets, version control, configuration
-
 ## Group Members and Work Breakdown for entire Project
-* Sam Walker: components with canvas, game logic, models, readMe's
-* Michael Du: Game logic,  web sockets, components and styling
-* Matt DeShaw: readMe's, Redux, routes, game over and splash components, styling/animation 
-* Omar Abassi: Game logic, web socket-canvas integration
+* Sam Walker: components with canvas, game logic, model, readMe's
+* Michael Du: Game logic,  web sockets, components
+* Matt DeShaw: readMe's, redux, routes, game over and splash components, styling/animation 
+* Omar Abassi: Game logic, version control, web socket-canvas integration, configuration
