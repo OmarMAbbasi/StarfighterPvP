@@ -16,6 +16,9 @@ const player = require("./models/player");
 const io = (module.exports.io = require("socket.io")(serv));
 const SocketManager = require("./frontend/src/SocketManager.js");
 
+
+let ROOM_SOCKET_LIST = {};
+
 io.on("connection", SocketManager);
 //! Off while dev websockets
 mongoose
