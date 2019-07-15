@@ -1,5 +1,5 @@
 import React from 'react';
-import MovingObject from '../classes/movingObject';
+// import MovingObject from '../classes/movingObject';
 
 class Canvas extends React.Component {
     constructor(props) {
