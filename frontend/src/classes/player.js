@@ -14,7 +14,7 @@ class Player extends MovingObject {
     this.health = 100;
     this.totalScore = 0;
     this.score = 0;
-
+    this.points = 1000;
     this.inputs = {};
     this.dir = dir;
     this.speed = 0;

@@ -1,5 +1,7 @@
 const MovingObject = require('./movingObject');
 const redBlast = require('../style/images/redblast.png');
+const Player = require('./player');
+// const Hazard = require('./hazard');
 
 class Bullet extends MovingObject {
     constructor(pos, vel, size, playerId, damage) {
@@ -8,7 +10,15 @@ class Bullet extends MovingObject {
         this.damage = damage;
     }
 
-    
+    rewardPoints(players, obj) {
+        if (this.isCollidedWith(obj) && obj.health <= 0) {
+            players.forEach(player => {
+                if (player.id === this.playerId) {
+                    player.addScore(obj.points);
+                }
+            })
+        }
+    }
 
     draw(ctx) {
         // to see hit circle
