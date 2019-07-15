@@ -89,6 +89,4 @@ class MovingObject {
     }
 }
 
-// module.exports = MovingObject;
-
-export default MovingObject
+module.exports = MovingObject;
