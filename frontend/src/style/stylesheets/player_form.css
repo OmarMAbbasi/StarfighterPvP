@@ -56,8 +56,6 @@
     left: 450px;
 }
 
-
-
 .player-form input {
     min-height: 36px;
     min-width: 355px;
@@ -76,7 +74,7 @@
 }
 
 ::placeholder {
-    color: #ffffff;
+    color: #3500fa;
 }
 
 .player-btn {

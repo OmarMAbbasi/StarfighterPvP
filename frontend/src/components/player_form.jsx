@@ -38,9 +38,8 @@ class PlayerForm extends React.Component {
                     <img className='red-blast2' src={require('../style/images/redblast.png')} alt="redblast2" width='200' height='131' />
                     <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />  
                     <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />  
-                    <label className='name-label'>Name
-                        <input className='player-input' type="text" value={this.state.tag} onChange={this.updateType("tag")} placeholder="name" />
-                    </label>
+                    
+                    <input className='player-input' type="text" value={this.state.tag} onChange={this.updateType("tag")} placeholder="name" />
                     <button className='player-btn' type="submit">Play</button>
                     { this.state.tag !== '' ? shownView() : null }
                 </form>
