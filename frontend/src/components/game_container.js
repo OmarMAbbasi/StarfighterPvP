@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Game from "./game";
-// import MovingObject from "../classes/movingObject";
+import MovingObject from "../classes/movingObject";
 import Player from "../classes/player";
 import Hazard from "../classes/hazard";
 import Bullet from "../classes/bullet";
