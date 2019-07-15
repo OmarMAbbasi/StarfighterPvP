@@ -10,30 +10,30 @@ class Canvas extends React.Component {
 		this.state = {
 			socket: null
 		};
-		// this.state = this.props;
-		// this.openSocket = this.openSocket.bind(this);
+		this.state = this.props;
+		this.openSocket = this.openSocket.bind(this);
 		this.canvasRef = React.createRef();
 	}
 
 	openSocket = () => {
-		// const socket = io(socketURL);
-		// this.setState({ socket: { socket } });
+		const socket = io(socketURL);
+		this.setState({ socket: { socket } });
 
-		//!Socket Tests
-		// socket.on("connect", () => {
-		// 	console.log("Ayyy! Websockets!");
-		// });
+		// !Socket Tests
+		socket.on("connect", () => {
+			console.log("Ayyy! Websockets!");
+		});
 
-		// socket.emit("c2s", {
-		// 	event: "Client Talks to Server"
-		// });
+		socket.emit("c2s", {
+			event: "Client Talks to Server"
+		});
 
-		// socket.on("s2c", data => console.log(data.event));
+		socket.on("s2c", data => console.log(data.event));
 	};
 
-	// componentWillMount() {
-	// 	this.openSocket();
-	// }
+	componentWillMount() {
+		this.openSocket();
+	}
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
@@ -53,7 +53,7 @@ class Canvas extends React.Component {
 		if (this.props !== {}) {
 			this.props.hazards.forEach((hazard) => hazard.draw(ctx))
 			this.props.players.forEach(player => player.draw(ctx, canvas));
-			// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
+			this.props.bullets.forEach((bullet) => bullet.draw(ctx))
 		}
 	}
 

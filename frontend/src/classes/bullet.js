@@ -29,7 +29,7 @@ class Bullet extends MovingObject {
             // ctx.translate(this.pos.x, this.pos.y);
             // ctx.rotate(rotateDir);
             // ctx.translate(-this.pos.x, -this.pos.y);
-            ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
+            ctx.drawImage(img, this.pos.x - 6, this.pos.y - 5, 12, 15);
             // ctx.restore();
 
         };
@@ -37,4 +37,4 @@ class Bullet extends MovingObject {
     }
 }
 
-module.export = Bullet;
+module.exports = Bullet;
