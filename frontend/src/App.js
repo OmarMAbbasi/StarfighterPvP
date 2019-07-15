@@ -1,28 +1,27 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
+import SocketTest from "./components/sockettest";
+import GameContainer from "./components/game_container";
+import PlayerContainer from './components/player_container';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
+			<SocketTest />
+			{/* <header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
 				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+				</header> */}
+			<Switch>
+				<Route exact path='/' component={PlayerContainer}/>
+				<Route path='/game' component={GameContainer}/>
+			</Switch>
 		</div>
 	);
 }
-
-
 
 export default App;
