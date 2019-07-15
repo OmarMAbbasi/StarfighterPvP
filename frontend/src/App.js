@@ -1,11 +1,7 @@
 import React from "react";
 // import logo from "./logo.svg";
-<<<<<<< HEAD
-import "./App.css";
-=======
 // import './App.css'
 import './style/stylesheets/player_form.css';
->>>>>>> UserAuth
 import GameContainer from "./components/game_container";
 import PlayerContainer from './components/player_container';
 import { Switch, Route } from 'react-router-dom';
@@ -13,10 +9,6 @@ import { Switch, Route } from 'react-router-dom';
 function App() {
 	return (
 		<div className="App">
-<<<<<<< HEAD
-			{/* <SocketTest /> */}
-=======
->>>>>>> UserAuth
 			{/* <header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>
