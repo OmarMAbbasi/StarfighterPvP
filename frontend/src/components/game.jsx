@@ -31,6 +31,54 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 	};
 
+	_handleKey(event, down) {
+		let input = this.state.input;
+		let socket = this.state.socket;
+		console.log(event.keyCode);
+
+		switch (event.keyCode) {
+			case 87:
+				if (input.w !== down) {
+					input.w = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
+			case 83:
+				if (input.s !== down) {
+					input.s = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
+			case 65:
+				if (input.a !== down) {
+					input.a = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+				break;
+			case 68:
+				if (input.d !== down) {
+					input.d = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
+			default:
+				break;
+		}
+		this.setState({ input: input });
+		// debugger;
+	}
+
+	// updatePos = () => {
+	// 	socket = io(socketURL);
+	// };
+
 	componentWillMount() {
 		this.openSocket();
 	}
