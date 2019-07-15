@@ -17,8 +17,8 @@ function App() {
 				</p>
 				</header> */}
 			<Switch>
-				<Route to='/' component={PlayerContainer}/>
-				<Route to='/game' component={GameContainer}/>
+				<Route exact path='/' component={PlayerContainer}/>
+				<Route path='/game' component={GameContainer}/>
 			</Switch>
 		</div>
 	);
