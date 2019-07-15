@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Modal from './modal';
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+
 const redShip = require('../style/images/redshipfire.png');
 const blueShip = require('../style/images/fireshipURL.png');
 
@@ -24,6 +26,7 @@ class PlayerForm extends React.Component {
                 let xPos2 = 1500;
                 let yPos2 = 800;
                 img2.onload = () => {
+<<<<<<< HEAD
                         setInterval(() => {
                             ctx.save();
                             ctx.clearRect(0, 0, 1600, 900);
@@ -46,6 +49,30 @@ class PlayerForm extends React.Component {
                             if (yPos2 < 0) {
                                 yPos2 = 800;
                             }
+=======
+                setInterval(() => {
+                    ctx.save();
+                    ctx.clearRect(0, 0, 1600, 900);
+                    ctx.fillRect(0, 0, 1600, 900);
+                    xPos += 10;
+                    xPos2 -= 10;
+                    ctx.drawImage(img, xPos, yPos, 80, 61);
+                    ctx.drawImage(img2, xPos2, yPos2, 80, 61);
+                    
+                    ctx.restore();
+                    if (xPos > 1600 || yPos > 900) {
+                        xPos = 0;
+                        yPos = 210;
+                    };
+
+                    if (xPos2 < 0) {
+                        xPos2 = 1500;
+                    }
+
+                    if (yPos2 < 0) {
+                        yPos2 = 800;
+                    }
+>>>>>>> ConnecSockets
 
                         }, 100 / 3)
             };
@@ -53,8 +80,6 @@ class PlayerForm extends React.Component {
         }
         img.src = redShip;
     }
-
-
 
     handleCreateRoom(e) {
         e.preventDefault();
@@ -64,14 +89,20 @@ class PlayerForm extends React.Component {
     render() {
         return (
             <div className='player-form-parent'>
+                <audio src={backSound} autoPlay loop />
+
                 <canvas ref={this.canvasRef} id="my-canvas" width='1600' height='900' ></canvas>
 
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
+<<<<<<< HEAD
                     {/* <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />   */}
                     {/* <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />   */}
                     
+=======
+                     
+>>>>>>> ConnecSockets
                     <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
                     
@@ -80,7 +111,8 @@ class PlayerForm extends React.Component {
                 <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
                 <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
                 <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
-                </div>
+
+            </div>
         );
     }
 
