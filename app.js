@@ -15,6 +15,13 @@ const player = require("./models/player");
 const io = (module.exports.io = require("socket.io")(serv));
 const SocketManager = require("./frontend/src/SocketManager.js");
 
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static("frontend/build"));
+	app.get("/", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+	});
+}
+
 let ROOM_SOCKET_LIST = {};
 
 io.on("connection", SocketManager);
