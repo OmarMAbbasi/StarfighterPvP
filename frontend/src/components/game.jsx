@@ -10,20 +10,22 @@ class Canvas extends React.Component {
 		this.state = {
 			socket: null,
 			hazards: this.props.hazards,
-			w: false,
-			s: false,
-			a: false,
-			d: false
+			input: {
+				w: false,
+				s: false,
+				a: false,
+				d: false
+			}
 		};
 		// this.state = this.props;
 		this.openSocket = this.openSocket.bind(this);
+		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 	}
 
 	openSocket = () => {
 		let socket = io(socketURL);
-		socket.on("joinGame");
-		this.setState({ socket: { socket } });
+		this.setState({ socket });
 
 		//!Socket Tests
 		socket.on("connect", () => {
@@ -58,19 +60,48 @@ class Canvas extends React.Component {
 		});
 	};
 
-	_handleKeyDown(event) {
+	_handleKey(event, down) {
+		let input = this.state.input;
+		let socket = this.state.socket;
+		console.log(event.keyCode);
+
 		switch (event.keyCode) {
 			case 87:
-				this.setState({ w: true });
+				if (input.w != down) {
+					input.w = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
 			case 83:
-				this.setState({ s: true });
+				if (input.s != down) {
+					input.s = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
 			case 65:
-				this.setState({ a: true });
+				if (input.a != down) {
+					input.a = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+				break;
 			case 68:
-				this.setState({ w: true });
+				if (input.d != down) {
+					input.d = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
 			default:
 				break;
 		}
+		this.setState({ input: input });
+		// debugger;
 	}
 
 	// updatePos = () => {
@@ -90,6 +121,13 @@ class Canvas extends React.Component {
 			this.state.hazards.forEach(hazard => hazard.draw(ctx));
 			// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
 		}
+		document.addEventListener("keydown", event => {
+			this._handleKey(event, true);
+		});
+		document.addEventListener("keyup", event => {
+			this._handleKey(event, false);
+		});
+		// document.addEventListener("keyup", this._handleKeyDown);
 	}
 
 	render() {
