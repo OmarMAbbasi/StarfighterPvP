@@ -64,10 +64,17 @@ Technological Challenges:
 * Built out the entire Redux Cycle so we could see our state on the window and use it in our components
 * Get web sockets up and running
 * Draw out the game board with Canvas and integrate it into a React component
-* Write this readMe
+* Write this readMe proposal
+* create a splash page
 
-## Group Members and Work Breakdown
+## Group Members and Work Breakdown Over the Weekend
 * Sam Walker: Model, readMe, Canvas, components
 * Michael Du: Game logic, web sockets, sample state
 * Matt DeShaw: Routes, Redux, Axios, readMe
 * Omar Abassi: Web sockets, version control, configuration
+
+## Group Members and Work Breakdown for entire Project
+* Sam Walker: components with canvas, game logic, models, readMe's
+* Michael Du: Game logic,  web sockets, components and styling
+* Matt DeShaw: readMe's, Redux, routes, game over and splash components, styling/animation 
+* Omar Abassi: Game logic, web socket-canvas integration
