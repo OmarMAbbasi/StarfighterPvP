@@ -2,11 +2,13 @@
     font-family: 'Press Start 2P', cursive;
     height: 900px;
     width: 1600px;
-    border: 2px solid #069304;
-    background: #000000;
     display: flex;
     justify-content: center;
     vertical-align: middle;
+}
+
+.player-header {
+    position: relative;
 }
 
 .player-form {
@@ -22,7 +24,11 @@
     font-size: 24px;
 }
 
-.red-ship {
+.enter-room {
+    position: relative;
+}
+
+/* .red-ship {
     -webkit-transform: rotate(30deg);
     -moz-transform: rotate(30deg);
     -o-transform: rotate(30deg);
@@ -32,7 +38,7 @@
     top: 280px;
     left: 320px;
 }
-
+ */
 .red-blast1 {
     -webkit-transform: rotate(120deg);
     -moz-transform: rotate(120deg);
@@ -71,6 +77,8 @@
     line-height: normal;
     padding: 5px 10px;
     margin-top: 50px;
+    position: relative;
+
 }
 
 ::placeholder {
@@ -100,10 +108,10 @@
     cursor: pointer;
 }
 
-.blue-ship {
+#blue-ship {
     position: absolute;
     top: 500px;
-    right: 120px;
+    right: 140px;
     -webkit-transform: rotate(200deg);
     -moz-transform: rotate(200deg);
     -o-transform: rotate(200deg);
@@ -132,7 +140,7 @@
 .ast-1 {
     position: absolute;
     top: 400px;
-    right: 300px;
+    right: 400px;
 }
 
 .ast-2 {
@@ -161,4 +169,15 @@
     -o-transform: rotate(290deg);
     -ms-transform: rotate(290deg);
     transform: rotate(290deg);
+}
+
+#my-canvas {
+    font-family: 'Press Start 2P', cursive;
+    height: 900px;
+    width: 1600px;
+    position: fixed;
+    border: 2px solid #069304;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
 }
