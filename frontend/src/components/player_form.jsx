@@ -18,24 +18,51 @@ class PlayerForm extends React.Component {
         ctx.fillRect(0, 0, 1600, 900);
         let img = new Image();
         let xPos = 0;
-        let yPos = 0;
+        let yPos = 210;
             img.onload = () => {
+                let img2 = new Image();
+                let xPos2 = 1500;
+                let yPos2 = 800;
+                img2.onload = () => {
                 setInterval(() => {
                     ctx.save();
                     ctx.clearRect(0, 0, 1600, 900);
                     ctx.fillRect(0, 0, 1600, 900);
                     xPos += 10;
-                    yPos += 10;
-                    ctx.rotate(0.25);
+                    // yPos += 10;
+                    xPos2 -= 10;
+                    // yPos2 -= 10;
+                    // ctx.translate(xPos, yPos);
+                    // ctx.rotate(45*Math.PI / 180);
+                    // ctx.translate(-xPos, -yPos);
                     ctx.drawImage(img, xPos, yPos, 80, 61);
+
+                    // ctx.rotate((-45 * Math.PI) / 180);
+
+                    // ctx.translate(xPos2, yPos2);
+                    // ctx.rotate(225*Math.PI / 180);
+                    // ctx.translate(-xPos2, -yPos2);
+                    ctx.drawImage(img2, xPos2, yPos2, 80, 61);
+                    
                     ctx.restore();
                     if (xPos > 1600 || yPos > 900) {
                         xPos = 0;
-                        yPos = 0;
+                        yPos = 210;
                     };
+
+                    if (xPos2 < 0) {
+                        xPos2 = 1500;
+                    }
+
+                    if (yPos2 < 0) {
+                        yPos2 = 800;
+                    }
+
                 }, 100 / 3)
             };
-            img.src = redShip;
+            img2.src = blueShip;
+        }
+        img.src = redShip;
     }
 
 
@@ -53,9 +80,6 @@ class PlayerForm extends React.Component {
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
-                    {/* <img className='red-ship' src={require('../style/images/redshipfire.png')} alt="redShip" width='250' height='191' /> */}
-                    <img className='red-blast1' src={require('../style/images/redblast.png')} alt="redblast1" width='200' height='131' />
-                    <img className='red-blast2' src={require('../style/images/redblast.png')} alt="redblast2" width='200' height='131' />
                     <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />  
                     <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />  
                     
@@ -67,9 +91,6 @@ class PlayerForm extends React.Component {
                 <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
                 <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
                 <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
-                {/* <img id='blue-ship' src={require('../style/images/blueship.png')} onMouseOver={this.animateScript} alt="blueShip" width='250' height='191' /> */}
-                <img className='blue-blast1' src={require('../style/images/blueblast.png')} alt="blueblast1" width='200' height='131' />
-                <img className='blue-blast2' src={require('../style/images/blueblast.png')} alt="blueblast2" width='200' height='131' />
                 </div>
         );
     }

@@ -8,15 +8,8 @@ class JoinRoom extends React.Component {
             room_id: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
 
-    componentDidMount() {
-        let canvas = document.getElementById("my-canvas");
-        let ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0, 0, 1600, 900);
     }
-
 
     handleSubmit(e) {
         e.preventDefault();
@@ -39,13 +32,9 @@ class JoinRoom extends React.Component {
 
         return (
             <div className='player-form'>
-                <canvas id='my-canvas'></canvas>
 
                 <form onSubmit={this.handleSubmit} className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
-                    <img className='red-ship' src={require('../style/images/redshipfire.png')} alt="redShip" width='250' height='191' />
-                    <img className='red-blast1' src={require('../style/images/redblast.png')} alt="redblast1" width='200' height='131' />
-                    <img className='red-blast2' src={require('../style/images/redblast.png')} alt="redblast2" width='200' height='131' />
                     <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />
                     <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191' />
 
