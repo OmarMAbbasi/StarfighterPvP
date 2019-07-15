@@ -50,7 +50,7 @@ Within entities, players, hazards, and bullets are stored in arrays, allowing fo
 * Game logic: Our game logic will be on the frontend, and will actively manage player movement, health, and score, current powerups, object behavior, collision logic, and overall game rules.
 
 ## Technologies and Technological Challenges
-We used many technologies to construct this game, the full MERN Stack. On the backend, we use MongoDB to store player tags and scores and Node.js to develop it. Routing was accomplished using Express.js. API calls were made using Axios, allowing for interaction between our frontend and backend database. State was managed through Redux, and the frontend was created using a combination of React and Canvas. We added multiplayer functionality using web sockets with Socket.io.
+We primarily used the full MERN stack to construct this game. On the backend, we use MongoDB to store player tags and scores and Node.js to develop it. Routing was accomplished using Express.js. API calls were made using Axios, allowing for interaction between our frontend and backend database. State was managed through Redux, and the frontend was created using a combination of React and Canvas. We added multiplayer functionality using web sockets with Socket.io.
 
 ## Technological Challenges:
 * Allowing for simultaneous multiplayer games using Socket.io.
