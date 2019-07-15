@@ -1,7 +1,7 @@
 import React from "react";
 // import logo from "./logo.svg";
 // import './App.css'
-import './stylesheets/player_form.css';
+import './style/stylesheets/player_form.css';
 import GameContainer from "./components/game_container";
 import PlayerContainer from './components/player_container';
 import { Switch, Route } from 'react-router-dom';
