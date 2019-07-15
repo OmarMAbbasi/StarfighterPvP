@@ -1,6 +1,5 @@
 const express = require("express");
 
-//! Off while dev websockets
 const mongoose = require("mongoose");
 const db = require("./config/keys").mongoURI;
 const app = express();
@@ -16,11 +15,9 @@ const player = require("./models/player");
 const io = (module.exports.io = require("socket.io")(serv));
 const SocketManager = require("./frontend/src/SocketManager.js");
 
-
 let ROOM_SOCKET_LIST = {};
 
 io.on("connection", SocketManager);
-//! Off while dev websockets
 mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
@@ -40,7 +37,6 @@ app.get("/", (req, res) => {
 
 const players = require("./routes/api/players");
 app.use("/api/players", players);
-//! Off
 
 const PORT = process.env.PORT || 5000;
 
