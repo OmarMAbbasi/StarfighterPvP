@@ -1,9 +1,8 @@
 const Util = require('../utils/game_util');
 
 class MovingObject {
-    constructor(pos, vel, radius) {
+    constructor(pos, radius) {
         this.pos = pos;
-        this.vel = vel;
         this.radius = radius;
     }
 
