@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import Game from "./game";
-import MovingObject from "../classes/movingObject";
+// import MovingObject from "../classes/movingObject";
 
 const mapSTP = state => {
-	let test = new MovingObject({ x: 400, y: 400 }, { x: 25, y: 25 }, 15);
+	// let test = new MovingObject({ x: 400, y: 400 }, { x: 25, y: 25 }, 15);
 
 	return {
 		// players: state.players,
-		hazards: [test],
+		hazards: [],
 		// bullets: state.bullets,
 		timeLeft: 120,
 		roundsLeft: 5

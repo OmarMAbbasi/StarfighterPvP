@@ -1,12 +1,12 @@
 import React from "react";
-import MovingObject from "../classes/movingObject";
+// import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = 'https://starfight-staging.herokuapp.com/'
-} 
+	socketURL = "https://starfight-staging.herokuapp.com/";
+}
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
