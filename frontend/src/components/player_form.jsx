@@ -24,41 +24,30 @@ class PlayerForm extends React.Component {
                 let xPos2 = 1500;
                 let yPos2 = 800;
                 img2.onload = () => {
-                setInterval(() => {
-                    ctx.save();
-                    ctx.clearRect(0, 0, 1600, 900);
-                    ctx.fillRect(0, 0, 1600, 900);
-                    xPos += 10;
-                    // yPos += 10;
-                    xPos2 -= 10;
-                    // yPos2 -= 10;
-                    // ctx.translate(xPos, yPos);
-                    // ctx.rotate(45*Math.PI / 180);
-                    // ctx.translate(-xPos, -yPos);
-                    ctx.drawImage(img, xPos, yPos, 80, 61);
+                        setInterval(() => {
+                            ctx.save();
+                            ctx.clearRect(0, 0, 1600, 900);
+                            ctx.fillRect(0, 0, 1600, 900);
+                            xPos += 12;
+                            xPos2 -= 12;
+                            ctx.drawImage(img, xPos, yPos, 80, 61);
+                            ctx.drawImage(img2, xPos2, yPos2, 80, 61);
+                            
+                            ctx.restore();
+                            if (xPos > 1600 || yPos > 900) {
+                                xPos = 0;
+                                yPos = 210;
+                            };
 
-                    // ctx.rotate((-45 * Math.PI) / 180);
+                            if (xPos2 < 0) {
+                                xPos2 = 1500;
+                            }
 
-                    // ctx.translate(xPos2, yPos2);
-                    // ctx.rotate(225*Math.PI / 180);
-                    // ctx.translate(-xPos2, -yPos2);
-                    ctx.drawImage(img2, xPos2, yPos2, 80, 61);
-                    
-                    ctx.restore();
-                    if (xPos > 1600 || yPos > 900) {
-                        xPos = 0;
-                        yPos = 210;
-                    };
+                            if (yPos2 < 0) {
+                                yPos2 = 800;
+                            }
 
-                    if (xPos2 < 0) {
-                        xPos2 = 1500;
-                    }
-
-                    if (yPos2 < 0) {
-                        yPos2 = 800;
-                    }
-
-                }, 100 / 3)
+                        }, 100 / 3)
             };
             img2.src = blueShip;
         }
@@ -80,8 +69,8 @@ class PlayerForm extends React.Component {
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
-                    <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />  
-                    <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />  
+                    {/* <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />   */}
+                    {/* <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />   */}
                     
                     <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
