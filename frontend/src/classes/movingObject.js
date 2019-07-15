@@ -4,7 +4,7 @@ const { WIDTH, HEIGHT } = require('./constants');
 class MovingObject {
   constructor(pos, vel, radius) {
     this.radius = (radius) ? radius : this.randomRadius(20, 40);
-    this.vel = (vel) ? vel : this.randomVelocity(5, 10);
+    this.vel = (vel) ? vel : this.randomVelocity(10, 20);
     this.pos = (pos) ? pos : this.randomPosition(this.radius);
   }
 
@@ -17,8 +17,27 @@ class MovingObject {
 
   }
 
-  move() {
-    this.pos = [(this.pos[0] + this.vel[0]), (this.pos[1] + this.vel[1])]
+  move(deltaTime) {
+    // increment position by time-scaled velocity
+    this.pos.x += this.vel.x * deltaTime;
+    this.pos.y += this.vel.y * deltaTime;
+
+    // check if offscreen
+    this.screenWrap();
+  }
+
+  screenWrap() {
+    if (this.pos.x > WIDTH + this.radius) {
+      this.pos.x = -this.radius;
+    } else if (this.pos.x < -this.radius) {
+      this.pos.x = WIDTH + this.radius;
+    }
+
+    if (this.pos.y > HEIGHT + this.radius) {
+      this.pos.y = -this.radius;
+    } else if (this.pos.y < -this.radius) {
+      this.pos.y = HEIGHT + this.radius;
+    }
   }
 
   draw(ctx) {
@@ -26,7 +45,7 @@ class MovingObject {
 
     ctx.beginPath();
     ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true
+      this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true
     );
     ctx.fill();
   }
@@ -52,13 +71,13 @@ class MovingObject {
       x = Math.floor(Math.random() * WIDTH);
     }
 
-    return {x, y};
+    return { x, y };
   }
 
   randomVelocity(min, max) {
     const x = Math.floor(Math.random() * (max - min) + min) * this.randomDirection();
     const y = Math.floor(Math.random() * (max - min) + min) * this.randomDirection();
-    return {x, y};
+    return { x, y };
   }
 
   randomDirection() {

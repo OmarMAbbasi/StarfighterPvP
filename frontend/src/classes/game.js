@@ -2,10 +2,10 @@ const Player = require('./player');
 const Hazard = require('./hazard');
 const Constants = require('./constants');
 
-const FPS = 30;
-const HAZARD_COUNT = 10;
+const FPS = 5;
+const HAZARD_COUNT = 1;
 const NUM_ROUNDS = 5;
-const ROUND_LENGTH = 10;
+const ROUND_LENGTH = 30;
 
 class Game {
   constructor(hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
@@ -17,15 +17,10 @@ class Game {
     this.hostId = hostId;
 
     // create players array with host player
-    this.players = [new Player({x: 0, y: 0}, hostId)];
+    this.players = [new Player({ x: 0, y: 0 }, hostId, { x: 1, y: 1 })];
 
-    // create hazards array and populate with initial hazards
+    // create hazards array
     this.hazards = [];
-    for (let i = 0; i < HAZARD_COUNT; i++) {
-      const hazard = new Hazard(100)
-      this.hazards.push(hazard);
-      console.log(hazard)
-    }
 
     // create empty bullets array
     this.bullets = [];
@@ -44,7 +39,7 @@ class Game {
     console.log(`Round ${this.rounds}`);
     const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-    this.timer = this.roundLength
+    this.initRound();
 
     this.lastUpdate = Date.now();
     while (this.timer > 0) {
@@ -57,8 +52,8 @@ class Game {
   update() {
     const deltaTime = (Date.now() - this.lastUpdate) / 1000;
     this.timer -= deltaTime;
-
-
+    let allObjects = this.allObjects();
+    allObjects.forEach(hazard => hazard.move(deltaTime));
   }
 
   selectPowerups() {
@@ -67,6 +62,24 @@ class Game {
 
   gameOver() {
 
+  }
+
+  populateHazards() {
+    this.hazards = [];
+    for (let i = 0; i < HAZARD_COUNT; i++) {
+      const hazard = new Hazard(100)
+      this.hazards.push(hazard);
+    }
+  }
+
+  initRound() {
+    this.populateHazards();
+    this.bullets = [];
+    this.timer = this.roundLength
+  }
+
+  allObjects() {
+    return [].concat(this.players, this.hazards, this.bullets);
   }
 }
 
