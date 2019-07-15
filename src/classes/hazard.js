@@ -1,11 +1,5 @@
-import MovingObject from "./movingObject";
-import Bullet from "./bullet";
-import Hazard1 from "../style/images/asteroid1.png";
-import Hazard2 from "../style/images/asteroid2.png";
-const HAZARDS = [Hazard1, Hazard2];
-
-// const HAZARD1_RADIUS = 10;
-// const HAZARD2_RADIUS = 12;
+const MovingObject = require("./movingObject");
+const Bullet = require("./bullet");
 
 class Hazard extends MovingObject {
 	constructor(pos, radius, points = 100) {
@@ -33,4 +27,4 @@ class Hazard extends MovingObject {
 	}
 }
 
-export default Hazard;
+module.exports = Hazard;

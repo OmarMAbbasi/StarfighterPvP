@@ -1,6 +1,6 @@
-const io = require("../../app").io;
-const Game = require("./classes/game");
-const MovObj = require("./classes/movingObject");
+const io = require("../app").io;
+// const Game = require("./classes/game");
+const Player = require("./classes/player");
 
 let SOCKET_LIST = {};
 let PLAYER_LIST = {};
@@ -32,11 +32,10 @@ function updatePos(player) {
 module.exports = function(socket) {
 	socket.id = Math.random();
 	socket = SOCKET_LIST[socket.id] = socket;
-	let playerObj = new MovObj(
-		{ x: randomX(), y: randomY() },
-		{ x: 25, y: 25 },
-		15
-	);
+	let playerObj = new Player({ x: randomX(), y: randomY() }, socket.id, {
+		x: 1,
+		y: 0
+	});
 	let input = {
 		w: false,
 		s: false,

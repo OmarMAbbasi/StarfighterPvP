@@ -13,7 +13,7 @@ const bodyParser = require("body-parser");
 const player = require("./models/player");
 
 const io = (module.exports.io = require("socket.io")(serv));
-const SocketManager = require("./frontend/src/SocketManager.js");
+const SocketManager = require("./src/SocketManager");
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("frontend/build"));

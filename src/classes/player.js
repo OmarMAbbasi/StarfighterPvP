@@ -1,7 +1,6 @@
-import MovingObject from "./movingObject";
-import redShip from "../style/images/redshipfire.png";
-import Bullet from "./bullet";
-import Hazard from "./hazard";
+const MovingObject = require("./movingObject");
+const Bullet = require("./bullet");
+const Hazard = require("./hazard");
 
 const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 30;
@@ -69,6 +68,16 @@ class Player extends MovingObject {
 		}
 	}
 
+	move(deltaTime) {
+		// rotate player
+		this.rotate(deltaTime);
+		this.pos.x += this.dir.x * this.speed * deltaTime;
+		this.pos.y += this.dir.y * this.speed * deltaTime;
+
+		// check if offscreen
+		this.screenWrap();
+	}
+
 	rotate(deltaTime) {
 		let dir = 0;
 
@@ -84,15 +93,6 @@ class Player extends MovingObject {
 		this.rotateVector([this.dir.x, this.dir.y], ROTATE_SPEED * deltaTime);
 	}
 
-	move(deltaTime) {
-		// rotate player
-		this.rotate(deltaTime);
-		this.pos.x += this.dir.x * this.speed * deltaTime;
-		this.pos.y += this.dir.y * this.speed * deltaTime;
-
-		// check if offscreen
-		this.screenWrap();
-	}
 	rotateVector(vec, ang) {
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
@@ -100,30 +100,6 @@ class Player extends MovingObject {
 		this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
 		this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
 	}
-
-	draw(ctx) {
-		// ctx.fillStyle = "#00FF00";
-		// ctx.beginPath();
-		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		// ctx.fill();
-		// ctx.closePath();
-		let img = new Image();
-		let rotateDir;
-		if (this.dir.x === 0) {
-			rotateDir = this.dir.y * (-Math.PI / 2);
-		} else {
-			rotateDir = Math.atan(this.dir.y / this.dir.x);
-		}
-		img.onload = () => {
-			ctx.save();
-			ctx.translate(this.pos.x, this.pos.y);
-			ctx.rotate(rotateDir);
-			ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
-			ctx.restore();
-		};
-		img.src = redShip;
-	}
 }
 
-export default Player;
+module.exports = Player;
