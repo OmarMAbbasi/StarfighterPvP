@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Modal from './modal';
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+
 const redShip = require('../style/images/redshipfire.png');
 const blueShip = require('../style/images/fireshipURL.png');
 
@@ -62,11 +64,9 @@ class PlayerForm extends React.Component {
     render() {
         return (
             <div className='player-form-parent'>
-                <canvas ref={this.canvasRef} id="my-canvas" width='1600' height='900' ></canvas>
+                <audio src={backSound} autoPlay loop />
 
-                <audio autoPlay loop>
-                    <source src="../style/sounds/InterplanetaryOdyssey.ogg"/>
-                </audio>
+                <canvas ref={this.canvasRef} id="my-canvas" width='1600' height='900' ></canvas>
 
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
