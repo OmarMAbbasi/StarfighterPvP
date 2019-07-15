@@ -6,7 +6,7 @@ class MovingObject {
 		this.pos = pos;
 		//*{x: 0, y: 0}
 		this.vel = vel;
-		this.radius = radius;
+		this.radius = radius;e
 	}
 
 	checkCollision(other) {
@@ -35,6 +35,6 @@ class MovingObject {
 	}
 }
 
-// module.exports = MovingObject;
+module.exports = MovingObject;
 
-export default MovingObject
+// export default MovingObject

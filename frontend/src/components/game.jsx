@@ -67,7 +67,7 @@ class Canvas extends React.Component {
 
 		switch (event.keyCode) {
 			case 87:
-				if (input.w != down) {
+				if (input.w !== down) {
 					input.w = down;
 					socket.emit("playerInput", input);
 					console.log(input);
@@ -75,7 +75,7 @@ class Canvas extends React.Component {
 
 				break;
 			case 83:
-				if (input.s != down) {
+				if (input.s !== down) {
 					input.s = down;
 					socket.emit("playerInput", input);
 					console.log(input);
@@ -83,14 +83,14 @@ class Canvas extends React.Component {
 
 				break;
 			case 65:
-				if (input.a != down) {
+				if (input.a !== down) {
 					input.a = down;
 					socket.emit("playerInput", input);
 					console.log(input);
 				}
 				break;
 			case 68:
-				if (input.d != down) {
+				if (input.d !== down) {
 					input.d = down;
 					socket.emit("playerInput", input);
 					console.log(input);
