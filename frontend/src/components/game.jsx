@@ -52,7 +52,7 @@ class Canvas extends React.Component {
         // ctx.closePath();
 		if (this.props !== {}) {
 			// this.state.players.forEach((player) => player.draw(ctx))
-			this.props.players.forEach(player => player.draw(ctx));
+			this.props.players.forEach(player => player.draw(ctx, canvas));
 			// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
 		}
 	}
