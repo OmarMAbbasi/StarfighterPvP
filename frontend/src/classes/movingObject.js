@@ -1,17 +1,18 @@
 const Util = require("../utils/game_util");
+const redShip = require('../style/images/redshipfire.png')
 
 class MovingObject {
-	constructor(pos, vel, radius) {
+	constructor(pos, vel, size) {
 		//* {x: 0, y:0}
 		this.pos = pos;
 		//*{x: 0, y: 0}
 		this.vel = vel;
-		this.radius = radius;
+		this.size = size;
 	}
 
 	checkCollision(other) {
 		const ctrPointDist = Util.dist(this.pos, other.pos);
-		return ctrPointDist < this.radius + other.radius;
+		return ctrPointDist < this.size + other.size;
 	}
 
 	applyPowerups(powerups) {}
@@ -29,9 +30,14 @@ class MovingObject {
 
 		ctx.beginPath();
 
-		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		// ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true);
+		ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI, true);
+		// ctx.arc(this.pos[0], this.pos[1], this.size, 0, 2 * Math.PI, true);
 		ctx.fill();
+		let img = new Image();
+		img.onload = () => (
+			ctx.drawImage(img, this.pos.x-17, this.pos.y-17, 35, 35)
+		);
+		img.src = redShip;
 	}
 }
 

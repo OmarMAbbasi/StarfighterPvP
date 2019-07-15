@@ -6,6 +6,7 @@ class Player extends MovingObject {
         this.health = 100;
         this.totalScore = 0;
         this.score = 0;
+        this.size = 11;
     }
 
     addScore(points) {
