@@ -1,6 +1,7 @@
 import React from "react";
 // import logo from "./logo.svg";
-import "./App.css";
+// import './App.css'
+import './stylesheets/player_form.css';
 import SocketTest from "./components/sockettest";
 import GameContainer from "./components/game_container";
 import PlayerContainer from './components/player_container';

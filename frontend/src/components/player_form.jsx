@@ -27,6 +27,7 @@ class PlayerForm extends React.Component {
         return(
             <div className='player-form-parent'>
                 <form className='player-form'>
+                    <h1 className='player-header'>StarfighterPvP</h1>
                     <label className='name-label'>Name
                         <input className='player-input' type="text" value={this.state.tag} onChange={this.updateType("tag")} />
                     </label>
