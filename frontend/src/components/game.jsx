@@ -10,26 +10,23 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			socket: null,
-			hazards: this.props.hazards,
-			input: {
-				w: false,
-				s: false,
-				a: false,
-				d: false
-			}
+		this.state = {};
+		this.input = {
+			w: false,
+			s: false,
+			a: false,
+			d: false
 		};
-		this.state = this.props;
+		this.hazards = this.props.hazards;
+		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 	}
 
 	openSocket = () => {
-		let socket = io(socketURL);
-		this.setState({ socket });
-
+		this.socket = io(socketURL);
+		let socket = this.socket;
 		// !Socket Tests
 		socket.on("connect", () => {
 			console.log("Ayyy! Websockets!");
@@ -41,14 +38,13 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-			let hazards = this.state.hazards;
+			let hazards = this.props.players;
 			// this.setState({ hazards: hazards });
 			const canvas = this.canvasRef.current;
 			const ctx = canvas.getContext("2d");
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			// this.state.hazards
 			let newHazArr = [];
-			if (this.props !== {} && this.state.hazards !== {}) {
+			if (this.props !== {} && this.props.players !== {}) {
 				// this.state.players.forEach((player) => player.draw(ctx))
 				for (let i = 0; i < data.length; i++) {
 					let newHazard = hazards[0];
@@ -56,18 +52,18 @@ class Canvas extends React.Component {
 					newHazArr.push(newHazard);
 					newHazard.draw(ctx);
 				}
-				this.setState({ hazards: newHazArr });
+				this.hazards = newHazArr;
 
 				// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
 			}
+			// ctx.clearRect(0, 0, canvas.width, canvas.height);
 		});
 	};
 
 	_handleKey(event, down) {
-		let input = this.state.input;
-		let socket = this.state.socket;
+		let input = this.input;
+		let socket = this.socket;
 		console.log(event.keyCode);
-
 		switch (event.keyCode) {
 			case 87:
 				if (input.w != down) {
@@ -103,7 +99,7 @@ class Canvas extends React.Component {
 			default:
 				break;
 		}
-		this.setState({ input: input });
+		this.input = input;
 		// debugger;
 	}
 
@@ -121,7 +117,7 @@ class Canvas extends React.Component {
 		ctx.rect(0, 0, canvas.width, canvas.height);
 		ctx.fillStyle = "black";
 		ctx.fill();
-		// ctx.fillRect(0, 0, canvas.width, canvas.height);
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.lineWidth = 5;
 		ctx.strokeStyle = "#00FF00";
 		ctx.stroke();

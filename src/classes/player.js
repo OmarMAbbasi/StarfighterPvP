@@ -77,6 +77,22 @@ class Player extends MovingObject {
 		// check if offscreen
 		this.screenWrap();
 	}
+
+	rotate(deltaTime) {
+		let dir = 0;
+
+		// check inputs for rotate direction
+		if (this.inputs.A && this.inputs.D) {
+			dir = 0;
+		} else if (this.inputs.A) {
+			dir = -1;
+		} else if (this.inputs.D) {
+			dir = 1;
+		}
+
+		this.rotateVector([this.dir.x, this.dir.y], ROTATE_SPEED * deltaTime);
+	}
+
 	rotateVector(vec, ang) {
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);

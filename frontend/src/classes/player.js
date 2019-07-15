@@ -69,6 +69,21 @@ class Player extends MovingObject {
 		}
 	}
 
+	rotate(deltaTime) {
+		let dir = 0;
+
+		// check inputs for rotate direction
+		if (this.inputs.A && this.inputs.D) {
+			dir = 0;
+		} else if (this.inputs.A) {
+			dir = -1;
+		} else if (this.inputs.D) {
+			dir = 1;
+		}
+
+		this.rotateVector([this.dir.x, this.dir.y], ROTATE_SPEED * deltaTime);
+	}
+
 	move(deltaTime) {
 		// rotate player
 		this.rotate(deltaTime);

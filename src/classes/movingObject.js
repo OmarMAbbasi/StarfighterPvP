@@ -38,14 +38,6 @@ class MovingObject {
 		}
 	}
 
-	draw(ctx) {
-		ctx.fillStyle = "#00FF00";
-
-		ctx.beginPath();
-		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		ctx.fill();
-	}
-
 	randomPosition(radius) {
 		let x, y;
 

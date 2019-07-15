@@ -1,11 +1,5 @@
 const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
-const Hazard1 = require("../style/images/asteroid1.png");
-const Hazard2 = require("../style/images/asteroid2.png");
-const HAZARDS = [Hazard1, Hazard2];
-
-// const HAZARD1_RADIUS = 10;
-// const HAZARD2_RADIUS = 12;
 
 class Hazard extends MovingObject {
 	constructor(pos, radius, points = 100) {
