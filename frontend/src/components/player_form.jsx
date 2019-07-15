@@ -26,30 +26,6 @@ class PlayerForm extends React.Component {
                 let xPos2 = 1500;
                 let yPos2 = 800;
                 img2.onload = () => {
-<<<<<<< HEAD
-                        setInterval(() => {
-                            ctx.save();
-                            ctx.clearRect(0, 0, 1600, 900);
-                            ctx.fillRect(0, 0, 1600, 900);
-                            xPos += 12;
-                            xPos2 -= 12;
-                            ctx.drawImage(img, xPos, yPos, 80, 61);
-                            ctx.drawImage(img2, xPos2, yPos2, 80, 61);
-                            
-                            ctx.restore();
-                            if (xPos > 1600 || yPos > 900) {
-                                xPos = 0;
-                                yPos = 210;
-                            };
-
-                            if (xPos2 < 0) {
-                                xPos2 = 1500;
-                            }
-
-                            if (yPos2 < 0) {
-                                yPos2 = 800;
-                            }
-=======
                 setInterval(() => {
                     ctx.save();
                     ctx.clearRect(0, 0, 1600, 900);
@@ -72,7 +48,6 @@ class PlayerForm extends React.Component {
                     if (yPos2 < 0) {
                         yPos2 = 800;
                     }
->>>>>>> ConnecSockets
 
                         }, 100 / 3)
             };
