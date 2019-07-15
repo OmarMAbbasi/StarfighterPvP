@@ -1,5 +1,4 @@
 const MovingObject = require("./movingObject");
-const redShip = require("../style/images/redshipfire.png");
 const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
@@ -84,30 +83,6 @@ class Player extends MovingObject {
 		var sin = Math.sin(ang);
 		this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
 		this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
-	}
-
-	draw(ctx) {
-		// ctx.fillStyle = "#00FF00";
-		// ctx.beginPath();
-		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		// ctx.fill();
-		// ctx.closePath();
-		let img = new Image();
-		let rotateDir;
-		if (this.dir.x === 0) {
-			rotateDir = this.dir.y * (-Math.PI / 2);
-		} else {
-			rotateDir = Math.atan(this.dir.y / this.dir.x);
-		}
-		img.onload = () => {
-			ctx.save();
-			ctx.translate(this.pos.x, this.pos.y);
-			ctx.rotate(rotateDir);
-			ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
-			ctx.restore();
-		};
-		img.src = redShip;
 	}
 }
 

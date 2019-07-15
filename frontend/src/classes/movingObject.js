@@ -1,5 +1,6 @@
-const Util = require("../utils/game_util");
-const { WIDTH, HEIGHT } = require("./constants");
+import Util from "../utils/game_util";
+
+import { WIDTH, HEIGHT } from "./constants";
 
 class MovingObject {
 	constructor(pos, vel, radius) {
@@ -90,4 +91,4 @@ class MovingObject {
 	}
 }
 
-module.exports = MovingObject;
+export default MovingObject;

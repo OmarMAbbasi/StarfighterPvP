@@ -1,4 +1,4 @@
-const io = require("../../app").io;
+const io = require("../app").io;
 const Game = require("./classes/game");
 const MovObj = require("./classes/movingObject");
 

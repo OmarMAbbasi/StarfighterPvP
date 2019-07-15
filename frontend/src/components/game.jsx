@@ -1,5 +1,5 @@
 import React from "react";
-// import MovingObject from "../classes/movingObject";
+import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 
 let socketURL = "http://localhost:5000";
@@ -117,23 +117,23 @@ class Canvas extends React.Component {
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        ctx.rect(0, 0, canvas.width, canvas.height)
-        ctx.fillStyle = 'black';
-        ctx.fill();
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = '#00FF00';
-        ctx.stroke();
-        // ctx.fillStyle = "#00FF00";
-        // ctx.beginPath();
-        // ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
-        // ctx.fill();
-        // ctx.closePath();
+		const ctx = canvas.getContext("2d");
+		ctx.rect(0, 0, canvas.width, canvas.height);
+		ctx.fillStyle = "black";
+		ctx.fill();
+		// ctx.fillRect(0, 0, canvas.width, canvas.height);
+		ctx.lineWidth = 5;
+		ctx.strokeStyle = "#00FF00";
+		ctx.stroke();
+		// ctx.fillStyle = "#00FF00";
+		// ctx.beginPath();
+		// ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
+		// ctx.fill();
+		// ctx.closePath();
 		if (this.props !== {}) {
-			this.props.hazards.forEach((hazard) => hazard.draw(ctx))
+			this.props.hazards.forEach(hazard => hazard.draw(ctx));
 			this.props.players.forEach(player => player.draw(ctx, canvas));
-			this.props.bullets.forEach((bullet) => bullet.draw(ctx))
+			this.props.bullets.forEach(bullet => bullet.draw(ctx));
 		}
 		document.addEventListener("keydown", event => {
 			this._handleKey(event, true);
@@ -146,7 +146,7 @@ class Canvas extends React.Component {
 	render() {
 		if (!this.props) {
 			return null;
-        }
+		}
 		return (
 			<div>
 				<h3>Timer: {this.props.timeLeft}</h3>
