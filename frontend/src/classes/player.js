@@ -78,7 +78,7 @@ class Player extends MovingObject {
     this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
   }
 
-  draw(ctx, canvas) {
+  draw(ctx) {
       // ctx.fillStyle = "#00FF00";
       // ctx.beginPath();
       // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
@@ -98,6 +98,7 @@ class Player extends MovingObject {
           ctx.translate(-this.pos.x, -this.pos.y);
           ctx.drawImage(img, this.pos.x-17, this.pos.y-17, 35, 35);
           ctx.restore();
+          
       };
       img.src = redShip;
   }
