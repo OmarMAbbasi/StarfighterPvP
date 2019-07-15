@@ -52,13 +52,13 @@ class MovingObject {
       x = Math.floor(Math.random() * WIDTH);
     }
 
-    return [x, y];
+    return {x, y};
   }
 
   randomVelocity(min, max) {
     const x = Math.floor(Math.random() * (max - min) + min) * this.randomDirection();
     const y = Math.floor(Math.random() * (max - min) + min) * this.randomDirection();
-    return [x, y];
+    return {x, y};
   }
 
   randomDirection() {

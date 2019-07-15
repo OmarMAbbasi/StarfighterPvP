@@ -4,7 +4,7 @@ const PLAYER_RADIUS = 25;
 
 class Player extends MovingObject {
     constructor(pos, id) {
-        super(pos, [0,0], PLAYER_RADIUS);
+        super(pos, {x: 0, y: 0}, PLAYER_RADIUS);
         this.id = id;
         this.health = 100;
         this.totalScore = 0;

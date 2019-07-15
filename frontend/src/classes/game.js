@@ -17,7 +17,7 @@ class Game {
     this.hostId = hostId;
 
     // create players array with host player
-    this.players = [new Player([0, 0], hostId)];
+    this.players = [new Player({x: 0, y: 0}, hostId)];
 
     // create hazards array and populate with initial hazards
     this.hazards = [];
