@@ -87,6 +87,11 @@ class MovingObject {
     randomRadius(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     }
+
+    randomRotation() {
+        let rads = Math.random() * Math.PI * 2;
+        return {x: Math.cos(rads), y: Math.sin(rads)};
+    }
 }
 
 module.exports = MovingObject;
