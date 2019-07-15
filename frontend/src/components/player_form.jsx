@@ -64,10 +64,14 @@ class PlayerForm extends React.Component {
             <div className='player-form-parent'>
                 <canvas ref={this.canvasRef} id="my-canvas" width='1600' height='900' ></canvas>
 
+                <audio autoPlay loop>
+                    <source src="../style/sounds/InterplanetaryOdyssey.ogg"/>
+                </audio>
+
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
-                    
+                     
                     <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
                     
@@ -76,7 +80,8 @@ class PlayerForm extends React.Component {
                 <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
                 <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
                 <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
-                </div>
+
+            </div>
         );
     }
 
