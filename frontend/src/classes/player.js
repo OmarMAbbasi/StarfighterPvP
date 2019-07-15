@@ -54,11 +54,6 @@ class Player extends MovingObject {
 		}
 	}
 
-	addScore(points) {
-		this.score += points;
-		this.totalScore += points;
-	}
-
 	takeDamage(damage) {
 		this.health -= damage;
 	}
@@ -77,8 +72,12 @@ class Player extends MovingObject {
 	move(deltaTime) {
 		// rotate player
 		this.rotate(deltaTime);
-    }
-    
+		this.pos.x += this.dir.x * this.speed * deltaTime;
+		this.pos.y += this.dir.y * this.speed * deltaTime;
+
+		// check if offscreen
+		this.screenWrap();
+	}
 	rotateVector(vec, ang) {
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
