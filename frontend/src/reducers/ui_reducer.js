@@ -1,18 +1,8 @@
-import { UPDATE_GAME } from '../actions/ui';
+import { combineReducers } from 'redux';
+import gameReducer from './game_reducer';
+import modalReducer from './modal_reducer';
 
-const defaultGame = Object.freeze({
-    timeLeft: 120,
-    roundsLeft: 5
+export default combineReducers({
+    game: gameReducer,
+    modal: modalReducer
 });
-
-const uIReducer = (state = defaultGame, action) => {
-    switch (action.type) {
-        case UPDATE_GAME:
-            const newState = { [action.game]: action.value }
-            return Object.assign({}, state, newState)
-        default:
-            return state;
-    };
-};
- 
-export default uIReducer;
