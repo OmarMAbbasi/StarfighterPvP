@@ -5,17 +5,26 @@ import Modal from './modal';
 class PlayerForm extends React.Component {
     constructor(props) {
         super(props);
-        this.handleCreateRoom = this.handleCreateRoom.bind(this)
+        this.handleCreateRoom = this.handleCreateRoom.bind(this);
+    }
+
+    componentDidMount() {
+        let canvas = document.getElementById("my-canvas");
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, 1600, 900);
     }
 
     handleCreateRoom(e) {
         e.preventDefault();
         this.props.history.push("/game")
     };
-
+    
     render() {
         return (
             <div className='player-form-parent'>
+                <canvas id='my-canvas'></canvas>
+
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
@@ -27,16 +36,15 @@ class PlayerForm extends React.Component {
                     
                     <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
-
+                    
                 </form>
                 }
                 <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
                 <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
                 <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
-                <img className='blue-ship' src={require('../style/images/fireshipURL.png')} alt="blueShip" width='250' height='191' />
+                <img id='blue-ship' src={require('../style/images/blueship.png')} onMouseOver={this.animateScript} alt="blueShip" width='250' height='191' />
                 <img className='blue-blast1' src={require('../style/images/blueblast.png')} alt="blueblast1" width='200' height='131' />
                 <img className='blue-blast2' src={require('../style/images/blueblast.png')} alt="blueblast2" width='200' height='131' />
- 
                 </div>
         );
     }
