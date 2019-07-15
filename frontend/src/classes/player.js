@@ -1,5 +1,6 @@
 const MovingObject = require('./movingObject');
-const redShip = require('../style/images/redshipfire.png')
+const redShip = require('../style/images/redshipfire.png');
+const Bullet = require('./bullet');
 
 const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 30;
@@ -19,6 +20,16 @@ class Player extends MovingObject {
 
     // testing
     this.inputs.A = true;
+  }
+
+  collideWith(obj) {
+    if (this.isCollidedWith(obj)) {
+      if (obj instanceof Player || obj instanceof Hazard) {
+        this.takeDamage(100);
+        obj.takeDamage(100);
+      } else if (obj instanceof Bullet) {
+        this.takeDamage(obj.damage);
+      }
   }
 
   addScore(points) {

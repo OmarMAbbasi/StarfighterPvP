@@ -8,13 +8,15 @@ class Bullet extends MovingObject {
         this.damage = damage;
     }
 
+    
+
     draw(ctx) {
-        // to see hitcircle
-        ctx.fillStyle = "#00FF00";
-        ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-        ctx.fill();
-        ctx.closePath();
+        // to see hit circle
+        // ctx.fillStyle = "#00FF00";
+        // ctx.beginPath();
+        // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
+        // ctx.fill();
+        // ctx.closePath();
         //
         
         let img = new Image();

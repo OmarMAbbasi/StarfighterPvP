@@ -8,7 +8,7 @@ class MovingObject {
     this.pos = (pos) ? pos : this.randomPosition(this.radius);
   }
 
-  checkCollision(other) {
+  isCollidedWith(other) {
     const ctrPointDist = Util.dist(this.pos, other.pos);
     return ctrPointDist < (this.radius + other.radius);
   }
