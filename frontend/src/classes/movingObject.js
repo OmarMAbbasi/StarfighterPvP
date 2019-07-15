@@ -35,4 +35,6 @@ class MovingObject {
 	}
 }
 
-module.exports = MovingObject;
+// module.exports = MovingObject;
+
+export default MovingObject
