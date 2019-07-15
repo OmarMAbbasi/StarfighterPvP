@@ -37,8 +37,14 @@ class Canvas extends React.Component {
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
-		const ctx = canvas.getContext("2d");
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const ctx = canvas.getContext("2d");
+        ctx.rect(0, 0, canvas.width, canvas.height)
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#00FF00';
+        ctx.stroke();
 		if (this.props !== {}) {
 			// this.state.players.forEach((player) => player.draw(ctx))
 			this.props.hazards.forEach(hazard => hazard.draw(ctx));
