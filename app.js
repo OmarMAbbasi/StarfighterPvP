@@ -48,3 +48,5 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 	});
 }
+
+console.log('achange')
