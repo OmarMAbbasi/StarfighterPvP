@@ -1,7 +1,6 @@
 .player-form-parent {
     font-family: 'Press Start 2P', cursive;
-    height: 900px;
-    width: 1600px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     vertical-align: middle;
@@ -173,8 +172,7 @@
 
 #my-canvas {
     font-family: 'Press Start 2P', cursive;
-    height: 900px;
-    width: 1600px;
+    height: 100vh;
     position: fixed;
     border: 2px solid #069304;
     display: flex;

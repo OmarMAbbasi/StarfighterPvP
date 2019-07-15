@@ -29,19 +29,8 @@ class PlayerForm extends React.Component {
                     ctx.clearRect(0, 0, 1600, 900);
                     ctx.fillRect(0, 0, 1600, 900);
                     xPos += 10;
-                    // yPos += 10;
                     xPos2 -= 10;
-                    // yPos2 -= 10;
-                    // ctx.translate(xPos, yPos);
-                    // ctx.rotate(45*Math.PI / 180);
-                    // ctx.translate(-xPos, -yPos);
                     ctx.drawImage(img, xPos, yPos, 80, 61);
-
-                    // ctx.rotate((-45 * Math.PI) / 180);
-
-                    // ctx.translate(xPos2, yPos2);
-                    // ctx.rotate(225*Math.PI / 180);
-                    // ctx.translate(-xPos2, -yPos2);
                     ctx.drawImage(img2, xPos2, yPos2, 80, 61);
                     
                     ctx.restore();
@@ -65,8 +54,6 @@ class PlayerForm extends React.Component {
         img.src = redShip;
     }
 
-
-
     handleCreateRoom(e) {
         e.preventDefault();
         this.props.history.push("/game")
@@ -80,8 +67,6 @@ class PlayerForm extends React.Component {
                 { this.props.modal ? <Modal /> :      
                 <form className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
-                    <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />  
-                    <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />  
                     
                     <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
