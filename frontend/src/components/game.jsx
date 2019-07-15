@@ -11,13 +11,15 @@ class Canvas extends React.Component {
 			socket: null
 		};
 		// this.state = this.props;
-
+		this.openSocket = this.openSocket.bind(this);
 		this.canvasRef = React.createRef();
 	}
 
 	openSocket = () => {
 		const socket = io(socketURL);
 		this.setState({ socket: { socket } });
+
+		//!Socket Tests
 		socket.on("connect", () => {
 			console.log("Ayyy! Websockets!");
 		});
@@ -25,6 +27,8 @@ class Canvas extends React.Component {
 		socket.emit("c2s", {
 			event: "Client Talks to Server"
 		});
+
+		socket.on("s2c", data => console.log(data.event));
 	};
 
 	componentWillMount() {
@@ -39,8 +43,7 @@ class Canvas extends React.Component {
 			// this.state.players.forEach((player) => player.draw(ctx))
 			this.props.hazards.forEach(hazard => hazard.draw(ctx));
 			// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
-        }
-        
+		}
 	}
 
 	render() {
