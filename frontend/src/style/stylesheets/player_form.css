@@ -56,7 +56,7 @@
     left: 450px;
 }
 
-.player-form input {
+.room-input {
     min-height: 36px;
     min-width: 355px;
     font-family: 'Press Start 2P', cursive;
@@ -65,12 +65,12 @@
     outline: none;
     border: 3px solid #3500fa;
     background: #000000;
-    font-size: 22px;
+    font-size: 24px;
     border-radius: 5px;
     display: flex;
     line-height: normal;
     padding: 5px 10px;
-    margin-top: 250px;
+    margin-top: 50px;
 }
 
 ::placeholder {
@@ -81,10 +81,29 @@
     display: none;
 }
 
+.room-btn {
+    min-height: 36px;
+    min-width: 355px;
+    background: none;
+    font-size: 36px;
+    color: #3500fa;
+    outline: none;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    padding: 30px 50px;
+    position: relative;
+    display: flex;
+}
+
+.room-btn:hover {
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .blue-ship {
     position: absolute;
-    top: 480px;
-    right: 180px;
+    top: 500px;
+    right: 120px;
     -webkit-transform: rotate(200deg);
     -moz-transform: rotate(200deg);
     -o-transform: rotate(200deg);
@@ -100,32 +119,32 @@
 
 .star2 {
     position: absolute;
-    right: 130px;
+    right: 170px;
     top: 260px;
 }
 
 .star3 {
     position: absolute;
     left: 250px;
-    bottom: 160px;
+    bottom: 100px;
 }
 
 .ast-1 {
     position: absolute;
-    top: 300px;
-    right: 500px;
+    top: 400px;
+    right: 300px;
 }
 
 .ast-2 {
     position: absolute;
     left: 540px;
-    top: 380px;
+    top: 540px;
 }
 
 .blue-blast1 {
     position: absolute;
-    top: 370px;
-    right: 420px;
+    top: 400px;
+    right: 200px;
     -webkit-transform: rotate(290deg);
     -moz-transform: rotate(290deg);
     -o-transform: rotate(290deg);
@@ -135,8 +154,8 @@
 
 .blue-blast2 {
     position: absolute;
-    top: 500px;
-    right: 420px;
+    top: 520px;
+    right: 300px;
     -webkit-transform: rotate(290deg);
     -moz-transform: rotate(290deg);
     -o-transform: rotate(290deg);
