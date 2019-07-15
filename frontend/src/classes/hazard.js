@@ -11,47 +11,25 @@ class Hazard extends MovingObject {
     constructor(pos, radius, points = 100) {
         super(pos, { x: 0, y: 0 }, radius)
         this.points = points;
-        this.health = 100;
+        this.dir = this.randomRotation();
+        this.rotateSpeed = Math.random() * 60 + 30;
     }
 
-    collideWith(obj) {
-        if (this.isCollidedWith(obj)) {
-            if (obj instanceof Bullet) {
-                this.takeDamage(obj.damage);
-            }
-        }
+    move(deltaTime) {
+        super.move(deltaTime);
+        this.rotate(deltaTime);
+        console.log(this.dir);
     }
 
-    takeDamage(damage) {
-        this.health -= damage;
-    }
+    rotate(deltaTime) {
+        let ang = -this.rotateSpeed * (Math.PI / 180) * deltaTime;
+        let vec = [this.dir.x, this.dir.y];
 
-    draw(ctx) {
-        // to see hitcircle
-        // ctx.fillStyle = "#00FF00";
-        // ctx.beginPath();
-        // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-        // ctx.fill();
-        // ctx.closePath();
-        //
-        
-        let img = new Image();
-        // let rotateDir;
-        // if (this.dir.x === 0) {
-        //     rotateDir = (this.dir.y * (-Math.PI / 2))
-        // } else {
-        //     rotateDir = Math.atan(this.dir.y / this.dir.x);
-        // }
-        img.onload = () => {
-            // ctx.save();
-            // ctx.translate(this.pos.x, this.pos.y);
-            // ctx.rotate(rotateDir);
-            // ctx.translate(-this.pos.x, -this.pos.y);
-            ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
-            // ctx.restore();
+        var cos = Math.cos(ang);
+        var sin = Math.sin(ang);
 
-        };
-        img.src = Hazard1;
+        this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
+        this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
     }
 }
 
