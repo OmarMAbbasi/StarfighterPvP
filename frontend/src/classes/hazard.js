@@ -22,6 +22,10 @@ class Hazard extends MovingObject {
         }
     }
 
+    takeDamage(damage) {
+        this.health -= damage;
+    }
+
     draw(ctx) {
         // to see hitcircle
         // ctx.fillStyle = "#00FF00";
