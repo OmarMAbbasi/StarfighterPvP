@@ -6,6 +6,12 @@ const FPS = 5;
 const HAZARD_COUNT = 1;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
+const START_LOCS = [
+    { pos: {x: 200, y: 200}, dir: { x: 1, y: 0 } },
+    { pos: {x: 1400, y: 700}, dir: { x: -1, y: 0 } },
+    { pos: {x: 200, y: 700}, dir: { x: 1, y: 0 } },
+    { pos: {x: 1400, y: 200}, dir: { x: -1, y: 0 } },
+]
 
 class Game {
     constructor(hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
@@ -17,13 +23,15 @@ class Game {
         this.hostId = hostId;
 
         // create players array with host player
-        this.players = [new Player({ x: 0, y: 0 }, hostId, { x: 1, y: 1 })];
+        this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
 
         // create hazards array
         this.hazards = [];
 
         // create empty bullets array
         this.bullets = [];
+
+        this.playerSockets = [];
     }
 
     async startGame() {
@@ -50,10 +58,20 @@ class Game {
     }
 
     update() {
+        // calculate time since last update
         const deltaTime = (Date.now() - this.lastUpdate) / 1000;
+        // decrease time remaining in round
         this.timer -= deltaTime;
+        
         let allObjects = this.allObjects();
+
+        // move all objects
         allObjects.forEach(hazard => hazard.move(deltaTime));
+
+        // update clients with new positions
+        this.playerSockets.forEach(socket => {
+            // emit game state to client
+        });
     }
 
     selectPowerups() {
@@ -62,6 +80,12 @@ class Game {
 
     gameOver() {
 
+    }
+
+    addPlayer(playerId, socket) {
+        let playerParams = START_LOCS[this.players.length]
+        this.players.push(new Player(playerParams.pos, playerId, playerParams.dir));
+        this.playerSockets.push(socket);
     }
 
     populateHazards() {
