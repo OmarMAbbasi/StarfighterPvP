@@ -61,9 +61,6 @@ class Canvas extends React.Component {
 		if (!this.props) {
 			return null;
         }
-        if (this.props.players[0].checkCollision(this.props.players[1])) {
-            console.log('colided');
-        }
 		return (
 			<div>
 				<h3>Timer: {this.props.timeLeft}</h3>
