@@ -52,7 +52,7 @@ Within entities, players, hazards, and bullets are stored in arrays, allowing fo
 ## Technologies and Technological Challenges
 We used many technologies to construct this game, the full MERN Stack. On the backend, we use MongoDB to store player tags and scores and Node.js to develop it. Routing was accomplished using Express.js. API calls were made using Axios, allowing for interaction between our frontend and backend database. State was managed through Redux, and the frontend was created using a combination of React and Canvas. We added multiplayer functionality using web sockets with Socket.io.
 
-Technological Challenges:
+## Technological Challenges:
 * Allowing for simultaneous multiplayer games using Socket.io.
 * Creating powerups that can affect players and game rules separately and function for single rounds
 * Using Canvas to draw and create an immersive, interactive, and engaging game experience
