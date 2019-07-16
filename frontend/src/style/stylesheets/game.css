@@ -1,11 +1,31 @@
-#background-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+.gameboard-parent {
+    font-family: 'Press Start 2P', cursive;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    background: black;
+    /* vertical-align: middle; */
 }
 
-#animation-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+.board-container {
+    width: 1600;
+    height: 900;
+    margin: 0 auto;
+    position: relative;
+    border: 2px solid #069304;
+    margin-bottom: 70px;
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+}
+
+.board-header h3 {
+    color: #3500fa;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
 }
