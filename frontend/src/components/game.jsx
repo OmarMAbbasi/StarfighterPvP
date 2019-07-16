@@ -2,6 +2,7 @@ import React from "react";
 import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 import Player from "../classes/player";
+import Hazard from "../classes/hazard";
 
 let socketURL = "http://localhost:5000";
 
@@ -11,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { time: 0, round: 5 };
 		this.input = {
 			w: false,
 			s: false,
@@ -20,7 +21,7 @@ class Canvas extends React.Component {
 		};
 		
 		this.players = [];
-		this.hazards = this.props.hazards;
+		this.hazards = [];
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 		this._handleKey = this._handleKey.bind(this);
@@ -42,14 +43,21 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
+			this.setState({ time: Math.ceil(data.timer), round: data.rounds })
             console.log(data);
 			this.players = [];
-            let players = data.players;
-			console.log(players);
+			let players = data.players;
             players.forEach(player => {
 				let p = new Player({ x: 0, y: 0 }, 1, { x: 0, y: 0 });
 				p = Object.assign(p, player);
                 this.players.push(p);
+			});
+			this.hazards = [];
+			let hazards = data.hazards;
+			hazards.forEach(hazard => {
+				let h = new Hazard();
+				h = Object.assign(h, hazard);
+				this.hazards.push(h);
 			});
 		});
 	};
@@ -63,8 +71,10 @@ class Canvas extends React.Component {
 		can1Ctx.rect(0, 0, 1600, 900);
 		can1Ctx.fillStyle = "black";
 		can1Ctx.fill();
-		this.players.forEach(player => {
-			player.draw(can1Ctx, can1)
+		let objects = this.players.concat(this.hazards);
+		debugger
+		objects.forEach(object => {
+			object.draw(can1Ctx, can1)
 		})
 		can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
@@ -143,21 +153,21 @@ class Canvas extends React.Component {
 		}
 		return (
 			<div>
-				<h3>Timer: {this.props.timeLeft}</h3>
-				<h3>Rounds Left: {this.props.roundsLeft}</h3>
+				<h3>Timer: {this.state.time}</h3>
+				<h3>Rounds Left: {this.state.round}</h3>
                 <canvas 
                     id='can1' 
                     // ref={this.canvasRef} 
                     width='1600' 
                     height='900'
-                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    style={{ position: 'absolute', top: 100, left: 0 }}
                 />
                 <canvas 
                     id='can2'
                     // ref={this.canvasRef} 
                     width='1600' 
                     height='900' 
-                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    style={{ position: 'absolute', top: 100, left: 0 }}
                 />
 			</div>
 		);

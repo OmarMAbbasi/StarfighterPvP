@@ -23,6 +23,7 @@ class Player extends MovingObject {
 
     collideWith(obj) {
         if (this.isCollidedWith(obj)) {
+			console.log("im hit");
             if (obj instanceof Player || obj instanceof Hazard) {
                 this.takeDamage(100);
                 obj.takeDamage(100);
@@ -38,8 +39,16 @@ class Player extends MovingObject {
     }
 
     takeDamage(damage) {
-        this.health -= damage;
-    }
+		this.health -= damage;
+		if (this.health <= 0) {
+			this.respawn();
+		}
+	}
+	
+	respawn() {
+		this.health = 100;
+		this.pos = {x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200};
+	}
 
     shoot() {
         let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };

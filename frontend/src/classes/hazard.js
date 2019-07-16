@@ -1,8 +1,8 @@
 import MovingObject from "./movingObject";
 import Bullet from "./bullet";
-import Hazard1 from "../style/images/asteroid1.png";
-import Hazard2 from "../style/images/asteroid2.png";
-const HAZARDS = [Hazard1, Hazard2];
+import hazard1 from "../style/images/asteroid1.png";
+import hazard2 from "../style/images/asteroid2.png";
+const HAZARDS = [hazard1, hazard2];
 
 // const HAZARD1_RADIUS = 10;
 // const HAZARD2_RADIUS = 12;
@@ -29,6 +29,21 @@ class Hazard extends MovingObject {
 
 		this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
 		this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
+	}
+
+	draw(ctx) {
+		let img = new Image();
+		let rotateDir = Math.atan(this.dir.y / this.dir.x);
+		if (this.dir.x < 0) {
+			rotateDir = rotateDir + Math.PI;
+		}
+		img.src = hazard1;
+		ctx.save();
+		ctx.translate(this.pos.x, this.pos.y);
+		ctx.rotate(rotateDir);
+		ctx.translate(-this.pos.x, -this.pos.y);
+		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.restore();
 	}
 }
 

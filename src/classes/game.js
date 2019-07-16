@@ -3,7 +3,7 @@ const Hazard = require("./hazard");
 const Constants = require("./constants");
 
 const FPS = 60;
-const HAZARD_COUNT = 1;
+const HAZARD_COUNT = 20;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
@@ -77,6 +77,13 @@ class Game {
 		// move all objects
 		allObjects.forEach(obj => obj.move(deltaTime));
 
+		// check collisions
+		Object.values(this.players).forEach(player => {
+			this.hazards.concat(this.bullets).forEach(obj2 => {
+				player.collideWith(obj2)
+			})
+		})
+
 		// update clients with new positions
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
@@ -124,6 +131,7 @@ class Game {
 			const hazard = new Hazard();
 			this.hazards.push(hazard);
 		}
+		console.log(this.hazards.length);
 	}
 
 	initRound() {
