@@ -82,7 +82,7 @@ class Canvas extends React.Component {
 		objects.forEach(object => {
 			object.draw(can1Ctx, can1)
 		})
-		can2Ctx.drawImage(can1, 0, 0);
+		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
 	}
 
@@ -197,26 +197,27 @@ class Canvas extends React.Component {
 		})
 
 		return (
-			<div>
-				<h3>Timer: {this.state.time}</h3>
-				<h3>Rounds Left: {this.state.round}</h3>
-					<ul className='player-side-bar-thing'>
-						<h1>Players</h1>
-						{playerList()} 
-					</ul>
-                <canvas 
-                    id='can1' 
-                    // ref={this.canvasRef} 
-                    width='1600' 
-                    height='900'
-                />
-                <canvas 
-                    id='can2'
-                    // ref={this.canvasRef} 
-                    width='1600' 
-                    height='900' 
-                />
-
+			<div className='gameboard-parent'>
+				<div className='board-header'>
+					<h3>Timer:{this.state.time}</h3>
+					<h3>Rounds Left:{this.state.round}</h3>
+				</div>
+				<div className='board-container'>
+					<canvas 
+						id='can1' 
+						// ref={this.canvasRef} 
+						width='1300' 
+						height='750'
+						// style={{ position: 'absolute', top: 0 }}
+					/>
+					<canvas 
+						id='can2'
+						// ref={this.canvasRef} 
+						width='1300' 
+						height='750' 
+						style={{ position: 'absolute', top: 0 }}
+					/>
+				</div>
 			</div>
 		);
 	}
