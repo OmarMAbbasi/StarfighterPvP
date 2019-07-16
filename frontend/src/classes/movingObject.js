@@ -34,7 +34,6 @@ class MovingObject {
 
 		if (this.pos.y > HEIGHT + this.radius) {
 			this.pos.y = -this.radius;
-		} else if (this.pos.y < -this.radius) {
 			this.pos.y = HEIGHT + this.radius;
 		}
 	}
@@ -50,7 +49,7 @@ class MovingObject {
 	randomPosition(radius) {
 		let x, y;
 
-		if (this.randomDirection === 1) {
+		if (this.randomDirection == 1) {
 			if (this.vel.x > 0) {
 				x = -radius;
 			} else {

@@ -1,7 +1,6 @@
 .player-form-parent {
     font-family: 'Press Start 2P', cursive;
-    height: 900px;
-    width: 1600px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     vertical-align: middle;
@@ -93,7 +92,7 @@
     min-height: 36px;
     min-width: 355px;
     background: none;
-    font-size: 36px;
+    font-size: 46px;
     color: #3500fa;
     outline: none;
     border: none;
@@ -101,6 +100,11 @@
     padding: 30px 50px;
     position: relative;
     display: flex;
+   
+}
+
+.btns {
+    margin-top: 300px;
 }
 
 .room-btn:hover {
@@ -119,23 +123,26 @@
     transform: rotate(200deg);
 }
 
+/* 
 .star1 {
-    position: absolute;
-    left: 100px;
-    top: 340px;
+    display: flex;
+    position: relative;
+    float: left;
 }
 
+
 .star2 {
-    position: absolute;
-    right: 170px;
-    top: 280px;
+    display: flex;
+    position: relative;
+    justify-content: center;
 }
 
 .star3 {
-    position: absolute;
-    left: 250px;
-    bottom: 100px;
-}
+    position: relative;
+    top: 500px;
+    right: 500px;
+
+}  */
 
 .ast-1 {
     position: absolute;
@@ -173,11 +180,31 @@
 
 #my-canvas {
     font-family: 'Press Start 2P', cursive;
-    height: 900px;
-    width: 1600px;
+    height: 100vh;
     position: fixed;
     border: 2px solid #069304;
     display: flex;
     justify-content: center;
     vertical-align: middle;
+}
+
+audio { 
+  visibility: hidden;
+}
+
+.round-over {
+    font-size: 36px;
+    color: #3500fa;
+}
+
+.round-over {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 36px;
+    color: #3500fa;
+}
+
+.player-score {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 28px;
+    color: #3500fa;
 }
