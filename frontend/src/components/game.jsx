@@ -43,9 +43,12 @@ class Canvas extends React.Component {
             let players = data.players;
             console.log(players);
 			const canvas = this.canvasRef.current;
-			const ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext("2d");
+            // ctx.rect(0, 0, canvas.width, canvas.height);
+            // ctx.fillStyle = "black";
+            // ctx.fill();
 			players.forEach(player => {
-                new Player(player.pos, player.id, player.dir).draw(ctx);
+                new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
             });
 		});
 	};
@@ -56,7 +59,7 @@ class Canvas extends React.Component {
 		console.log(event.keyCode);
 		switch (event.keyCode) {
 			case 87:
-				if (input.w != down) {
+				if (input.w !== down) {
 					input.w = down;
 					socket.emit("playerInput", input);
 					console.log(input);
@@ -64,7 +67,7 @@ class Canvas extends React.Component {
 
 				break;
 			case 83:
-				if (input.s != down) {
+				if (input.s !== down) {
 					input.s = down;
 					socket.emit("playerInput", input);
 					console.log(input);
@@ -72,14 +75,14 @@ class Canvas extends React.Component {
 
 				break;
 			case 65:
-				if (input.a != down) {
+				if (input.a !== down) {
 					input.a = down;
 					socket.emit("playerInput", input);
 					console.log(input);
 				}
 				break;
 			case 68:
-				if (input.d != down) {
+				if (input.d !== down) {
 					input.d = down;
 					socket.emit("playerInput", input);
 					console.log(input);
@@ -100,6 +103,7 @@ class Canvas extends React.Component {
 	componentWillMount() {
 		this.openSocket();
 	}
+	Di;
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
@@ -116,11 +120,11 @@ class Canvas extends React.Component {
 		// ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
 		// ctx.fill();
 		// ctx.closePath();
-		if (this.props !== {}) {
-			this.props.hazards.forEach(hazard => hazard.draw(ctx));
-			this.props.players.forEach(player => player.draw(ctx, canvas));
-			this.props.bullets.forEach(bullet => bullet.draw(ctx));
-		}
+		// if (this.props !== {}) {
+		// 	this.props.hazards.forEach(hazard => hazard.draw(ctx));
+		// 	this.props.players.forEach(player => player.draw(ctx, canvas));
+		// 	this.props.bullets.forEach(bullet => bullet.draw(ctx));
+		// }
 		document.addEventListener("keydown", event => {
 			this._handleKey(event, true);
 		});
