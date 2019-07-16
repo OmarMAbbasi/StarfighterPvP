@@ -23,12 +23,14 @@ class Bullet extends MovingObject {
 
 	setType(type) {
 		let dir = this.dir;
-		let x = this.pos.x;
-		let y = this.pos.y;
-		let player = Player.new(pos, this.playerId, dir);
-		player.shoot(1000);
-		let player = Player.new(pos, this.playerId, dir);
-		let player = Player.new(pos, this.playerId, dir);
+		let dir = {};
+		dir.x = Math.random;
+		dir.y = 1 - Math.random;
+		for (let i = 0; i < 4; i++) {
+			let player = Player.new(pos, this.playerId, dir);
+			player.bulletType("littleboypellet");
+			player.shoot(1000000);
+		}
 	}
 
 	draw(ctx) {

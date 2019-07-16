@@ -51,6 +51,10 @@ class Player extends MovingObject {
 		}
 	}
 
+	setBulletType(type) {
+		this.bulletType = type;
+	}
+
 	respawn() {
 		if this.powerUps.includes('shields'){
 			this.health = 200
@@ -78,6 +82,17 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10
+			);
+			bullet.setType("littleBoy");
+			bullets.push(bullet);
+			break;
+		case "littleboypellet":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				4,
+				this.id,
+				4
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
