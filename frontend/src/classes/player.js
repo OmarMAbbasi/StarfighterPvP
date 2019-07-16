@@ -23,7 +23,7 @@ class Player extends MovingObject {
 		this.inputs.A = true;
     }
     
-	draw(ctx) {
+	draw(ctx, canvas) {
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
 		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
@@ -37,6 +37,12 @@ class Player extends MovingObject {
 			rotateDir = Math.atan(this.dir.y / this.dir.x);
 		}
 		img.onload = () => {
+			ctx.rect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = "black";
+			ctx.fill();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = "#00FF00";
+			ctx.stroke();
 			ctx.save();
 			ctx.translate(this.pos.x, this.pos.y);
 			ctx.rotate(rotateDir);
