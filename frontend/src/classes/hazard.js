@@ -33,6 +33,7 @@ class Hazard extends MovingObject {
 	}
 
 	draw(ctx) {
+		
 		let img = new Image();
 		let rotateDir = Math.atan(this.dir.y / this.dir.x);
 		if (this.dir.x < 0) {
@@ -43,7 +44,7 @@ class Hazard extends MovingObject {
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
 		ctx.restore();
 	}
 }
