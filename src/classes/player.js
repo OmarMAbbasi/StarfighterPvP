@@ -47,7 +47,7 @@ class Player extends MovingObject {
 
 	respawn() {
 		this.health = 100;
-		this.pos = { x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200 };
+		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
 	shoot() {
