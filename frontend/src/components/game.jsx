@@ -7,7 +7,7 @@ import Hazard from "../classes/hazard";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-staging.herokuapp.com/";
+	socketURL = "https://starfight-michael.herokuapp.com/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
