@@ -21,8 +21,8 @@ class Player extends MovingObject {
 
 		// testing
 		this.inputs.A = true;
-    }
-    
+	}
+
 	draw(ctx, canvas) {
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
@@ -38,18 +38,18 @@ class Player extends MovingObject {
 		}
 		img.src = redShip;
 		// img.onload = () => {
-			// ctx.rect(0, 0, canvas.width, canvas.height);
-			// ctx.fillStyle = "black";
-			// ctx.fill();
-			// ctx.lineWidth = 5;
-			// ctx.strokeStyle = "#00FF00";
-			// ctx.stroke();
-			ctx.save();
-			ctx.translate(this.pos.x, this.pos.y);
-			ctx.rotate(rotateDir);
-			ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
-			ctx.restore();
+		// ctx.rect(0, 0, canvas.width, canvas.height);
+		// ctx.fillStyle = "black";
+		// ctx.fill();
+		// ctx.lineWidth = 5;
+		// ctx.strokeStyle = "#00FF00";
+		// ctx.stroke();
+		ctx.save();
+		ctx.translate(this.pos.x, this.pos.y);
+		ctx.rotate(rotateDir);
+		ctx.translate(-this.pos.x, -this.pos.y);
+		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.restore();
 		// };
 	}
 }

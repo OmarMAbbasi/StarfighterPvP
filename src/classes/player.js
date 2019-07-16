@@ -17,6 +17,7 @@ class Player extends MovingObject {
 		this.inputs = {};
 		this.dir = dir;
 		this.speed = 0;
+		this.shooting = false;
 	}
 
 	collideWith(obj) {
@@ -39,15 +40,25 @@ class Player extends MovingObject {
 		this.health -= damage;
 	}
 
-	shoot() {}
+	shoot() {
+		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
+		console.log(this.dir)
+		let bullet = new Bullet(this.pos, vel, 5, this.id, 10);
+		return bullet; //console.log(input);
+	}
 
 	setInputs(inputs) {
-        console.log(inputs);
+		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
 			this.speed = PLAYER_SPEED;
 		} else {
 			this.speed = 0;
+		}
+		if (inputs.space) {
+			this.shooting = true;
+		} else {
+			this.shooting = false;
 		}
 	}
 
@@ -56,7 +67,6 @@ class Player extends MovingObject {
 		this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;
 		this.pos.y += this.dir.y * this.speed * deltaTime;
-        console.log(this.pos);
 		// check if offscreen
 		this.screenWrap();
 	}
@@ -77,7 +87,6 @@ class Player extends MovingObject {
 	}
 
 	rotateVector(vec, ang) {
-        console.log(vec);
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
 		var sin = Math.sin(ang);
