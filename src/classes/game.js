@@ -22,7 +22,7 @@ class Game {
 		// set game host
 		this.hostId = hostId;
 
-		// create players array with host player
+		// create players array with host POJO
 		// this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
 		this.players = {};
 
@@ -66,6 +66,12 @@ class Game {
 
 		let allObjects = this.allObjects();
 
+		Object.values(this.players).forEach(player => {
+			if (player.shooting) {
+				this.bullets.push(player.shoot());
+				console.log(player.shoot());
+			}
+		});
 		// move all objects
 		allObjects.forEach(hazard => hazard.move(deltaTime));
 
@@ -74,6 +80,7 @@ class Game {
 			// emit game state to client
 			socket.emit("newPosition", { players: Object.values(this.players) });
 		});
+		// console.log(this.bullets);
 	}
 
 	selectPowerups() {}

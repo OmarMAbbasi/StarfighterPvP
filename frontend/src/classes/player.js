@@ -46,7 +46,7 @@ class Player extends MovingObject {
 		ctx.stroke();
 		ctx.save();
 		ctx.translate(this.pos.x, this.pos.y);
-		ctx.rotate(rotateDir);
+		ctx.rotate(rotateDir);	
 		ctx.translate(-this.pos.x, -this.pos.y);
 		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
 		ctx.restore();

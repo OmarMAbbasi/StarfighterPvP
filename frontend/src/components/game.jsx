@@ -99,8 +99,8 @@ class Canvas extends React.Component {
 
 				break;
 			case 16:
-				if (input.d !== down) {
-					input.d = down;
+				if (input.shift !== down) {
+					input.shift = down;
 					socket.emit("playerInput", input);
 					console.log(input);
 				}
@@ -120,7 +120,6 @@ class Canvas extends React.Component {
 	componentWillMount() {
 		this.openSocket();
 	}
-	Di;
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
