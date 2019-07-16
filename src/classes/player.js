@@ -20,10 +20,11 @@ class Player extends MovingObject {
 		this.speed = 0;
 		this.shooting = false;
 		this.bulletType = "normal";
+		this.powerUps = [];
 	}
 
 	setHealth(hp) {
-		this.health = hp
+		this.health = hp;
 	}
 
 	collideWith(obj) {
@@ -56,10 +57,11 @@ class Player extends MovingObject {
 	}
 
 	respawn() {
-		if this.powerUps.includes('shields'){
-			this.health = 200
-		} else if this.powerUps
-		this.health = 100;
+		if (this.powerUps.includes("shields")) {
+			this.health = 200;
+		} else {
+			this.health = 100;
+		}
 		this.pos = { x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200 };
 	}
 
@@ -78,7 +80,7 @@ class Player extends MovingObject {
 		case "littleBoy":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				10
@@ -89,7 +91,7 @@ class Player extends MovingObject {
 		case "littleboypellet":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				4,
 				this.id,
 				4
@@ -103,10 +105,10 @@ class Player extends MovingObject {
 			for (let step = 0; step < 5; step++) {
 				bullet = new Bullet(
 					this.pos,
-					[
-						this.dir.x * BULLET_SPEED * cone,
-						this.dir.y * BULLET_SPEED * cone
-					],
+					{
+						x: this.dir.x * BULLET_SPEED * cone,
+						y: this.dir.y * BULLET_SPEED * cone
+					},
 					5,
 					this.id,
 					5
@@ -118,7 +120,10 @@ class Player extends MovingObject {
 		case "speedybullets":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED * 3, this.dir.y * BULLET_SPEED * 3],
+				{
+					x: this.dir.x * BULLET_SPEED * 3,
+					y: this.dir.y * BULLET_SPEED * 3
+				},
 				5,
 				this.id,
 				10
@@ -128,7 +133,7 @@ class Player extends MovingObject {
 		case "fatman":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				15,
 				this.id,
 				10
@@ -138,7 +143,7 @@ class Player extends MovingObject {
 		case "doubleDamage":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				20
@@ -148,7 +153,7 @@ class Player extends MovingObject {
 		case "buttshot":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				10
@@ -156,7 +161,10 @@ class Player extends MovingObject {
 			bullets.push(bullet);
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED * -1, this.dir.y * -1 * BULLET_SPEED],
+				{
+					x: this.dir.x * BULLET_SPEED * -1,
+					y: this.dir.y * -1 * BULLET_SPEED
+				},
 				5,
 				this.id,
 				10
@@ -169,7 +177,7 @@ class Player extends MovingObject {
 			for (let step = 0; step < 10; step++) {
 				bullet = new Bullet(
 					this.pos,
-					[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+					{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 					3,
 					this.id,
 					2
@@ -180,7 +188,7 @@ class Player extends MovingObject {
 		case "sideshot":
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				10
@@ -188,7 +196,7 @@ class Player extends MovingObject {
 			bullets.push(bullet);
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.y * BULLET_SPEED, this.dir.x * BULLET_SPEED],
+				{ y: this.dir.y * BULLET_SPEED, x: this.dir.x * BULLET_SPEED },
 				5,
 				this.id,
 				10
@@ -196,7 +204,10 @@ class Player extends MovingObject {
 			bullets.push(bullet);
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.y * BULLET_SPEED * -1, this.dir.x * BULLET_SPEED * -1],
+				{
+					y: this.dir.y * BULLET_SPEED * -1,
+					x: this.dir.x * BULLET_SPEED * -1
+				},
 				5,
 				this.id,
 				10
@@ -206,7 +217,7 @@ class Player extends MovingObject {
 		default:
 			bullet = new Bullet(
 				this.pos,
-				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				10

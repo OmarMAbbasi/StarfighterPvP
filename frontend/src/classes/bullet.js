@@ -9,6 +9,7 @@ class Bullet extends MovingObject {
 		super(pos, vel, size);
 		this.playerId = playerId;
 		this.damage = damage;
+		this.powerUps = [];
 	}
 
 	rewardPoints(players, obj) {
@@ -22,15 +23,29 @@ class Bullet extends MovingObject {
 	}
 
 	setType(type) {
-		let dir = this.dir;
 		let dir = {};
-		dir.x = Math.random;
-		dir.y = 1 - Math.random;
-		for (let i = 0; i < 4; i++) {
-			let player = Player.new(pos, this.playerId, dir);
-			player.bulletType("littleboypellet");
-			player.shoot(1000000);
-		}
+		let pos = this.pos;
+		dir.x = vel.x;
+		dir.y = vel.y;
+		let player = Player.new(pos, this.playerId, {
+			x: dir.x * -1,
+			y: dir.y * -1
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		let player = Player.new(pos, this.playerId, {
+			y: dir.y * -1,
+			x: dir.x * -1
+		});
+
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		let player = Player.new(pos, this.playerId, {
+			y: dir.y,
+			x: dir.x
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
 	}
 
 	draw(ctx) {
