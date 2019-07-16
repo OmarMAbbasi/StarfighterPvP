@@ -1,10 +1,8 @@
 import MovingObject from "./movingObject";
 import Bullet from "./bullet";
-// import Hazard1 from "../style/images/asteroid1.png";
-// import Hazard2 from "../style/images/asteroid2.png";
-// const HAZARDS = [Hazard1, Hazard2];
-
-import asteroid from "../style/images/asteroid1.png";
+import hazard1 from "../style/images/asteroid1.png";
+import hazard2 from "../style/images/asteroid2.png";
+const HAZARDS = [hazard1, hazard2];
 
 // const HAZARD1_RADIUS = 10;
 // const HAZARD2_RADIUS = 12;
@@ -36,26 +34,17 @@ class Hazard extends MovingObject {
 
 	draw(ctx) {
 		let img = new Image();
-
-		img.onload = () => {
-			ctx.fillStyle = "#000000";
-			ctx.rect(0, 0, 1600, 900);
-			ctx.fill();
-			ctx.lineWidth = 5;
-			ctx.strokeStyle = "#00FF00";
-			ctx.stroke();
-			ctx.save();
-			ctx.clearRect(0, 0, 1600, 900);
-			ctx.fillRect(0, 0, 1600, 900);
-
-
-			ctx.translate(this.pos.x, this.pos.y);
-			ctx.rotate(this.dir);
-			ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x, this.pos.y, this.radius, this.radius);
-			ctx.restore();
-		}	
-		img.src = asteroid;
+		let rotateDir = Math.atan(this.dir.y / this.dir.x);
+		if (this.dir.x < 0) {
+			rotateDir = rotateDir + Math.PI;
+		}
+		img.src = hazard1;
+		ctx.save();
+		ctx.translate(this.pos.x, this.pos.y);
+		ctx.rotate(rotateDir);
+		ctx.translate(-this.pos.x, -this.pos.y);
+		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.restore();
 	}
 }
 
