@@ -142,7 +142,6 @@ class Canvas extends React.Component {
 		if (this.props.roundsLeft === 0) {
 			this.props.history.push("/gameover");
 		}
-		debugger;
 		const can1 = document.getElementById("can1");
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
@@ -190,8 +189,8 @@ class Canvas extends React.Component {
 				<li
 				key = {player.id}
 				>
-					<h1>player.tag</h1>
-					<h2>player.totalScore</h2>
+					<h2>player.tag</h2>
+					<h3>player.score</h3>
 					<progress id="player-health" value={player.health} max="100">Health</progress>
 				</li>
 			);
@@ -202,6 +201,7 @@ class Canvas extends React.Component {
 				<h3>Timer: {this.state.time}</h3>
 				<h3>Rounds Left: {this.state.round}</h3>
 					<ul className='player-side-bar-thing'>
+						<h1>Players</h1>
 						{playerList()} 
 					</ul>
                 <canvas 
@@ -209,14 +209,12 @@ class Canvas extends React.Component {
                     // ref={this.canvasRef} 
                     width='1600' 
                     height='900'
-                    style={{ position: 'absolute', top: 100, left: 0 }}
                 />
                 <canvas 
                     id='can2'
                     // ref={this.canvasRef} 
                     width='1600' 
                     height='900' 
-                    style={{ position: 'absolute', top: 100, left: 0 }}
                 />
 
 			</div>

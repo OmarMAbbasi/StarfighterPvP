@@ -2,15 +2,26 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+}
 
+#can1 {
+    position: absolute;
+    top: 100;
+    left: 0;
+    z-index: 1;
+}
+
+#can2 {
+    position: absolute;
+    top: 100;
+    left: 0;
+    z-index: 2;
 }
 
 #animation-canvas {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
 
 }
 
@@ -20,4 +31,6 @@
     height: 100vh;
     font-size: 22px;
     color: #3500fa;
+    z-index: 3;
+    position: relative;
 }
