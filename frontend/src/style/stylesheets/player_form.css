@@ -192,3 +192,19 @@ audio {
   visibility: hidden;
 }
 
+.round-over {
+    font-size: 36px;
+    color: #3500fa;
+}
+
+.round-over {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 36px;
+    color: #3500fa;
+}
+
+.player-score {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 28px;
+    color: #3500fa;
+}

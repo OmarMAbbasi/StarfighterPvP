@@ -1,6 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
 import Player from "../classes/player";
+import { withRouter } from 'react-router-dom';
 
 let socketURL = "http://localhost:5000";
 
@@ -10,7 +11,9 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			modalVis: false
+		};
 		this.input = {
 			w: false,
 			s: false,
@@ -101,6 +104,10 @@ class Canvas extends React.Component {
 	};
 
 	componentDidMount() {
+		if (this.props.roundsLeft === 0) {
+			this.props.history.push('/gameover')
+		};
+
 		const canvas = this.canvasRef.current;
 		const ctx = canvas.getContext("2d");
 		ctx.fillStyle = "#000000";
@@ -110,16 +117,7 @@ class Canvas extends React.Component {
 		ctx.strokeStyle = "#069304"
 
 		ctx.stroke();
-		// ctx.fillStyle = "#00FF00";
-		// ctx.beginPath();
-		// ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
-		// ctx.fill();
-		// ctx.closePath();
-		// if (this.props !== {}) {
-		// 	this.props.hazards.forEach(hazard => hazard.draw(ctx));
-		// 	this.props.players.forEach(player => player.draw(ctx, canvas));
-		// 	this.props.bullets.forEach(bullet => bullet.draw(ctx));
-		// }
+
 		document.addEventListener("keydown", event => {
 			this._handleKey(event, true);
 		});
@@ -133,14 +131,37 @@ class Canvas extends React.Component {
 		if (!this.props) {
 			return null;
 		}
+
+		// if (this.props.time === 0) {
+		// 	this.setState({ modalVis: true })
+		// }
+
+		// if (this.modalVis) {
+		// 	setTimeout(() => {
+		// 		this.setState({ modalVis: false })
+		// 	}, 8000);
+		// };
+
+		const roundOver = () => (
+			<div className='roundOver'>
+				<h1>Round Over</h1>
+				<h2>Player 1</h2>
+				<h2>Player 2</h2>
+			</div>
+		)
+
 		return (
 			<div>
-				<h3>Timer: {this.props.timeLeft}</h3>
-				<h3>Rounds Left: {this.props.roundsLeft}</h3>
+				{this.state.modalVis ? roundOver()
+				: <div className="screen">
+					<h3>Timer: {this.props.timeLeft}</h3>
+					<h3>Rounds Left: {this.props.roundsLeft}</h3>
+				</div>
+				}
 				<canvas ref={this.canvasRef} width='1600' height='900' />
 			</div>
 		);
 	}
 }
 
-export default Canvas;
+export default withRouter(Canvas);
