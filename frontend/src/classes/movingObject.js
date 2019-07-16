@@ -1,4 +1,5 @@
 import Util from "../utils/game_util";
+
 import { WIDTH, HEIGHT } from "./constants";
 
 class MovingObject {
@@ -49,7 +50,7 @@ class MovingObject {
 	randomPosition(radius) {
 		let x, y;
 
-		if (this.randomDirection === 1) {
+		if (this.randomDirection == 1) {
 			if (this.vel.x > 0) {
 				x = -radius;
 			} else {

@@ -151,4 +151,4 @@ class Canvas extends React.Component {
 	}
 }
 
-export default withRouter(Canvas);
+export default Canvas;

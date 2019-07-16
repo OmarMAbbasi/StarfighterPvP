@@ -24,11 +24,6 @@ class Player extends MovingObject {
     }
     
 	draw(ctx, canvas) {
-		// ctx.fillStyle = "#00FF00";
-		// ctx.beginPath();
-		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		// ctx.fill();
-		// ctx.closePath();
 
 		ctx.fillStyle = "#000000";
 		ctx.fillRect(0, 0, 1600, 900);
@@ -44,16 +39,12 @@ class Player extends MovingObject {
 		// ctx.fillRect(0, 0, 1600, 900);
 
 		img.onload = () => {
-<<<<<<< HEAD
-
-=======
 			ctx.rect(0, 0, canvas.width, canvas.height);
 			ctx.fillStyle = "black";
 			ctx.fill();
 			ctx.lineWidth = 5;
 			ctx.strokeStyle = "#00FF00";
 			ctx.stroke();
->>>>>>> 0752d6e6da4c38c960caf6ae78535b67a31c4810
 			ctx.save();
 			ctx.clearRect(0, 0, 1600, 900);
 			ctx.fillRect(0, 0, 1600, 900);

@@ -1,11 +1,16 @@
 import MovingObject from "./movingObject";
 import Bullet from "./bullet";
-import Hazard1 from "../style/images/asteroid1.png";
+// import Hazard1 from "../style/images/asteroid1.png";
 import Hazard2 from "../style/images/asteroid2.png";
-const HAZARDS = [Hazard1, Hazard2];
+// const HAZARDS = [Hazard1, Hazard2];
+
+import asteroid from "../style/images/asteroid1.png";
 
 // const HAZARD1_RADIUS = 10;
 // const HAZARD2_RADIUS = 12;
+
+//build so it spawns asteroids, and they can be created or deleted 
+
 
 class Hazard extends MovingObject {
 	constructor(pos, radius, points = 100) {
@@ -30,6 +35,35 @@ class Hazard extends MovingObject {
 		this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
 		this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
 	}
+
+	draw(ctx) {
+		let img = new Image();
+
+		img.onload = () => {
+			ctx.fillStyle = "#000000";
+			ctx.rect(0, 0, 1600, 900);
+			ctx.fill();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = "#00FF00";
+			ctx.stroke();
+			ctx.save();
+
+			ctx.clearRect(0, 0, 1600, 900);
+			ctx.fillRect(0, 0, 1600, 900);
+
+			// ctx.translate(this.pos.x, this.pos.y);
+			// ctx.rotate(this.dir);
+			// ctx.translate(-this.pos.x, -this.pos.y);
+
+			ctx.drawImage(img, this.pos.x, this.pos.y, 35, 35);
+			ctx.restore();
+		}
+		
+		img.src = asteroid;
+	}
+
+
+
 }
 
 export default Hazard;
