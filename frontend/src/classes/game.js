@@ -7,10 +7,10 @@ const HAZARD_COUNT = 1;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
-    { pos: {x: 200, y: 200}, dir: { x: 1, y: 0 } },
-    { pos: {x: 1400, y: 700}, dir: { x: -1, y: 0 } },
-    { pos: {x: 200, y: 700}, dir: { x: 1, y: 0 } },
-    { pos: {x: 1400, y: 200}, dir: { x: -1, y: 0 } },
+    { pos: { x: 200, y: 200 }, dir: { x: 1, y: 0 } },
+    { pos: { x: 1400, y: 700 }, dir: { x: -1, y: 0 } },
+    { pos: { x: 200, y: 700 }, dir: { x: 1, y: 0 } },
+    { pos: { x: 1400, y: 200 }, dir: { x: -1, y: 0 } },
 ]
 
 class Game {
@@ -37,8 +37,8 @@ class Game {
     async startGame() {
         console.log("Starting game");
         while (this.rounds > 0) {
-        await this.playRound();
-        this.rounds--;
+            await this.playRound();
+            this.rounds--;
         }
         this.gameOver();
     }
@@ -51,9 +51,9 @@ class Game {
 
         this.lastUpdate = Date.now();
         while (this.timer > 0) {
-        this.update();
-        this.lastUpdate = Date.now();
-        await sleep(1000 / FPS);
+            this.update();
+            this.lastUpdate = Date.now();
+            await sleep(1000 / FPS);
         }
     }
 
@@ -61,8 +61,8 @@ class Game {
         // calculate time since last update
         const deltaTime = (Date.now() - this.lastUpdate) / 1000;
         // decrease time remaining in round
-        this.timer -= deltaTime;
-        
+        // this.timer -= deltaTime;
+
         let allObjects = this.allObjects();
 
         // move all objects
@@ -71,6 +71,7 @@ class Game {
         // update clients with new positions
         this.playerSockets.forEach(socket => {
             // emit game state to client
+            socket.emit('newPosition', { players: this.players });
         });
     }
 
@@ -83,16 +84,19 @@ class Game {
     }
 
     addPlayer(playerId, socket) {
+        console.log(player);
         let playerParams = START_LOCS[this.players.length]
-        this.players.push(new Player(playerParams.pos, playerId, playerParams.dir));
+        let player = new Player(playerParams.pos, playerId, playerParams.dir);
+        this.players.push(player);
         this.playerSockets.push(socket);
+        return player;
     }
 
     populateHazards() {
         this.hazards = [];
         for (let i = 0; i < HAZARD_COUNT; i++) {
-        const hazard = new Hazard(100)
-        this.hazards.push(hazard);
+            const hazard = new Hazard();
+            this.hazards.push(hazard);
         }
     }
 
@@ -109,4 +113,5 @@ class Game {
 
 module.exports = Game;
 
-new Game(5).startGame();
+const game = new Game(5).addPlayer(1, 1);
+console.log(game.players);
