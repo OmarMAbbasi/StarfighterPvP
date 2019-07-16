@@ -20,7 +20,7 @@ class Player extends MovingObject {
         this.dir = dir;
         this.speed = 0;
         this.shooting = false;
-        this.lastShotDelta = 1000 / FIRE_RATE;
+        this.lastShotDelta = 1 / FIRE_RATE;
     }
 
     collideWith(obj) {
@@ -53,14 +53,14 @@ class Player extends MovingObject {
     }
 
     shoot(deltaTime) {
-        if (this.lastShotDelta < 1000 / FIRE_RATE || !this.inputs.space) {
+        if (this.lastShotDelta < 1 / FIRE_RATE || !this.inputs.space) {
             this.lastShotDelta += deltaTime;
             return;
         }
 
         let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
         let bullet = new Bullet(
-            this.pos, [this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+            Object.assign({}, this.pos), [this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
             5,
             this.id,
             10
@@ -78,11 +78,7 @@ class Player extends MovingObject {
         } else {
             this.speed = 0;
         }
-        if (inputs.space) {
-            this.shooting = true;
-        } else {
-            this.shooting = false;
-        }
+        this.shooting = inputs.space;
     }
 
     move(deltaTime) {

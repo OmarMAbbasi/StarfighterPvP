@@ -80,7 +80,7 @@ class Game {
 
         // check collisions
         Object.values(this.players).forEach(player => {
-            this.hazards.concat(this.bullets).forEach(obj2 => {
+            this.hazards.forEach(obj2 => {
                 player.collideWith(obj2)
             })
         })
