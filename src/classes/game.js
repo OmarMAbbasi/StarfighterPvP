@@ -58,7 +58,9 @@ class Game {
             this.lastUpdate = Date.now();
             await sleep(1000 / FPS);
         }
-    }
+	}
+
+	appyPowerups() { }
 
     update() {
         // calculate time since last update
@@ -69,21 +71,21 @@ class Game {
         let allObjects = this.allObjects();
 
         Object.values(this.players).forEach(player => {
-            let bullet = player.shoot(deltaTime);
-            if (bullet) {
-                console.log(bullet);
-                this.bullets.push(bullet);
+            let bullets = player.shoot(deltaTime);
+            if (bullets) {
+                console.log(bullets);
+                this.bullets = this.bullets.concat(bullets);
             }
         });
         // move all objects
         allObjects.forEach(obj => obj.move(deltaTime));
 
         // check collisions
-        Object.values(this.players).forEach(player => {
-            this.hazards.forEach(obj2 => {
-                player.collideWith(obj2)
-            })
-        })
+		Object.values(this.players).forEach(player => {
+			this.hazards.concat(this.bullets).forEach(obj2 => {
+				player.collideWith(obj2);
+			});
+		});
 
         // update clients with new positions
         Object.values(this.playerSockets).forEach(socket => {

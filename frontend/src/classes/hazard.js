@@ -14,6 +14,7 @@ class Hazard extends MovingObject {
 		this.dir = this.randomRotation();
 		this.health = 100;
 		this.rotateSpeed = Math.random() * 60 + 30;
+		this.powerUps = [];
 	}
 
 	move(deltaTime) {

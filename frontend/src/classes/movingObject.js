@@ -7,6 +7,7 @@ class MovingObject {
 		this.radius = radius ? radius : this.randomRadius(20, 40);
 		this.vel = vel ? vel : this.randomVelocity(10, 20);
 		this.pos = pos ? pos : this.randomPosition(this.radius);
+		this.powerUps = [];
 	}
 
 	checkCollision(other) {
@@ -14,7 +15,9 @@ class MovingObject {
 		return ctrPointDist < this.radius + other.radius;
 	}
 
-	applyPowerups(powerups) {}
+	setPowerup(powerUp) {
+		this.powerUps.push(powerUp);
+	}
 
 	move(deltaTime) {
 		// increment position by time-scaled velocity

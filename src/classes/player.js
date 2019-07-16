@@ -22,6 +22,12 @@ class Player extends MovingObject {
 		this.shooting = false;
 		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
+		this.bulletType = "normal";
+		this.powerUps = [];
+	}
+
+	setHealth(hp) {
+		this.health = hp;
 	}
 
 	collideWith(obj) {
@@ -47,13 +53,22 @@ class Player extends MovingObject {
 
 	takeDamage(damage) {
 		this.health -= damage;
+
 		if (this.health <= 0) {
 			this.respawning = 3;	
 		}
 	}
 
+	setBulletType(type) {
+		this.bulletType = type;
+	}
+
 	respawn() {
-		this.health = 100;
+		if (this.powerUps.includes("shields")) {
+			this.health = 200;
+		} else {
+			this.health = 100;
+		}
 		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
@@ -65,16 +80,167 @@ class Player extends MovingObject {
 			this.lastShotDelta += deltaTime;
 			return;
 		}
+		//* Bullet: constructor(pos, vel, size, playerId, damage)
+		let bullets = [];
+		let bullet;
+		let powerup = this.bulletType;
+		if (!"delta" && !this.bulletType === "littleBoy") {
+			powerup = "noshoot";
+		}
+		if (this.bulletType == "uzi" && !"delta" / 2) {
+			powerup = "none";
+		}
+		switch (powerup) {
+		case "littleBoy":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				5,
+				this.id,
+				10
+			);
+			bullet.setType("littleBoy");
+			bullets.push(bullet);
+			break;
+		case "littleboypellet":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				4,
+				this.id,
+				4
+			);
+			bullet.setType("littleBoy");
+			bullets.push(bullet);
+			break;
+		case "shotgun":
+			scalar = Math.sqrt(2) / 4;
+			cone = Math.sqrt(2) / 2;
+			for (let step = 0; step < 5; step++) {
+				bullet = new Bullet(
+					Object.assign({}, this.pos),
+					{
+						x: this.dir.x * BULLET_SPEED * cone,
+						y: this.dir.y * BULLET_SPEED * cone
+					},
+					5,
+					this.id,
+					5
+				);
+				scalar = cone - scalar;
+				bullets.push(bullet);
+			}
+			break;
+		case "speedybullets":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{
+					x: this.dir.x * BULLET_SPEED * 3,
+					y: this.dir.y * BULLET_SPEED * 3
+				},
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "fatman":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				15,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "doubleDamage":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				5,
+				this.id,
+				20
+			);
+			bullets.push(bullet);
+			break;
+		case "buttshot":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{
+					x: this.dir.x * BULLET_SPEED * -1,
+					y: this.dir.y * -1 * BULLET_SPEED
+				},
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "buckshot":
+			scalar = Math.sqrt(2) / 10;
+			cone = Math.sqrt(2) / 2;
+			for (let step = 0; step < 10; step++) {
+				bullet = new Bullet(
+					Object.assign({}, this.pos),
+					{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+					3,
+					this.id,
+					2
+				);
+				bullets.push(bullet);
+			}
+			break;
+		case "sideshot":
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ y: this.dir.y * BULLET_SPEED, x: this.dir.x * BULLET_SPEED },
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{
+					y: this.dir.y * BULLET_SPEED * -1,
+					x: this.dir.x * BULLET_SPEED * -1
+				},
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		default:
+			bullet = new Bullet(
+				Object.assign({}, this.pos),
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		}
 
-		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		let bullet = new Bullet(
-			Object.assign({}, this.pos), { x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED},
-			5,
-			this.id,
-			10
-		);
-		this.lastShotDelta = 0;
-		return bullet; //console.log(input);
+		return bullets; //console.log(input);
 	}
 	
 

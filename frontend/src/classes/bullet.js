@@ -1,5 +1,6 @@
 import MovingObject from "./movingObject";
 import redBlast from "../style/images/redblast.png";
+import Player from "./player";
 // import Player from "./player";//! user but not defined
 // const Hazard = require('./hazard');
 
@@ -8,6 +9,7 @@ class Bullet extends MovingObject {
 		super(pos, vel, size);
 		this.playerId = playerId;
 		this.damage = damage;
+		this.powerUps = [];
 	}
 
 	rewardPoints(players, obj) {
@@ -18,6 +20,32 @@ class Bullet extends MovingObject {
 				}
 			});
 		}
+	}
+
+	setType(type) {
+		let dir = {};
+		let pos = this.pos;
+		dir.x = vel.x;
+		dir.y = vel.y;
+		let player = Player.new(pos, this.playerId, {
+			x: dir.x * -1,
+			y: dir.y * -1
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		let player = Player.new(pos, this.playerId, {
+			y: dir.y * -1,
+			x: dir.x * -1
+		});
+
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		let player = Player.new(pos, this.playerId, {
+			y: dir.y,
+			x: dir.x
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
 	}
 
 	draw(ctx) {
