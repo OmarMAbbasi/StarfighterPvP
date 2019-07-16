@@ -160,7 +160,6 @@ class Canvas extends React.Component {
 
 	joinRoom() {
 		let socket = this.socket;
-		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			userTag: this.props.history.location.userTag,
@@ -185,11 +184,26 @@ class Canvas extends React.Component {
 				<h2>Player 2</h2>
 			</div>
 		);
+		
+		const playerList = () => this.players.map(player => {
+			return(
+				<li
+				key = {player.id}
+				>
+					<h1>player.tag</h1>
+					<h2>player.totalScore</h2>
+					<progress id="player-health" value={player.health} max="100">Health</progress>
+				</li>
+			);
+		})
 
 		return (
 			<div>
 				<h3>Timer: {this.state.time}</h3>
 				<h3>Rounds Left: {this.state.round}</h3>
+					<ul className='player-side-bar-thing'>
+						{playerList()} 
+					</ul>
                 <canvas 
                     id='can1' 
                     // ref={this.canvasRef} 
@@ -204,6 +218,7 @@ class Canvas extends React.Component {
                     height='900' 
                     style={{ position: 'absolute', top: 100, left: 0 }}
                 />
+
 			</div>
 		);
 	}

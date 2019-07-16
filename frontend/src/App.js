@@ -1,6 +1,7 @@
 import React from "react";
 import './style/stylesheets/player_form.css';
 import './style/stylesheets/game_over.css';
+import './style/stylesheets/game.css';
 import GameContainer from "./components/game_container";
 import GameOverContainer from "./components/game_over_container";
 import PlayerContainer from './components/player_container';

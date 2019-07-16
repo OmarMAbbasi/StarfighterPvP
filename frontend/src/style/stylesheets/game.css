@@ -2,10 +2,22 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
+
 }
 
 #animation-canvas {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
+
+}
+
+.player-side-bar-thing {
+    background: grey;
+    width: 200px;
+    height: 100vh;
+    font-size: 22px;
+    color: #3500fa;
 }
