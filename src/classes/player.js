@@ -6,6 +6,7 @@ const PLAYER_RADIUS = 11;
 let player_speed = 100;
 const ROTATE_SPEED = 90;
 const BULLET_SPEED = 300;
+const FIRE_RATE = 2;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
@@ -19,6 +20,7 @@ class Player extends MovingObject {
 		this.dir = dir;
 		this.speed = 0;
 		this.shooting = false;
+		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
 	}
 
@@ -30,11 +32,13 @@ class Player extends MovingObject {
 			if (obj instanceof Player || obj instanceof Hazard) {
 					this.takeDamage(100);
 					obj.takeDamage(100);
-			} else if (obj instanceof Bullet) {
+			} else if (obj instanceof Bullet && obj.playerId !== this.id) {
 				this.takeDamage(obj.damage);
 			}
 		}
 	}
+
+	
 
 	addScore(points) {
 		this.score += points;
@@ -53,32 +57,34 @@ class Player extends MovingObject {
 		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
-	shoot() {
+	shoot(deltaTime) {
+		if (this.lastShotDelta < 1 / FIRE_RATE || !this.inputs.space) {
+			this.lastShotDelta += deltaTime;
+			return;
+		}
+
 		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		console.log(this.dir);
 		let bullet = new Bullet(
-			this.pos,
-			[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+			Object.assign({}, this.pos), [this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
 			5,
 			this.id,
 			10
 		);
+
+		this.lastShotDelta = 0;
 		return bullet; //console.log(input);
 	}
+	
 
 	setInputs(inputs) {
 		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
-			this.speed = player_speed;
+			this.speed = PLAYER_SPEED;
 		} else {
 			this.speed = 0;
 		}
-		if (inputs.space) {
-			this.shooting = true;
-		} else {
-			this.shooting = false;
-		}
+		this.shooting = inputs.space;
 	}
 
 	move(deltaTime) {
