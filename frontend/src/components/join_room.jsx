@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
 class JoinRoom extends React.Component {
 	constructor(props) {
@@ -38,6 +39,7 @@ class JoinRoom extends React.Component {
 
 		return (
 			<div className="player-form">
+				<audio src={backSound} autoPlay loop />
 				<form onSubmit={this.handleSubmit} className="player-form">
 					<img
 						className="player-header"

@@ -1,7 +1,7 @@
 import React from "react";
-import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 import Player from "../classes/player";
+import { withRouter } from 'react-router-dom';
 
 let socketURL = "http://localhost:5000";
 
@@ -23,6 +23,7 @@ class Canvas extends React.Component {
 		this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
+
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 		this.drawObj = this.drawObj.bind(this);
@@ -40,6 +41,11 @@ class Canvas extends React.Component {
 		socket.emit("c2s", {
 			event: "Client Talks to Server"
 		});
+
+		socket.emit("joinRoom", {
+			event: "Client Talks to Server"
+		});
+
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
@@ -120,7 +126,11 @@ class Canvas extends React.Component {
 	}
 
 	componentDidMount() {
-		const can1 = document.getElementById("can1");
+		if (this.props.roundsLeft === 0) {
+			this.props.history.push('/gameover')
+		};
+
+		const can1 = document.getElementById('can1');
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
 		can1Ctx.fillStyle = "black";
@@ -152,6 +162,19 @@ class Canvas extends React.Component {
 		if (!this.props) {
 			return null;
 		}
+
+		if (this.props.timeLeft === 0) {
+			this.props.openModal("nextRound")
+		};
+
+		const roundOver = () => (
+			<div className='roundOver'>
+				<h1>Round Over</h1>
+				<h2>Player 1</h2>
+				<h2>Player 2</h2>
+			</div>
+		)
+
 		return (
 			<div>
 				<h3>Timer: {this.props.timeLeft}</h3>
@@ -175,4 +198,4 @@ class Canvas extends React.Component {
 	}
 }
 
-export default Canvas;
+export default withRouter(Canvas);

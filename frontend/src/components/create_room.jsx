@@ -1,5 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { createRoom } from '../utils/room_util';
+
 
 class CreateRoom extends React.Component {
 	constructor(props) {
@@ -13,16 +15,29 @@ class CreateRoom extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
-		let roomId = "game";
+		let roomId = "";  
+		if (this.state.userTag !== '') { 
+            this.props.closeModal();
+            createRoom()
+                .then((res) => {
+					roomId = res.data.gameId
+                })
+		}; 
+
+
+		
 		if (roomId !== "") {
-			if (roomId !== "") {
+			
+				
 				this.props.history.push({
 					pathname: `/game/${roomId}`,
 					type: "createRoom",
 					userTag: this.state.userTag,
 					roomId: roomId
 				});
-			}
+			
+		} else {
+			//!display error
 		}
 	}
 
@@ -55,7 +70,7 @@ class CreateRoom extends React.Component {
 						type="text"
 						value={this.state.userTag}
 						onChange={this.updateType("userTag")}
-						placeholder="User Tag"
+						placeholder="nickname"
 					/>
 					<button className="player-btn" type="submit">
 						Play

@@ -1,13 +1,15 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "./modal";
+
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+
 const redShip = require("../style/images/redshipfire.png");
 const blueShip = require("../style/images/fireshipURL.png");
 
 class PlayerForm extends React.Component {
 	constructor(props) {
 		super(props);
-		this.handleCreateRoom = this.handleCreateRoom.bind(this);
 		this.canvasRef = React.createRef();
 	}
 
@@ -53,17 +55,11 @@ class PlayerForm extends React.Component {
 		img.src = redShip;
 	}
 
-	handleCreateRoom(e) {
-		e.preventDefault();
-		let roomId = this.props.match.params.roomId || "game";
-		console.log(roomId);
-		this.props.history.push(`/${roomId}`);
-	}
-
 	render() {
-        debugger;
 		return (
 			<div className="player-form-parent">
+				<audio src={backSound} autoPlay loop />
+
 				<canvas
 					ref={this.canvasRef}
 					id="my-canvas"
@@ -74,7 +70,7 @@ class PlayerForm extends React.Component {
 				{this.props.modal ? (
 					<Modal />
 				) : (
-					<form className="player-form">
+					<div className="player-form">
 						<img
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
@@ -82,44 +78,28 @@ class PlayerForm extends React.Component {
 							width="1200"
 							height="332"
 						/>
-						{/* <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />   */}
-						{/* <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191'  />   */}
 
-						<button
-							onClick={() => this.props.openModal("createRoom")}
-							className="room-btn"
-						>
-							Create Room
-						</button>
+						{/* <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
+                        <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
+                        <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
+                      */}
+						<div className="btns">
+							{/* <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button> */}
+							<button
+								onClick={() => this.props.openModal("createRoom")}
+								className="room-btn"
+							>
+								Create Room
+							</button>
+						</div>
 						<button
 							onClick={() => this.props.openModal("joinRoom")}
 							className="room-btn"
 						>
 							Join Room
 						</button>
-					</form>
+					</div>
 				)}
-				<img
-					className="star1"
-					src={require("../style/images/star1.png")}
-					alt="star1"
-					width="250"
-					height="191"
-				/>
-				<img
-					className="star2"
-					src={require("../style/images/star2.png")}
-					alt="star2"
-					width="250"
-					height="191"
-				/>
-				<img
-					className="star3"
-					src={require("../style/images/star3.png")}
-					alt="star3"
-					width="250"
-					height="191"
-				/>
 			</div>
 		);
 	}
