@@ -36,8 +36,9 @@ class Player extends MovingObject {
 		} else {
 			rotateDir = Math.atan(this.dir.y / this.dir.x);
 		}
-		img.onload = () => {
-			ctx.rect(0, 0, canvas.width, canvas.height);
+		img.src = redShip;
+		// img.onload = () => {
+			// ctx.rect(0, 0, canvas.width, canvas.height);
 			ctx.fillStyle = "black";
 			ctx.fill();
 			ctx.lineWidth = 5;
@@ -49,8 +50,7 @@ class Player extends MovingObject {
 			ctx.translate(-this.pos.x, -this.pos.y);
 			ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
 			ctx.restore();
-		};
-		img.src = redShip;
+		// };
 	}
 }
 

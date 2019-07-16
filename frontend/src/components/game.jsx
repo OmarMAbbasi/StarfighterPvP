@@ -43,7 +43,10 @@ class Canvas extends React.Component {
             let players = data.players;
             console.log(players);
 			const canvas = this.canvasRef.current;
-			const ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext("2d");
+            // ctx.rect(0, 0, canvas.width, canvas.height);
+            // ctx.fillStyle = "black";
+            // ctx.fill();
 			players.forEach(player => {
                 new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
             });
