@@ -30,11 +30,9 @@ class Player extends MovingObject {
 		// ctx.fill();
 		// ctx.closePath();
 		let img = new Image();
-		let rotateDir;
-		if (this.dir.x === 0) {
-			rotateDir = this.dir.y * (-Math.PI / 2);
-		} else {
-			rotateDir = Math.atan(this.dir.y / this.dir.x);
+		let rotateDir = Math.atan(this.dir.y / this.dir.x);
+		if (this.dir.x < 0) {
+			rotateDir = rotateDir + Math.PI;
 		}
 		img.src = redShip;
 		// img.onload = () => {
