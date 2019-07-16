@@ -17,8 +17,8 @@ class Canvas extends React.Component {
 			s: false,
 			a: false,
 			d: false
-        };
-        
+		};
+
 		this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
@@ -40,16 +40,20 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-            let players = data.players;
-            console.log(players);
+			let players = data.players;
+			// console.log(players);
 			const canvas = this.canvasRef.current;
-            const ctx = canvas.getContext("2d");
-            // ctx.rect(0, 0, canvas.width, canvas.height);
-            // ctx.fillStyle = "black";
-            // ctx.fill();
+			const ctx = canvas.getContext("2d");
+			// ctx.rect(0, 0, canvas.width, canvas.height);
+			// ctx.fillStyle = "black";
+			// ctx.fill();
 			players.forEach(player => {
-                new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
-            });
+				new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
+			});
+		});
+
+		socket.on("socketTest", data => {
+			console.log(data);
 		});
 	};
 
