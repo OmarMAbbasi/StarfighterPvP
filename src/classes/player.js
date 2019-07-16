@@ -5,6 +5,7 @@ const Hazard = require("./hazard");
 const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 100;
 const ROTATE_SPEED = 90;
+const BULLET_SPEED = 300;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
@@ -22,6 +23,7 @@ class Player extends MovingObject {
 
 	collideWith(obj) {
 		if (this.isCollidedWith(obj)) {
+			console.log("im hit");
 			if (obj instanceof Player || obj instanceof Hazard) {
 				this.takeDamage(100);
 				obj.takeDamage(100);
@@ -38,15 +40,31 @@ class Player extends MovingObject {
 
 	takeDamage(damage) {
 		this.health -= damage;
+		if (this.health <= 0) {
+			this.respawn();
+		}
+	}
+
+	respawn() {
+		this.health = 100;
+		this.pos = { x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200 };
 	}
 
 	shoot() {
 		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		let bullet = new Bullet(this.pos, vel, 5, this.id, 10);
+		console.log(this.dir);
+		let bullet = new Bullet(
+			this.pos,
+			[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+			5,
+			this.id,
+			10
+		);
 		return bullet; //console.log(input);
 	}
 
 	setInputs(inputs) {
+		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
 			this.speed = PLAYER_SPEED;

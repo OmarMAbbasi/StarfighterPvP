@@ -3,14 +3,23 @@ const Bullet = require("./bullet");
 
 class Hazard extends MovingObject {
 	constructor(pos, radius) {
-		super(pos, { x: 0, y: 0 }, radius);
+		super(pos, null, radius);
 		this.dir = this.randomRotation();
 		this.rotateSpeed = Math.random() * 60 + 30;
+		this.health = 100;
 	}
 
 	move(deltaTime) {
-		super.move(deltaTime);
+		this.pos.x += this.vel.x * deltaTime;
+		this.pos.y += this.vel.y * deltaTime;
+
+		// check if offscreen
 		this.rotate(deltaTime);
+		this.screenWrap();
+	}
+
+	takeDamage(damage) {
+		this.health -= damage;
 	}
 
 	rotate(deltaTime) {

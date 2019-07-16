@@ -3,7 +3,7 @@ const Hazard = require("./hazard");
 const Constants = require("./constants");
 
 const FPS = 60;
-const HAZARD_COUNT = 1;
+const HAZARD_COUNT = 20;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
@@ -32,7 +32,9 @@ class Game {
 		// create empty bullets array
 		this.bullets = [];
 
-		this.playerSockets = {};
+        this.playerSockets = {};
+        
+        this.timer = 0;
 	}
 
 	async startGame() {
@@ -62,7 +64,7 @@ class Game {
 		// calculate time since last update
 		const deltaTime = (Date.now() - this.lastUpdate) / 1000;
 		// decrease time remaining in round
-		// this.timer -= deltaTime;
+		this.timer -= deltaTime;
 
 		let allObjects = this.allObjects();
 
@@ -73,15 +75,37 @@ class Game {
 			}
 		});
 		// move all objects
-		allObjects.forEach(hazard => hazard.move(deltaTime));
+		allObjects.forEach(obj => obj.move(deltaTime));
+
+		// check collisions
+		Object.values(this.players).forEach(player => {
+			this.hazards.concat(this.bullets).forEach(obj2 => {
+				player.collideWith(obj2)
+			})
+		})
 
 		// update clients with new positions
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
-			socket.emit("newPosition", { players: Object.values(this.players) });
+			socket.emit("newPosition", { 
+                players: Object.values(this.players),
+                hazards: this.hazards,
+                bullets: this.bullets,
+                score: this.players[socket.id].score,
+                timer: this.timer,
+                rounds: this.rounds
+             });
 		});
 		// console.log(this.bullets);
-	}
+    }
+    
+    removeObject(obj) {
+        if (obj instanceof Bullet) {
+            this.bullets.splice(this.bullets.indexOf(obj), 1);
+        } else if (obj instanceof Hazard) {
+            this.hazards.splice(this.hazards.indexOf(obj), 1);
+        }
+    }
 
 	selectPowerups() {}
 
@@ -111,6 +135,7 @@ class Game {
 			const hazard = new Hazard();
 			this.hazards.push(hazard);
 		}
+		console.log(this.hazards.length);
 	}
 
 	initRound() {

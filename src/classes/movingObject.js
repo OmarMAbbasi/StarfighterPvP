@@ -4,11 +4,11 @@ const { WIDTH, HEIGHT } = require("./constants");
 class MovingObject {
 	constructor(pos, vel, radius) {
 		this.radius = radius ? radius : this.randomRadius(20, 40);
-		this.vel = vel ? vel : this.randomVelocity(10, 20);
+		this.vel = vel ? vel : this.randomVelocity(75, 150);
 		this.pos = pos ? pos : this.randomPosition(this.radius);
 	}
 
-	checkCollision(other) {
+	isCollidedWith(other) {
 		const ctrPointDist = Util.dist(this.pos, other.pos);
 		return ctrPointDist < this.radius + other.radius;
 	}
