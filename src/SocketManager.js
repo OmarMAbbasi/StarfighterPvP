@@ -7,10 +7,12 @@ let PLAYER_LIST = {};
 
 module.exports = function(socket) {
 	socket.on("joinRoom", data => {
+		console.log(data);
 		socket.id = Math.random();
 		let game = null;
 		if (data.type === "createRoom") {
 			game = ROOM_LIST[data.roomId] = new Game();
+			game.startGame();
 		} else {
 			game = ROOM_LIST[data.roomId];
 		}
@@ -19,7 +21,7 @@ module.exports = function(socket) {
 			PLAYER_LIST[socket.id] = player;
 		} else {
 			socket.emit("roomFull", false);
-		};
+		}
 	});
 
 	socket.on("playerInput", data => {
@@ -33,7 +35,7 @@ module.exports = function(socket) {
 	// 	player.shoot(data);
 	// });
 
-	socket.on("disconnect", (data) => {
+	socket.on("disconnect", data => {
 		delete PLAYER_LIST[socket.id];
 		ROOM_LIST[data.gameId].removePlayer(socket.id);
 	});
