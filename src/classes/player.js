@@ -42,13 +42,11 @@ class Player extends MovingObject {
 
 	shoot() {
 		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		console.log(this.dir)
 		let bullet = new Bullet(this.pos, vel, 5, this.id, 10);
 		return bullet; //console.log(input);
 	}
 
 	setInputs(inputs) {
-		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
 			this.speed = PLAYER_SPEED;

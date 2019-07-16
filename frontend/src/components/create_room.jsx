@@ -1,12 +1,12 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { createRoom } from "../utils/room_util";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
-class JoinRoom extends React.Component {
+class CreateRoom extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			roomId: "",
 			userTag: ""
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,13 +15,19 @@ class JoinRoom extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
-		let roomId = "game";
-		if (roomId !== "") {
-			this.props.history.push({
-				pathname: `/game/${roomId}`,
-				type: "joinRoom",
-				userTag: this.state.userTag,
-				roomId: roomId
+		let roomId = "";
+		debugger;
+		if (this.state.userTag !== "") {
+			let userTag = this.state.userTag;
+			this.props.closeModal();
+			createRoom().then(res => {
+				roomId = res.data.gameId;
+				this.props.history.push({
+					pathname: `/game/${roomId}`,
+					type: "createRoom",
+					userTag: userTag,
+					roomId: roomId
+				});
 			});
 		}
 	}
@@ -56,14 +62,7 @@ class JoinRoom extends React.Component {
 						type="text"
 						value={this.state.userTag}
 						onChange={this.updateType("userTag")}
-						placeholder="User Tag"
-					/>
-					<input
-						className="room-input"
-						type="text"
-						value={this.state.room_id}
-						onChange={this.updateType("roomId")}
-						placeholder="Room ID"
+						placeholder="nickname"
 					/>
 					<button className="player-btn" type="submit">
 						Play
@@ -75,4 +74,4 @@ class JoinRoom extends React.Component {
 	}
 }
 
-export default withRouter(JoinRoom);
+export default withRouter(CreateRoom);

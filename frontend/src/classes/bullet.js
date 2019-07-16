@@ -1,6 +1,6 @@
 import MovingObject from "./movingObject";
 import redBlast from "../style/images/redblast.png";
-import Player from "./player";
+// import Player from "./player";//! user but not defined
 // const Hazard = require('./hazard');
 
 class Bullet extends MovingObject {

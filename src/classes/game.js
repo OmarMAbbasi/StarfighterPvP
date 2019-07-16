@@ -87,12 +87,16 @@ class Game {
 
 	gameOver() {}
 
-	addPlayer(playerId, socket) {
+	addPlayer(playerId, socket, playerTag) {
+		if (this.players.length === 4) {
+			return null;
+		};
+		
 		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
+		player.playerTag = playerTag;
 		this.players[playerId] = player;
 		this.playerSockets[playerId] = socket;
-		// console.log(socket)
 		return player;
 	}
 

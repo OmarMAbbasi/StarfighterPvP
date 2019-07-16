@@ -2,15 +2,25 @@ const io = require("../app").io;
 const Game = require("./classes/game");
 const Player = require("./classes/player");
 
-let SOCKET_LIST = {};
+let ROOM_LIST = {};
 let PLAYER_LIST = {};
-let game = new Game(5);
-game.startGame();
 
 module.exports = function(socket) {
-	socket.id = Math.random();
-	socket = SOCKET_LIST[socket.id] = socket;
-	PLAYER_LIST[socket.id] = game.addPlayer(socket.id, socket);
+	socket.on("joinRoom", data => {
+		socket.id = Math.random();
+		let game = null;
+		if (data.type === "createRoom") {
+			game = ROOM_LIST[data.roomId] = new Game();
+		} else {
+			game = ROOM_LIST[data.roomId];
+		}
+		let player = game.addPlayer(socket.id, socket, data.userTag);
+		if (player) {
+			PLAYER_LIST[socket.id] = player;
+		} else {
+			socket.emit("roomFull", false);
+		};
+	});
 
 	socket.on("playerInput", data => {
 		player = PLAYER_LIST[socket.id];
@@ -23,9 +33,8 @@ module.exports = function(socket) {
 	// 	player.shoot(data);
 	// });
 
-	socket.on("disconnect", () => {
-		delete SOCKET_LIST[socket.id];
+	socket.on("disconnect", (data) => {
 		delete PLAYER_LIST[socket.id];
-		game.removePlayer(socket.id);
+		ROOM_LIST[data.gameId].removePlayer(socket.id);
 	});
 };
