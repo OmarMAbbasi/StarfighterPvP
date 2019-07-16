@@ -17,13 +17,16 @@ class Canvas extends React.Component {
 			s: false,
 			a: false,
 			d: false
-        };
-        
+		};
+		
+		this.players = [];
+		this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
+		this.drawObj = this.drawObj.bind(this);
 	}
 
 	openSocket = () => {
@@ -40,20 +43,32 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
+			this.players = [];
             let players = data.players;
-            // console.log(players);
-			const canvas = this.canvasRef.current;
-            const ctx = canvas.getContext("2d");
-            // ctx.rect(0, 0, canvas.width, canvas.height);
-            // ctx.fillStyle = "black";
-            // ctx.fill();
-			players.forEach(player => {
-                new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
-            });
+            console.log(players);
+            players.forEach(player => {
+                this.players.push(new Player(player.pos, player.id, player.dir));
+			});
 		});
 	};
 
-	_handleKey(event, down) {
+	drawObj() {
+		const can1 = document.getElementById('can1');
+		const can1Ctx = can1.getContext("2d");
+		const can2 = document.getElementById('can2');
+		const can2Ctx = can2.getContext("2d");
+		can1Ctx.clearRect(0, 0, 1600, 900);
+		can1Ctx.rect(0, 0, 1600, 900);
+		can1Ctx.fillStyle = "black";
+		can1Ctx.fill();
+		this.players.forEach(player => {
+			player.draw(can1Ctx, can1)
+		})
+		can2Ctx.drawImage(can1, 0, 0);
+		requestAnimationFrame(this.drawObj);
+	}
+
+ 	_handleKey(event, down) {
 		let input = this.input;
 		let socket = this.socket;
 		console.log(event.keyCode);
@@ -102,23 +117,20 @@ class Canvas extends React.Component {
 
 	componentWillMount() {
 		this.openSocket();
-	};
+	}
 
 	componentDidMount() {
 		if (this.props.roundsLeft === 0) {
 			this.props.history.push('/gameover')
 		};
 
-		const canvas = this.canvasRef.current;
-		const ctx = canvas.getContext("2d");
-		ctx.fillStyle = "#000000";
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = "#069304"
-
-		ctx.stroke();
-
+		const can1 = document.getElementById('can1');
+		const can1Ctx = can1.getContext("2d");
+		can1Ctx.rect(0, 0, can1.width, can1.height);
+		can1Ctx.fillStyle = "black";
+		can1Ctx.fill();
+		this.drawObj();
+        
 		document.addEventListener("keydown", event => {
 			this._handleKey(event, true);
 		});
@@ -147,13 +159,22 @@ class Canvas extends React.Component {
 
 		return (
 			<div>
-				{this.state.modalVis ? roundOver()
-				: <div className="screen">
-					<h3>Timer: {this.props.timeLeft}</h3>
-					<h3>Rounds Left: {this.props.roundsLeft}</h3>
-				</div>
-				}
-				<canvas ref={this.canvasRef} width='1600' height='900' />
+				<h3>Timer: {this.props.timeLeft}</h3>
+				<h3>Rounds Left: {this.props.roundsLeft}</h3>
+                <canvas 
+                    id='can1' 
+                    // ref={this.canvasRef} 
+                    width='1600' 
+                    height='900'
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                />
+                <canvas 
+                    id='can2'
+                    // ref={this.canvasRef} 
+                    width='1600' 
+                    height='900' 
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                />
 			</div>
 		);
 	}

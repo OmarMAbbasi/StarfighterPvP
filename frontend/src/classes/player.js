@@ -42,11 +42,11 @@ class Player extends MovingObject {
 		img.src = redShip;
 		// img.onload = () => {
 		// ctx.rect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = "black";
-		ctx.fill();
-		ctx.lineWidth = 5;
-		ctx.strokeStyle = "#00FF00";
-		ctx.stroke();
+		// ctx.fillStyle = "black";
+		// ctx.fill();
+		// ctx.lineWidth = 5;
+		// ctx.strokeStyle = "#00FF00";
+		// ctx.stroke();
 		ctx.save();
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
