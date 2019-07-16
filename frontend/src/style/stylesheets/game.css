@@ -1,0 +1,11 @@
+#background-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#animation-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
