@@ -11,9 +11,7 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			modalVis: false
-		};
+		this.state = {};
 		this.input = {
 			w: false,
 			s: false,
@@ -135,15 +133,9 @@ class Canvas extends React.Component {
 			return null;
 		}
 
-		// if (this.props.time === 0) {
-		// 	this.setState({ modalVis: true })
-		// }
-
-		// if (this.modalVis) {
-		// 	setTimeout(() => {
-		// 		this.setState({ modalVis: false })
-		// 	}, 8000);
-		// };
+		if (this.props.timeLeft === 0) {
+			this.props.openModal("nextRound")
+		};
 
 		const roundOver = () => (
 			<div className='roundOver'>

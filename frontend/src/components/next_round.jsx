@@ -16,7 +16,10 @@ class NextRound extends React.Component {
         ctx.strokeStyle = "#069304"
         ctx.stroke();
     }
-    
+
+    handleClose() {
+        this.props.closeModal();
+    };
 
     render() {
         return (
@@ -26,6 +29,12 @@ class NextRound extends React.Component {
                 <h1 className='round-over'>Round Over</h1>
                 <h2 className='player score'>Player 1: </h2>
                 <h2 className='player score'>Player 2: </h2>
+                <form className = 'powerups'>
+                    <button>Increased projectile speed</button>
+                    <button>Reversed controls</button>
+                    <button>More asteroids</button>
+                    <button>More asteroids</button>
+                </form>
             </div>
         );
     }
