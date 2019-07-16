@@ -203,6 +203,9 @@ class Canvas extends React.Component {
 					<h3>Rounds Left:{this.state.round}</h3>
 				</div>
 				<div className='board-container'>
+					<ul className="side-bar">
+
+					</ul>
 					<canvas 
 						id='can1' 
 						// ref={this.canvasRef} 
