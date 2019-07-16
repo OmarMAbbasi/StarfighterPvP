@@ -92,7 +92,7 @@
     min-height: 36px;
     min-width: 355px;
     background: none;
-    font-size: 36px;
+    font-size: 46px;
     color: #3500fa;
     outline: none;
     border: none;
@@ -100,6 +100,11 @@
     padding: 30px 50px;
     position: relative;
     display: flex;
+   
+}
+
+.btns {
+    margin-top: 300px;
 }
 
 .room-btn:hover {
@@ -118,23 +123,26 @@
     transform: rotate(200deg);
 }
 
+/* 
 .star1 {
-    position: absolute;
-    left: 100px;
-    top: 340px;
+    display: flex;
+    position: relative;
+    float: left;
 }
 
+
 .star2 {
-    position: absolute;
-    right: 170px;
-    top: 280px;
+    display: flex;
+    position: relative;
+    justify-content: center;
 }
 
 .star3 {
-    position: absolute;
-    left: 250px;
-    bottom: 100px;
-}
+    position: relative;
+    top: 500px;
+    right: 500px;
+
+}  */
 
 .ast-1 {
     position: absolute;

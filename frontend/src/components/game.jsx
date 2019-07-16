@@ -1,6 +1,7 @@
 import React from "react";
 import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
+import { withRouter } from 'react-router-dom';
 
 let socketURL = "http://localhost:5000";
 
@@ -20,6 +21,7 @@ class Canvas extends React.Component {
 		this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
+
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 	}
@@ -111,16 +113,22 @@ class Canvas extends React.Component {
 		this.openSocket();
 	}
 
+	componentWillUnmount() {
+		this.socket = null;
+	}
+
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
 		const ctx = canvas.getContext("2d");
-		ctx.rect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = "black";
-		ctx.fill();
+		ctx.fillStyle = "#000000";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		ctx.lineWidth = 5;
-		ctx.strokeStyle = "#00FF00";
+
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = "#069304"
+
 		ctx.stroke();
+
+
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
 		// ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
@@ -147,10 +155,10 @@ class Canvas extends React.Component {
 			<div>
 				<h3>Timer: {this.props.timeLeft}</h3>
 				<h3>Rounds Left: {this.props.roundsLeft}</h3>
-				<canvas ref={this.canvasRef} width={1600} height={900} />
+				<canvas ref={this.canvasRef} width='1600' height='900' />
 			</div>
 		);
 	}
 }
 
-export default Canvas;
+export default withRouter(Canvas);

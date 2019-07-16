@@ -45,15 +45,6 @@ class Player extends MovingObject {
 
 	shoot() {}
 
-	setInputs(inputs) {
-		this.inputs = inputs;
-		if (inputs.W) {
-			this.speed = PLAYER_SPEED;
-		} else {
-			this.speed = 0;
-		}
-	}
-
 	takeDamage(damage) {
 		this.health -= damage;
 	}
@@ -93,6 +84,7 @@ class Player extends MovingObject {
 		// check if offscreen
 		this.screenWrap();
 	}
+	
 	rotateVector(vec, ang) {
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
@@ -107,6 +99,9 @@ class Player extends MovingObject {
 		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
 		// ctx.fill();
 		// ctx.closePath();
+
+		ctx.fillStyle = "#000000";
+		ctx.fillRect(0, 0, 1600, 900);
 		let img = new Image();
 		let rotateDir;
 		if (this.dir.x === 0) {
@@ -114,11 +109,20 @@ class Player extends MovingObject {
 		} else {
 			rotateDir = Math.atan(this.dir.y / this.dir.x);
 		}
+
+		// ctx.clearRect(0, 0, 1600, 900);
+		// ctx.fillRect(0, 0, 1600, 900);
+
 		img.onload = () => {
+
 			ctx.save();
+			ctx.clearRect(0, 0, 1600, 900);
+			ctx.fillRect(0, 0, 1600, 900);
+
 			ctx.translate(this.pos.x, this.pos.y);
 			ctx.rotate(rotateDir);
 			ctx.translate(-this.pos.x, -this.pos.y);
+
 			ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
 			ctx.restore();
 		};

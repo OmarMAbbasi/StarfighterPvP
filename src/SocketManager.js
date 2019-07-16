@@ -82,5 +82,6 @@ module.exports = function(socket) {
 	socket.on("disconnect", () => {
 		delete SOCKET_LIST[socket.id];
 		delete PLAYER_LIST[socket.id];
+		
 	});
 };

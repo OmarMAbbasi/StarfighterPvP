@@ -1,5 +1,4 @@
 import Util from "../utils/game_util";
-
 import { WIDTH, HEIGHT } from "./constants";
 
 class MovingObject {
