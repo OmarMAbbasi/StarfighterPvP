@@ -3,7 +3,7 @@ const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
 const PLAYER_RADIUS = 11;
-const PLAYER_SPEED = 30;
+const PLAYER_SPEED = 100;
 const ROTATE_SPEED = 90;
 
 class Player extends MovingObject {
@@ -17,9 +17,6 @@ class Player extends MovingObject {
 		this.inputs = {};
 		this.dir = dir;
 		this.speed = 0;
-
-		// testing
-		this.inputs.A = true;
 	}
 
 	collideWith(obj) {
@@ -45,23 +42,9 @@ class Player extends MovingObject {
 	shoot() {}
 
 	setInputs(inputs) {
+        console.log(inputs);
 		this.inputs = inputs;
-		if (inputs.W) {
-			this.speed = PLAYER_SPEED;
-		} else {
-			this.speed = 0;
-		}
-	}
-
-	takeDamage(damage) {
-		this.health -= damage;
-	}
-
-	shoot() {}
-
-	setInputs(inputs) {
-		this.inputs = inputs;
-		if (inputs.W) {
+		if (inputs.w) {
 			this.speed = PLAYER_SPEED;
 		} else {
 			this.speed = 0;
@@ -73,7 +56,7 @@ class Player extends MovingObject {
 		this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;
 		this.pos.y += this.dir.y * this.speed * deltaTime;
-
+        console.log(this.pos);
 		// check if offscreen
 		this.screenWrap();
 	}
@@ -82,18 +65,19 @@ class Player extends MovingObject {
 		let dir = 0;
 
 		// check inputs for rotate direction
-		if (this.inputs.A && this.inputs.D) {
+		if (this.inputs.a && this.inputs.d) {
 			dir = 0;
-		} else if (this.inputs.A) {
+		} else if (this.inputs.a) {
 			dir = -1;
-		} else if (this.inputs.D) {
+		} else if (this.inputs.d) {
 			dir = 1;
 		}
 
-		this.rotateVector([this.dir.x, this.dir.y], ROTATE_SPEED * deltaTime);
+		this.rotateVector([this.dir.x, this.dir.y], dir * ROTATE_SPEED * deltaTime);
 	}
 
 	rotateVector(vec, ang) {
+        console.log(vec);
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
 		var sin = Math.sin(ang);

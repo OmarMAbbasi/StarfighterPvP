@@ -18,7 +18,6 @@ class Hazard extends MovingObject {
 	move(deltaTime) {
 		super.move(deltaTime);
 		this.rotate(deltaTime);
-		console.log(this.dir);
 	}
 
 	rotate(deltaTime) {
