@@ -23,7 +23,8 @@ class Game {
         this.hostId = hostId;
 
         // create players array with host player
-        this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
+        // this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
+        this.players = [];
 
         // create hazards array
         this.hazards = [];
