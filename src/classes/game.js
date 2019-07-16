@@ -32,9 +32,9 @@ class Game {
 		// create empty bullets array
 		this.bullets = [];
 
-        this.playerSockets = {};
-        
-        this.timer = 0;
+		this.playerSockets = {};
+
+		this.timer = 0;
 	}
 
 	async startGame() {
@@ -60,6 +60,8 @@ class Game {
 		}
 	}
 
+	appyPowerups() {}
+
 	update() {
 		// calculate time since last update
 		const deltaTime = (Date.now() - this.lastUpdate) / 1000;
@@ -70,7 +72,7 @@ class Game {
 
 		Object.values(this.players).forEach(player => {
 			if (player.shooting) {
-				this.bullets.push(player.shoot());
+				this.bullets.concat(player.shoot(deltaTime));
 				console.log(player.shoot());
 			}
 		});
@@ -80,32 +82,32 @@ class Game {
 		// check collisions
 		Object.values(this.players).forEach(player => {
 			this.hazards.concat(this.bullets).forEach(obj2 => {
-				player.collideWith(obj2)
-			})
-		})
+				player.collideWith(obj2);
+			});
+		});
 
 		// update clients with new positions
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
-			socket.emit("newPosition", { 
-                players: Object.values(this.players),
-                hazards: this.hazards,
-                bullets: this.bullets,
-                score: this.players[socket.id].score,
-                timer: this.timer,
-                rounds: this.rounds
-             });
+			socket.emit("newPosition", {
+				players: Object.values(this.players),
+				hazards: this.hazards,
+				bullets: this.bullets,
+				score: this.players[socket.id].score,
+				timer: this.timer,
+				rounds: this.rounds
+			});
 		});
 		// console.log(this.bullets);
-    }
-    
-    removeObject(obj) {
-        if (obj instanceof Bullet) {
-            this.bullets.splice(this.bullets.indexOf(obj), 1);
-        } else if (obj instanceof Hazard) {
-            this.hazards.splice(this.hazards.indexOf(obj), 1);
-        }
-    }
+	}
+
+	removeObject(obj) {
+		if (obj instanceof Bullet) {
+			this.bullets.splice(this.bullets.indexOf(obj), 1);
+		} else if (obj instanceof Hazard) {
+			this.hazards.splice(this.hazards.indexOf(obj), 1);
+		}
+	}
 
 	selectPowerups() {}
 
@@ -114,8 +116,8 @@ class Game {
 	addPlayer(playerId, socket, playerTag) {
 		if (this.players.length === 4) {
 			return null;
-		};
-		
+		}
+
 		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
 		player.playerTag = playerTag;

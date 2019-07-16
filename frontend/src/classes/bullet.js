@@ -1,5 +1,6 @@
 import MovingObject from "./movingObject";
 import redBlast from "../style/images/redblast.png";
+import Player from "./player";
 // import Player from "./player";//! user but not defined
 // const Hazard = require('./hazard');
 
@@ -18,6 +19,16 @@ class Bullet extends MovingObject {
 				}
 			});
 		}
+	}
+
+	setType(type) {
+		let dir = this.dir;
+		let x = this.pos.x;
+		let y = this.pos.y;
+		let player = Player.new(pos, this.playerId, dir);
+		player.shoot(1000);
+		let player = Player.new(pos, this.playerId, dir);
+		let player = Player.new(pos, this.playerId, dir);
 	}
 
 	draw(ctx) {

@@ -19,6 +19,11 @@ class Player extends MovingObject {
 		this.dir = dir;
 		this.speed = 0;
 		this.shooting = false;
+		this.bulletType = "normal";
+	}
+
+	setHealth(hp) {
+		this.health = hp
 	}
 
 	collideWith(obj) {
@@ -40,27 +45,162 @@ class Player extends MovingObject {
 
 	takeDamage(damage) {
 		this.health -= damage;
+
 		if (this.health <= 0) {
 			this.respawn();
 		}
 	}
 
 	respawn() {
+		if this.powerUps.includes('shields'){
+			this.health = 200
+		} else if this.powerUps
 		this.health = 100;
 		this.pos = { x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200 };
 	}
 
-	shoot() {
-		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		console.log(this.dir);
-		let bullet = new Bullet(
-			this.pos,
-			[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
-			5,
-			this.id,
-			10
-		);
-		return bullet; //console.log(input);
+	shoot(deltaTime) {
+		//* Bullet: constructor(pos, vel, size, playerId, damage)
+		let bullets = [];
+		let bullet;
+		let powerup = this.bulletType;
+		if (!"delta" && !this.bulletType === "littleBoy") {
+			powerup = "noshoot";
+		}
+		if (this.bulletType == "uzi" && !"delta" / 2) {
+			powerup = "none";
+		}
+		switch (powerup) {
+		case "littleBoy":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullet.setType("littleBoy");
+			bullets.push(bullet);
+			break;
+		case "shotgun":
+			scalar = Math.sqrt(2) / 4;
+			cone = Math.sqrt(2) / 2;
+			for (let step = 0; step < 5; step++) {
+				bullet = new Bullet(
+					this.pos,
+					[
+						this.dir.x * BULLET_SPEED * cone,
+						this.dir.y * BULLET_SPEED * cone
+					],
+					5,
+					this.id,
+					5
+				);
+				scalar = cone - scalar;
+				bullets.push(bullet);
+			}
+			break;
+		case "speedybullets":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED * 3, this.dir.y * BULLET_SPEED * 3],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "fatman":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				15,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "doubleDamage":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				5,
+				this.id,
+				20
+			);
+			bullets.push(bullet);
+			break;
+		case "buttshot":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED * -1, this.dir.y * -1 * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		case "buckshot":
+			scalar = Math.sqrt(2) / 10;
+			cone = Math.sqrt(2) / 2;
+			for (let step = 0; step < 10; step++) {
+				bullet = new Bullet(
+					this.pos,
+					[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+					3,
+					this.id,
+					2
+				);
+				bullets.push(bullet);
+			}
+			break;
+		case "sideshot":
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.y * BULLET_SPEED, this.dir.x * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.y * BULLET_SPEED * -1, this.dir.x * BULLET_SPEED * -1],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		default:
+			bullet = new Bullet(
+				this.pos,
+				[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+				5,
+				this.id,
+				10
+			);
+			bullets.push(bullet);
+			break;
+		}
+
+		return bullets; //console.log(input);
 	}
 
 	setInputs(inputs) {
