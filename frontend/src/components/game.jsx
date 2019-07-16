@@ -44,9 +44,11 @@ class Canvas extends React.Component {
 		socket.on("newPosition", data => {
 			this.players = [];
             let players = data.players;
-            console.log(players);
+			console.log(players);
             players.forEach(player => {
-                this.players.push(new Player(player.pos, player.id, player.dir));
+				let p = new Player({ x: 0, y: 0 }, 1, { x: 0, y: 0 });
+				p = Object.assign(p, player);
+                this.players.push(p);
 			});
 		});
 	};
