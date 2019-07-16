@@ -10,7 +10,7 @@ class Player extends MovingObject {
 	constructor(pos, id, dir) {
 		super(pos, { x: 0, y: 0 }, PLAYER_RADIUS);
 		this.id = id;
-		this.health = 0;
+		this.health = 100;
 		this.totalScore = 0;
 		this.score = 0;
 		this.points = 1000;
