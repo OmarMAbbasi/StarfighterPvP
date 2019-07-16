@@ -42,6 +42,7 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
+            console.log(data);
 			this.players = [];
             let players = data.players;
             console.log(players);
