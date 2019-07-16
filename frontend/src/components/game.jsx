@@ -1,11 +1,7 @@
 import React from "react";
 import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
-<<<<<<< HEAD
-import { withRouter } from 'react-router-dom';
-=======
 import Player from "../classes/player";
->>>>>>> 0752d6e6da4c38c960caf6ae78535b67a31c4810
 
 let socketURL = "http://localhost:5000";
 
