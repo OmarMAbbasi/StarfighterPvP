@@ -56,7 +56,7 @@ class Canvas extends React.Component {
 
 				// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
 			}
-			// ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		});
 	};
 
@@ -110,6 +110,7 @@ class Canvas extends React.Component {
 	componentWillMount() {
 		this.openSocket();
 	}
+	Di;
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;

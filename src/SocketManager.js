@@ -31,7 +31,7 @@ function updatePos(player) {
 
 module.exports = function(socket) {
 	socket.id = Math.random();
-	socket = SOCKET_LIST[socket.id] = socket;
+	SOCKET_LIST[socket.id] = socket;
 	let playerObj = new Player({ x: randomX(), y: randomY() }, socket.id, {
 		x: 1,
 		y: 0
@@ -69,7 +69,7 @@ module.exports = function(socket) {
 			payload.push(player.playerObj);
 		}
 		for (var i in SOCKET_LIST) {
-			socket.emit("newPosition", payload);
+			SOCKET_LIST[i].emit("newPosition", payload);
 		}
 	}, 1000 / 30);
 
