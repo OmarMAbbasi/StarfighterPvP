@@ -70,10 +70,11 @@ class Canvas extends React.Component {
 			});
 			this.bullets = [];
 			let bullets = data.bullets;
+			
 			bullets.forEach(bullet => {
 				let b = new Bullet();
 				b = Object.assign(b, bullet);
-				this.players.push(b);
+				this.bullets.push(b);
 			});
 		});
 	};
@@ -168,7 +169,6 @@ class Canvas extends React.Component {
 		if (this.props.roundsLeft === 0) {
 			this.props.history.push("/gameover");
 		}
-		debugger;
 		const can1 = document.getElementById("can1");
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
@@ -186,7 +186,6 @@ class Canvas extends React.Component {
 
 	joinRoom() {
 		let socket = this.socket;
-		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			userTag: this.props.history.location.userTag,

@@ -13,6 +13,7 @@ class Bullet extends MovingObject {
         // increment position by time-scaled velocity
         this.pos.x += this.vel.x * deltaTime;
         this.pos.y += this.vel.y * deltaTime;
+        // console.log(this);
     }
 
     rewardPoints(players, obj) {

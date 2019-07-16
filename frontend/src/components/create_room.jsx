@@ -16,7 +16,6 @@ class CreateRoom extends React.Component {
 		e.preventDefault();
 		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
 		let roomId = "";
-		debugger;
 		if (this.state.userTag !== "") {
 			let userTag = this.state.userTag;
 			this.props.closeModal();

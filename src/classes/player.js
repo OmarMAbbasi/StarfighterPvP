@@ -3,10 +3,10 @@ const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
 const PLAYER_RADIUS = 11;
-let player_speed = 100;
-const ROTATE_SPEED = 90;
-const BULLET_SPEED = 300;
-const FIRE_RATE = 2;
+let player_speed = 150;
+const ROTATE_SPEED = 180;
+const BULLET_SPEED = 450;
+const FIRE_RATE = 3.5;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
@@ -58,6 +58,9 @@ class Player extends MovingObject {
 	}
 
 	shoot(deltaTime) {
+		if (this.respawning > 0) {
+			return;
+		}
 		if (this.lastShotDelta < 1 / FIRE_RATE || !this.inputs.space) {
 			this.lastShotDelta += deltaTime;
 			return;
@@ -65,12 +68,11 @@ class Player extends MovingObject {
 
 		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
 		let bullet = new Bullet(
-			Object.assign({}, this.pos), [this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
+			Object.assign({}, this.pos), { x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED},
 			5,
 			this.id,
 			10
 		);
-
 		this.lastShotDelta = 0;
 		return bullet; //console.log(input);
 	}
@@ -80,7 +82,7 @@ class Player extends MovingObject {
 		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
-			this.speed = PLAYER_SPEED;
+			this.speed = player_speed;
 		} else {
 			this.speed = 0;
 		}

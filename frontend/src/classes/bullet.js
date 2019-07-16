@@ -30,21 +30,17 @@ class Bullet extends MovingObject {
 		//
 
 		let img = new Image();
-		// let rotateDir;
-		// if (this.dir.x === 0) {
-		//     rotateDir = (this.dir.y * (-Math.PI / 2))
-		// } else {
-		//     rotateDir = Math.atan(this.dir.y / this.dir.x);
-		// }
-		img.onload = () => {
-			// ctx.save();
-			// ctx.translate(this.pos.x, this.pos.y);
-			// ctx.rotate(rotateDir);
-			// ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x - 6, this.pos.y - 5, 12, 15);
-			// ctx.restore();
-		};
+		let rotateDir = Math.atan(this.vel.y / this.vel.x);
+		if (this.vel.x < 0) {
+			rotateDir = rotateDir + Math.PI;
+		}
 		img.src = redBlast;
+		ctx.save();
+		ctx.translate(this.pos.x, this.pos.y);
+		ctx.rotate(rotateDir);
+		ctx.translate(-this.pos.x, -this.pos.y);
+		ctx.drawImage(img, this.pos.x - 6, this.pos.y - 5, 12, 15);
+		ctx.restore();
 	}
 }
 
