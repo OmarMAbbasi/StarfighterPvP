@@ -1,5 +1,5 @@
 import React from "react";
-import MovingObject from "../classes/movingObject";
+import Player from "../classes/player";
 import io from "socket.io-client";
 
 const socketURL = "http://localhost:5000";
@@ -17,7 +17,7 @@ class Canvas extends React.Component {
 				d: false
 			}
 		};
-		// this.state = this.props;
+		this.state = this.props;
 		this.openSocket = this.openSocket.bind(this);
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
@@ -27,7 +27,7 @@ class Canvas extends React.Component {
 		let socket = io(socketURL);
 		this.setState({ socket });
 
-		//!Socket Tests
+		// !Socket Tests
 		socket.on("connect", () => {
 			console.log("Ayyy! Websockets!");
 		});
@@ -114,12 +114,23 @@ class Canvas extends React.Component {
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
-		const ctx = canvas.getContext("2d");
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		if (this.state !== {}) {
-			// this.state.players.forEach((player) => player.draw(ctx))
-			this.state.hazards.forEach(hazard => hazard.draw(ctx));
-			// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
+        const ctx = canvas.getContext("2d");
+        ctx.rect(0, 0, canvas.width, canvas.height)
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#00FF00';
+        ctx.stroke();
+        // ctx.fillStyle = "#00FF00";
+        // ctx.beginPath();
+        // ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
+        // ctx.fill();
+        // ctx.closePath();
+		if (this.props !== {}) {
+			this.props.hazards.forEach((hazard) => hazard.draw(ctx))
+			this.props.players.forEach(player => player.draw(ctx, canvas));
+			this.props.bullets.forEach((bullet) => bullet.draw(ctx))
 		}
 		document.addEventListener("keydown", event => {
 			this._handleKey(event, true);
@@ -133,7 +144,7 @@ class Canvas extends React.Component {
 	render() {
 		if (!this.props) {
 			return null;
-		}
+        }
 		return (
 			<div>
 				<h3>Timer: {this.props.timeLeft}</h3>
