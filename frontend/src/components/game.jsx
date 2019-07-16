@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
+import Bullet from "../classes/bullet";
 
 let socketURL = "http://localhost:5000";
 
@@ -22,6 +23,7 @@ class Canvas extends React.Component {
 
 		this.players = [];
 		this.hazards = [];
+		this.bullets = [];
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 
@@ -55,7 +57,7 @@ class Canvas extends React.Component {
 			this.players = [];
 			let players = data.players;
             players.forEach(player => {
-				let p = new Player({ x: 0, y: 0 }, 1, { x: 0, y: 0 });
+				let p = new Player();
 				p = Object.assign(p, player);
                 this.players.push(p);
 			});
@@ -65,6 +67,13 @@ class Canvas extends React.Component {
 				let h = new Hazard();
 				h = Object.assign(h, hazard);
 				this.hazards.push(h);
+			});
+			this.bullets = [];
+			let bullets = data.bullets;
+			bullets.forEach(bullet => {
+				let b = new Bullet();
+				b = Object.assign(b, bullet);
+				this.players.push(b);
 			});
 		});
 	};
@@ -78,7 +87,7 @@ class Canvas extends React.Component {
 		can1Ctx.rect(0, 0, 1600, 900);
 		can1Ctx.fillStyle = "black";
 		can1Ctx.fill();
-		let objects = this.players.concat(this.hazards);
+		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
 			object.draw(can1Ctx, can1)
 		})
