@@ -86,7 +86,6 @@ class Game {
 		this.players[playerId] = player;
 		this.playerSockets[playerId] = socket;
 		// console.log(socket)
-		socket.emit("socketTest", this.playerSockets );
 		return player;
 	}
 

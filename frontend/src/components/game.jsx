@@ -51,10 +51,6 @@ class Canvas extends React.Component {
 				new Player(player.pos, player.id, player.dir).draw(ctx, canvas);
 			});
 		});
-
-		socket.on("socketTest", data => {
-			console.log(data);
-		});
 	};
 
 	_handleKey(event, down) {
@@ -86,6 +82,23 @@ class Canvas extends React.Component {
 				}
 				break;
 			case 68:
+				if (input.d !== down) {
+					input.d = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
+
+				break;
+			case 32:
+				if (input.space !== down) {
+					input.space = down;
+					// console.log('fire!')
+					socket.emit("playerInput", input);
+					// socket.emit("playerInput", input);
+				}
+
+				break;
+			case 16:
 				if (input.d !== down) {
 					input.d = down;
 					socket.emit("playerInput", input);

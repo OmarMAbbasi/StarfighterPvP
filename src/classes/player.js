@@ -39,13 +39,16 @@ class Player extends MovingObject {
 		this.health -= damage;
 	}
 
-	shoot() {}
-
+	shoot(input) {
+		// console.log(input);
+	}
 	setInputs(inputs) {
-        console.log(inputs);
+		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
 			this.speed = PLAYER_SPEED;
+		} else if (inputs.space) {
+			console.log("player is shooting");
 		} else {
 			this.speed = 0;
 		}
@@ -56,7 +59,6 @@ class Player extends MovingObject {
 		this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;
 		this.pos.y += this.dir.y * this.speed * deltaTime;
-        console.log(this.pos);
 		// check if offscreen
 		this.screenWrap();
 	}
@@ -77,7 +79,6 @@ class Player extends MovingObject {
 	}
 
 	rotateVector(vec, ang) {
-        console.log(vec);
 		ang = -ang * (Math.PI / 180);
 		var cos = Math.cos(ang);
 		var sin = Math.sin(ang);
