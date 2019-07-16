@@ -1,11 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-class JoinRoom extends React.Component {
+class CreateRoom extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			roomId: "",
 			userTag: ""
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,12 +15,14 @@ class JoinRoom extends React.Component {
 		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
 		let roomId = "game";
 		if (roomId !== "") {
-			this.props.history.push({
-				pathname: `/game/${roomId}`,
-				type: "joinRoom",
-				userTag: this.state.userTag,
-				roomId: roomId
-			});
+			if (roomId !== "") {
+				this.props.history.push({
+					pathname: `/game/${roomId}`,
+					type: "createRoom",
+					userTag: this.state.userTag,
+					roomId: roomId
+				});
+			}
 		}
 	}
 
@@ -56,13 +57,6 @@ class JoinRoom extends React.Component {
 						onChange={this.updateType("userTag")}
 						placeholder="User Tag"
 					/>
-					<input
-						className="room-input"
-						type="text"
-						value={this.state.room_id}
-						onChange={this.updateType("roomId")}
-						placeholder="Room ID"
-					/>
 					<button className="player-btn" type="submit">
 						Play
 					</button>
@@ -73,4 +67,4 @@ class JoinRoom extends React.Component {
 	}
 }
 
-export default withRouter(JoinRoom);
+export default withRouter(CreateRoom);
