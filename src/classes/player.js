@@ -3,7 +3,7 @@ const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
 const PLAYER_RADIUS = 11;
-const PLAYER_SPEED = 100;
+let player_speed = 100;
 const ROTATE_SPEED = 90;
 const BULLET_SPEED = 300;
 
@@ -19,14 +19,17 @@ class Player extends MovingObject {
 		this.dir = dir;
 		this.speed = 0;
 		this.shooting = false;
+		this.respawning = 0;
 	}
 
 	collideWith(obj) {
+		if (this.respawning > 0) {
+			return;
+		}
 		if (this.isCollidedWith(obj)) {
-			console.log("im hit");
 			if (obj instanceof Player || obj instanceof Hazard) {
-				this.takeDamage(100);
-				obj.takeDamage(100);
+					this.takeDamage(100);
+					obj.takeDamage(100);
 			} else if (obj instanceof Bullet) {
 				this.takeDamage(obj.damage);
 			}
@@ -41,7 +44,7 @@ class Player extends MovingObject {
 	takeDamage(damage) {
 		this.health -= damage;
 		if (this.health <= 0) {
-			this.respawn();
+			this.respawning = 3;	
 		}
 	}
 
@@ -67,7 +70,7 @@ class Player extends MovingObject {
 		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
-			this.speed = PLAYER_SPEED;
+			this.speed = player_speed;
 		} else {
 			this.speed = 0;
 		}
@@ -79,6 +82,13 @@ class Player extends MovingObject {
 	}
 
 	move(deltaTime) {
+		if (this.respawning > 0) {
+			this.respawning -= deltaTime;
+			return;
+		} else if (this.respawning < 0) {
+			this.respawn();
+			this.respawning = 0;
+		}
 		// rotate player
 		this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;

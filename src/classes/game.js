@@ -3,7 +3,7 @@ const Hazard = require("./hazard");
 const Constants = require("./constants");
 
 const FPS = 60;
-const HAZARD_COUNT = 20;
+const HAZARD_COUNT = 15;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
