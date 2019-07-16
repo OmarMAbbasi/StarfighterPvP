@@ -121,7 +121,24 @@ class Canvas extends React.Component {
 					console.log(input);
 				}
 
-				break;
+                break;
+            case 32:
+                if (input.space !== down) {
+                    input.space = down;
+                    // console.log('fire!')
+                    socket.emit("playerInput", input);
+                    // socket.emit("playerInput", input);
+                }
+
+                break;
+            case 16:
+                if (input.shift !== down) {
+                    input.shift = down;
+                    socket.emit("playerInput", input);
+                    console.log(input);
+                }
+
+                break;
 			default:
 				break;
 		}

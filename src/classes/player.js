@@ -6,6 +6,7 @@ const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 100;
 const ROTATE_SPEED = 90;
 const BULLET_SPEED = 300;
+const FIRE_RATE = 2;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
@@ -18,7 +19,8 @@ class Player extends MovingObject {
 		this.inputs = {};
 		this.dir = dir;
 		this.speed = 0;
-		this.shooting = false;
+        this.shooting = false;
+        this.lastShotDelta = 1000 / FIRE_RATE;
 	}
 
 	collideWith(obj) {
@@ -50,16 +52,21 @@ class Player extends MovingObject {
 		this.pos = { x: Math.random() * 1200 + 200, y: Math.random() * 500 + 200 };
 	}
 
-	shoot() {
+	shoot(deltaTime) {
+        if (this.lastShotDelta < 1000 / FIRE_RATE || !this.inputs.space) {
+            this.lastShotDelta += deltaTime;
+            return;
+        }
+
+        this.lastShotDelta = 0;
 		let vel = { x: this.vel.x * 3, y: this.vel.y * 3 };
-		console.log(this.dir);
 		let bullet = new Bullet(
 			this.pos,
 			[this.dir.x * BULLET_SPEED, this.dir.y * BULLET_SPEED],
 			5,
 			this.id,
 			10
-		);
+        );
 		return bullet; //console.log(input);
 	}
 
@@ -80,7 +87,7 @@ class Player extends MovingObject {
 
 	move(deltaTime) {
 		// rotate player
-		this.rotate(deltaTime);
+        this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;
 		this.pos.y += this.dir.y * this.speed * deltaTime;
 		// check if offscreen

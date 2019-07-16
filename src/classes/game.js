@@ -14,7 +14,7 @@ const START_LOCS = [
 ];
 
 class Game {
-	constructor(hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
+	constructor(gameId, hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
 		// set game parameters
 		this.rounds = numRounds;
 		this.roundLength = roundLength;
@@ -70,8 +70,8 @@ class Game {
 
 		Object.values(this.players).forEach(player => {
 			if (player.shooting) {
-				this.bullets.push(player.shoot());
-				console.log(player.shoot());
+                let bullet = player.shoot(deltaTime);
+				if (bullet) console.log(player.shoot());
 			}
 		});
 		// move all objects
@@ -111,14 +111,15 @@ class Game {
 
 	gameOver() {}
 
-	addPlayer(playerId, socket, playerTag) {
+	addPlayer(playerId, socket, playerTag, gameId) {
 		if (this.players.length === 4) {
 			return null;
 		};
 		
 		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
-		player.playerTag = playerTag;
+        player.playerTag = playerTag;
+        player.gameId = gameId;
 		this.players[playerId] = player;
 		this.playerSockets[playerId] = socket;
 		return player;
