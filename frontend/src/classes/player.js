@@ -1,7 +1,9 @@
 import MovingObject from "./movingObject";
-import redShip from "../style/images/redshipfire.png";
+
 import Bullet from "./bullet";
 import Hazard from "./hazard";
+
+const redShip = require("../style/images/redshipfire.png");
 
 const PLAYER_RADIUS = 11;
 const PLAYER_SPEED = 30;
@@ -9,7 +11,6 @@ const ROTATE_SPEED = 90;
 
 //merge onto mattDev
 //npm run dev before commit
-
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
 		super(pos, { x: 0, y: 0 }, PLAYER_RADIUS);

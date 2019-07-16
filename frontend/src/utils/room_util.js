@@ -1,5 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const createRoom = () => {
-    return axios.get('/api/rooms')
+	return axios.get("/api/rooms");
 };

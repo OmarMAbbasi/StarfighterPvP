@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { createRoom } from '../utils/room_util';
-
+import { createRoom } from "../utils/room_util";
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
 class CreateRoom extends React.Component {
 	constructor(props) {
@@ -15,29 +15,20 @@ class CreateRoom extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
-		let roomId = "";  
-		if (this.state.userTag !== '') { 
-            this.props.closeModal();
-            createRoom()
-                .then((res) => {
-					roomId = res.data.gameId
-                })
-		}; 
-
-
-		
-		if (roomId !== "") {
-			
-				
+		let roomId = "";
+		debugger;
+		if (this.state.userTag !== "") {
+			let userTag = this.state.userTag;
+			this.props.closeModal();
+			createRoom().then(res => {
+				roomId = res.data.gameId;
 				this.props.history.push({
 					pathname: `/game/${roomId}`,
 					type: "createRoom",
-					userTag: this.state.userTag,
+					userTag: userTag,
 					roomId: roomId
 				});
-			
-		} else {
-			//!display error
+			});
 		}
 	}
 
@@ -54,6 +45,7 @@ class CreateRoom extends React.Component {
 
 		return (
 			<div className="player-form">
+				<audio src={backSound} autoPlay loop />
 				<form onSubmit={this.handleSubmit} className="player-form">
 					<img
 						className="player-header"

@@ -1,7 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
 import Player from "../classes/player";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 let socketURL = "http://localhost:5000";
 
@@ -42,9 +42,9 @@ class Canvas extends React.Component {
 			event: "Client Talks to Server"
 		});
 
-		socket.emit("joinRoom", {
-			event: "Client Talks to Server"
-		});
+		// socket.emit("joinRoom", {
+		// 	event: "Client Talks to Server"
+		// });
 
 		socket.on("s2c", data => console.log(data.event));
 
@@ -60,6 +60,7 @@ class Canvas extends React.Component {
 
 	drawObj() {
 		const can1 = document.getElementById("can1");
+		debugger;
 		const can1Ctx = can1.getContext("2d");
 		const can2 = document.getElementById("can2");
 		const can2Ctx = can2.getContext("2d");
@@ -123,14 +124,15 @@ class Canvas extends React.Component {
 
 	componentWillMount() {
 		this.openSocket();
+		this.joinRoom();
 	}
 
 	componentDidMount() {
 		if (this.props.roundsLeft === 0) {
-			this.props.history.push('/gameover')
-		};
-
-		const can1 = document.getElementById('can1');
+			this.props.history.push("/gameover");
+		}
+		debugger;
+		const can1 = document.getElementById("can1");
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
 		can1Ctx.fillStyle = "black";
@@ -143,17 +145,15 @@ class Canvas extends React.Component {
 		document.addEventListener("keyup", event => {
 			this._handleKey(event, false);
 		});
-
-		this.joinRoom();
 	}
 
 	joinRoom() {
-		let socket = this.state.socket;
-
+		let socket = this.socket;
+		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			userTag: this.props.history.location.userTag,
-			roomTag: this.props.history.location.roomId
+			roomId: this.props.history.location.roomId
 		};
 		socket.emit("joinRoom", payload);
 	}
@@ -164,16 +164,16 @@ class Canvas extends React.Component {
 		}
 
 		if (this.props.timeLeft === 0) {
-			this.props.openModal("nextRound")
-		};
+			this.props.openModal("nextRound");
+		}
 
 		const roundOver = () => (
-			<div className='roundOver'>
+			<div className="roundOver">
 				<h1>Round Over</h1>
 				<h2>Player 1</h2>
 				<h2>Player 2</h2>
 			</div>
-		)
+		);
 
 		return (
 			<div>
