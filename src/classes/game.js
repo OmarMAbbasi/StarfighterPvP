@@ -91,7 +91,8 @@ class Game {
     populateHazards() {
         this.hazards = [];
         for (let i = 0; i < HAZARD_COUNT; i++) {
-            const hazard = new Hazard({ x: 300, y: 300 }, 40);
+            // const hazard = new Hazard({ x: 300, y: 300 }, 40);
+            const hazard = new Hazard();
             this.hazards.push(hazard);
         }
     }

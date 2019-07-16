@@ -9,8 +9,6 @@ import asteroid from "../style/images/asteroid1.png";
 // const HAZARD1_RADIUS = 10;
 // const HAZARD2_RADIUS = 12;
 
-//build so it spawns asteroids, and they can be created or deleted 
-
 class Hazard extends MovingObject {
 	constructor(pos, radius, points = 100) {
 		super(pos, { x: 0, y: 0 }, radius);

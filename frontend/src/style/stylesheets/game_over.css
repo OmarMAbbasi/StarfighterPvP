@@ -1,0 +1,53 @@
+.game_over {
+    font-family: 'Press Start 2P', cursive;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    z-index: 1;
+}
+
+.other-ele {
+    z-index: 2;
+    padding: 10px;
+    height: 900px; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.winner-announcement {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 26px;
+    color: #3500fa;
+}
+
+.high-scorers {
+    margin-top: 140px;
+    height: 900px; 
+    display: flex;
+    justify-content: center;
+    vertical-align: middle; 
+    color: #3500fa;
+    flex-direction: column;
+    list-style: none;
+}
+
+.high-scorers h2 {
+    height: 900px; 
+    font-size: 36px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle; 
+    color: #3500fa;
+}
+
+.high-scorers li {
+    display: flex;
+    justify-content: flex-start;
+    color: #3500fa;
+    line-height: normal;
+    padding: 8px 18px;
+    font-size: 24px;
+}

@@ -18,7 +18,6 @@ class Canvas extends React.Component {
 			d: false
         };
         
-		// this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 
@@ -41,7 +40,7 @@ class Canvas extends React.Component {
 
 		socket.on("newPosition", data => {
             let players = data.players;
-            console.log(players);
+            // console.log(players);
 			const canvas = this.canvasRef.current;
 			const ctx = canvas.getContext("2d");
 			players.forEach(player => {
@@ -129,7 +128,6 @@ class Canvas extends React.Component {
 		});
 
 	}
-
 
 	render() {
 		if (!this.props) {

@@ -1,8 +1,10 @@
 import React from "react";
 import './style/stylesheets/player_form.css';
+import './style/stylesheets/game_over.css';
 import GameContainer from "./components/game_container";
+import GameOverContainer from "./components/game_over_container";
 import PlayerContainer from './components/player_container';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
 	return (
@@ -12,6 +14,7 @@ function App() {
 
 				<Route exact path='/' component={PlayerContainer}/>
 				<Route path='/game' component={GameContainer}/>
+				<Route path='/gameover' component={GameOverContainer}/>
 
 			</Switch>
 		</div>
