@@ -1,6 +1,7 @@
 import React from "react";
 import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
+import Player from "../classes/player";
 
 let socketURL = "http://localhost:5000";
 
@@ -16,7 +17,8 @@ class Canvas extends React.Component {
 			s: false,
 			a: false,
 			d: false
-		};
+        };
+        
 		this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
@@ -38,25 +40,13 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-			let hazards = this.props.players;
-			// this.setState({ hazards: hazards });
+            let players = data.players;
+            console.log(players);
 			const canvas = this.canvasRef.current;
 			const ctx = canvas.getContext("2d");
-			// this.state.hazards
-			let newHazArr = [];
-			if (this.props !== {} && this.props.players !== {}) {
-				// this.state.players.forEach((player) => player.draw(ctx))
-				for (let i = 0; i < data.length; i++) {
-					let newHazard = hazards[0];
-					newHazard = Object.assign(newHazard, data[i]);
-					newHazArr.push(newHazard);
-					newHazard.draw(ctx);
-				}
-				this.hazards = newHazArr;
-
-				// this.state.bullets.forEach((bullet) => bullet.draw(ctx))
-			}
-			// ctx.clearRect(0, 0, canvas.width, canvas.height);
+			players.forEach(player => {
+                new Player(player.pos, player.id, player.dir).draw(ctx);
+            });
 		});
 	};
 

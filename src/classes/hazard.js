@@ -2,9 +2,8 @@ const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
 
 class Hazard extends MovingObject {
-	constructor(pos, radius, points = 100) {
+	constructor(pos, radius) {
 		super(pos, { x: 0, y: 0 }, radius);
-		this.points = points;
 		this.dir = this.randomRotation();
 		this.rotateSpeed = Math.random() * 60 + 30;
 	}
@@ -12,7 +11,6 @@ class Hazard extends MovingObject {
 	move(deltaTime) {
 		super.move(deltaTime);
 		this.rotate(deltaTime);
-		console.log(this.dir);
 	}
 
 	rotate(deltaTime) {
