@@ -9,7 +9,7 @@ const blueShip = require('../style/images/fireshipURL.png');
 class PlayerForm extends React.Component {
     constructor(props) {
         super(props);
-        this.handleCreateRoom = this.handleCreateRoom.bind(this);
+        // this.handleCreateRoom = this.handleCreateRoom.bind(this);
         this.canvasRef = React.createRef();
     }
 
@@ -56,10 +56,10 @@ class PlayerForm extends React.Component {
         img.src = redShip;
     }
 
-    handleCreateRoom(e) {
-        e.preventDefault();
-        this.props.history.push("/game")
-    };
+    // handleCreateRoom(e) {
+    //     e.preventDefault();
+    //     this.props.history.push("/game")
+    // };
     
     render() {
         return (
@@ -69,7 +69,7 @@ class PlayerForm extends React.Component {
                 <canvas ref={this.canvasRef} id="my-canvas" width='1600' height='900' ></canvas>
 
                 { this.props.modal ? <Modal /> :      
-                <form className='player-form'>
+                <div className='player-form'>
                     <img className='player-header' src={require('../style/images/logoFinal.png')} alt="logo" width='1200' height='332' />
                      
                         {/* <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
@@ -77,12 +77,14 @@ class PlayerForm extends React.Component {
                         <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
                       */}
                       <div className='btns'>
-                    <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button>
+                    {/* <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button> */}
+                    <button onClick={() => this.props.openModal("createRoom")} className='room-btn'>Create Room</button>
+
                     </div>
                     <button onClick={() => this.props.openModal("joinRoom")} className='room-btn'>Join Room</button>
                     
 
-                </form>
+                </div>
                 }
             </div>
         );

@@ -53,6 +53,12 @@ app.get("/", (req, res) => {
 const players = require("./routes/api/players");
 app.use("/api/players", players);
 
+
+const rooms = require("./routes/api/rooms");
+app.use("/api/rooms", rooms);
+
+
+
 const PORT = process.env.PORT || 5000;
 
 serv.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

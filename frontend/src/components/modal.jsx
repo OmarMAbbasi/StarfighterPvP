@@ -3,6 +3,7 @@ import { closeModal } from '../actions/modals';
 import { connect } from 'react-redux';
 import JoinRoomContainer from './join_room_container';
 import NextRoundContainer from './next_round_container';
+import CreateRoomContainer from './create_room_container';
 
 function Modal({ modal, closeModal }) {
     if (!modal) {
@@ -16,6 +17,9 @@ function Modal({ modal, closeModal }) {
             break;
         case 'nextRound':
             component = <NextRoundContainer />;
+            break;
+        case 'createRoom':
+            component = <CreateRoomContainer />;
             break;
         default:
             return null;

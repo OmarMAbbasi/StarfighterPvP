@@ -40,6 +40,11 @@ class Canvas extends React.Component {
 		socket.emit("c2s", {
 			event: "Client Talks to Server"
 		});
+
+		socket.emit("joinRoom", {
+			event: "Client Talks to Server"
+		});
+
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
