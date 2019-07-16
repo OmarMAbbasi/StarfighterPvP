@@ -2,7 +2,7 @@ const Player = require("./player");
 const Hazard = require("./hazard");
 const Constants = require("./constants");
 
-const FPS = 5;
+const FPS = 60;
 const HAZARD_COUNT = 1;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
@@ -22,8 +22,9 @@ class Game {
 		// set game host
 		this.hostId = hostId;
 
-		// create players array with host player
-		this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
+		// create players array with host POJO
+		// this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
+		this.players = {};
 
 		// create hazards array
 		this.hazards = [];
@@ -31,7 +32,7 @@ class Game {
 		// create empty bullets array
 		this.bullets = [];
 
-		this.playerSockets = [];
+		this.playerSockets = {};
 	}
 
 	async startGame() {
@@ -65,14 +66,21 @@ class Game {
 
 		let allObjects = this.allObjects();
 
+		Object.values(this.players).forEach(player => {
+			if (player.shooting) {
+				this.bullets.push(player.shoot());
+				console.log(player.shoot());
+			}
+		});
 		// move all objects
 		allObjects.forEach(hazard => hazard.move(deltaTime));
 
 		// update clients with new positions
-		this.playerSockets.forEach(socket => {
+		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
-			socket.emit("newPosition", { players: this.players });
+			socket.emit("newPosition", { players: Object.values(this.players) });
 		});
+		// console.log(this.bullets);
 	}
 
 	selectPowerups() {}
@@ -80,12 +88,17 @@ class Game {
 	gameOver() {}
 
 	addPlayer(playerId, socket) {
-		console.log(player);
-		let playerParams = START_LOCS[this.players.length];
+		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
-		this.players.push(player);
-		this.playerSockets.push(socket);
+		this.players[playerId] = player;
+		this.playerSockets[playerId] = socket;
+		// console.log(socket)
 		return player;
+	}
+
+	removePlayer(playerId) {
+		delete this.players[playerId];
+		delete this.playerSockets[playerId];
 	}
 
 	populateHazards() {
@@ -103,11 +116,8 @@ class Game {
 	}
 
 	allObjects() {
-		return [].concat(this.players, this.hazards, this.bullets);
+		return [].concat(Object.values(this.players), this.hazards, this.bullets);
 	}
 }
 
 module.exports = Game;
-
-const game = new Game(5).addPlayer(1, 1);
-console.log(game.players);

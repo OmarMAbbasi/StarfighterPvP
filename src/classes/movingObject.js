@@ -1,6 +1,5 @@
-import Util from "../utils/game_util";
-
-import { WIDTH, HEIGHT } from "./constants";
+const Util = require("../utils/game_util");
+const { WIDTH, HEIGHT } = require("./constants");
 
 class MovingObject {
 	constructor(pos, vel, radius) {
@@ -39,18 +38,10 @@ class MovingObject {
 		}
 	}
 
-	draw(ctx) {
-		ctx.fillStyle = "#00FF00";
-
-		ctx.beginPath();
-		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
-		ctx.fill();
-	}
-
 	randomPosition(radius) {
 		let x, y;
 
-		if (this.randomDirection === 1) {
+		if (this.randomDirection == 1) {
 			if (this.vel.x > 0) {
 				x = -radius;
 			} else {
@@ -91,4 +82,4 @@ class MovingObject {
 	}
 }
 
-export default MovingObject;
+module.exports = MovingObject;
