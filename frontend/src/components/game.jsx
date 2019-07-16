@@ -1,5 +1,4 @@
 import React from "react";
-import MovingObject from "../classes/movingObject";
 import io from "socket.io-client";
 import Player from "../classes/player";
 
@@ -19,7 +18,7 @@ class Canvas extends React.Component {
 			d: false
         };
         
-		this.hazards = this.props.hazards;
+		// this.hazards = this.props.hazards;
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
 
@@ -100,12 +99,7 @@ class Canvas extends React.Component {
 
 	componentWillMount() {
 		this.openSocket();
-	}
-	Di;
-
-	componentWillUnmount() {
-		this.socket = null;
-	}
+	};
 
 	componentDidMount() {
 		const canvas = this.canvasRef.current;
@@ -117,8 +111,6 @@ class Canvas extends React.Component {
 		ctx.strokeStyle = "#069304"
 
 		ctx.stroke();
-
-
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
 		// ctx.arc(300, 300, 11, 0, 2 * Math.PI, true);
@@ -135,7 +127,9 @@ class Canvas extends React.Component {
 		document.addEventListener("keyup", event => {
 			this._handleKey(event, false);
 		});
+
 	}
+
 
 	render() {
 		if (!this.props) {

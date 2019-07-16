@@ -84,10 +84,6 @@ class PlayerForm extends React.Component {
 
                 </form>
                 }
-   
-
-
-
             </div>
         );
     }

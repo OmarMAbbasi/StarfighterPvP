@@ -34,7 +34,6 @@ class MovingObject {
 
 		if (this.pos.y > HEIGHT + this.radius) {
 			this.pos.y = -this.radius;
-		} else if (this.pos.y < -this.radius) {
 			this.pos.y = HEIGHT + this.radius;
 		}
 	}
