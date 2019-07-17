@@ -11,7 +11,7 @@ class Chat {
 	getMessage(player, message) {
 		this.messages.push({ message: message, playerId: player.id });
 		this.memberData.forEach(member => {
-			member.socket.emit(this.messages);
+			member.socket.emit("sendMessages", this.messages);
 		});
 	}
 }
