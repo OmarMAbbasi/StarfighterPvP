@@ -213,7 +213,7 @@ class Canvas extends React.Component {
 		let socket = this.socket;
 		const payload = {
 			type: this.props.history.location.type,
-			userTag: this.props.history.location.userTag,
+			roomId: this.roomId,
 			userTag: this.userTag
 		};
 		socket.emit("joinRoom", payload);
@@ -252,8 +252,8 @@ class Canvas extends React.Component {
 							player={player}
 							socket={this.socket}
 							gameStarted={this.state.gameStarted}
-							gameId={this.props.match.params.gameId}
-							myTag={this.props.history.location.userTag}
+							gameId={this.roomId}
+							myTag={this.userTag}
 						/>
 					);
 				})
@@ -317,7 +317,7 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
+				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 			</div>
 		);
 	}

@@ -12,7 +12,6 @@ module.exports = function(socket) {
 		let game = null;
 		if (data.type === "createRoom") {
 			game = ROOM_LIST[data.roomId] = new Game(data.roomId, socket.id);
-			game.startGame();
 		} else {
 			game = ROOM_LIST[data.roomId];
 		}
