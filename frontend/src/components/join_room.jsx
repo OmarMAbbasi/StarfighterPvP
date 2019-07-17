@@ -23,6 +23,7 @@ class JoinRoom extends React.Component {
 				userTag: this.state.userTag,
 				roomId: roomId
 			});
+			this.props.closeModal();
 		}
 	}
 
@@ -48,8 +49,6 @@ class JoinRoom extends React.Component {
 						width="1200"
 						height="332"
 					/>
-					{/* <img className='ast-1' src={require('../style/images/asteroid1.png')} alt="ast1" width='250' height='191' />
-                    <img className='ast-2' src={require('../style/images/asteroid2.png')} alt="ast2" width='250' height='191' /> */}
 
 					<input
 						className="room-input"
@@ -68,7 +67,7 @@ class JoinRoom extends React.Component {
 					<button className="player-btn" type="submit">
 						Play
 					</button>
-					{this.state.roomId !== "" ? shownView() : null}
+					{this.state.roomId && this.state.userTag !== "" ? shownView() : null}
 				</form>
 			</div>
 		);

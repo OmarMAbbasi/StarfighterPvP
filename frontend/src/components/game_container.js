@@ -10,7 +10,6 @@ const mapSTP = state => {
 	let player2 = new Player({ x: 600, y: 405 }, 2, { x: 0, y: 1 });
 	let bullet1 = new Bullet({ x: 700, y: 400 }, { x: 0, y: 0 }, 5, 1, 10);
 	
-	
 	return {
 		players: [player1, player2],
 		bullets: [bullet1],
