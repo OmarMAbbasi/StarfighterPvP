@@ -1,12 +1,8 @@
 .gameboard-parent {
     font-family: 'Press Start 2P', cursive;
-    /* height: 100%; */
     display: grid;
-    /* flex-direction: column; */
-    /* justify-content: center; */
     align-items: center;
     background: black;
-    /* vertical-align: middle; */
     grid-template: "a a a" "b c d";
     grid-template-columns: 1fr 1300px 1fr 
 }
@@ -16,8 +12,6 @@
 
 
 .board-container {
-    /* width: 1600; */
-    /* height: 900; */
     margin: 0 auto;
     position: relative;
     border: 2px solid #069304;
@@ -32,8 +26,8 @@
 }
 
 .board-header h3 {
-    margin-left: 275px;
-    margin-right: 250px;
+    margin-left: 265px;
+    margin-right: 260px;
 }
 
 .side-bar {
