@@ -9,7 +9,7 @@ import PlayerListItem from "./player_list_item";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight.herokuapp.com/#/;
+	socketURL = "https://starfight.herokuapp.com/#/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
@@ -244,7 +244,6 @@ class Canvas extends React.Component {
 				{/* <div 100% 0%></div>
 					</div>
 					<progress></progress> */}
-
 				<div className="board-container">
 					<canvas
 						id="can1"
@@ -265,7 +264,8 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-z			</div>
+				z{" "}
+			</div>
 		);
 	}
 }
