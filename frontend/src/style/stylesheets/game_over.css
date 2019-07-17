@@ -19,7 +19,19 @@
 .winner-announcement {
     font-family: 'Press Start 2P', cursive;
     font-size: 26px;
-    color: #3500fa;
+    color: #FCD02F;
+    list-style: none;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    /* padding: 8px 18px; */
+}
+
+.winner-announcement li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 18px;
 }
 
 .high-scorers {
@@ -31,6 +43,7 @@
     color: #3500fa;
     flex-direction: column;
     list-style: none;
+    padding: 0px;
 }
 
 .high-scorers h2 {
@@ -45,8 +58,8 @@
 
 .high-scorers li {
     display: flex;
-    justify-content: flex-start;
-    color: #3500fa;
+    justify-content: space-between;
+    color: #FFFF;
     line-height: normal;
     padding: 8px 18px;
     font-size: 24px;
