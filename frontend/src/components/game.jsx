@@ -222,11 +222,11 @@ class Canvas extends React.Component {
 				<li>Loading...</li>
 			);
 
-			//change to this.state.round after round logic implemented
-		if (this.state.time === 0) {
-			const canvas = document.getElementById("can1");
-			const can1Ctx = canvas.getContext("2d");
-			can1Ctx.clearRect(0, 0, 1600, 900);
+			//change to this.state.round after round logic implemented ??
+		if (this.state.round === 0) {
+			// const canvas = document.getElementById("can1");
+			// const can1Ctx = canvas.getContext("2d");
+			// can1Ctx.clearRect(0, 0, 1600, 900);
 
 			this.props.history.push({
 				pathname: "/gameover",

@@ -13,8 +13,8 @@ function App() {
 		<div className="App">
 			<Switch>
 				<Route exact path='/' component={PlayerContainer}/>
+				<Route path='/gameover' component={GameOverContainer} />
 				<Route exact path='/game/:gameId' component={GameContainer} />
-				<Route exact path='/gameover' component={GameOverContainer} />
 			</Switch>
 		</div>
 	);
