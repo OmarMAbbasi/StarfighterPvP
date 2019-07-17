@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
+import PlayerListItem from './player_list_item';
 
 let socketURL = "http://localhost:5000";
 
@@ -51,13 +52,13 @@ class Canvas extends React.Component {
 
 		socket.on("newPosition", data => {
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds })
-            console.log(data);
+			console.log(data);
 			this.players = [];
 			let players = data.players;
-            players.forEach(player => {
+			players.forEach(player => {
 				let p = new Player({ x: 0, y: 0 }, 1, { x: 0, y: 0 });
 				p = Object.assign(p, player);
-                this.players.push(p);
+				this.players.push(p);
 			});
 			this.hazards = [];
 			let hazards = data.hazards;
@@ -183,44 +184,50 @@ class Canvas extends React.Component {
 				<h2>Player 2</h2>
 			</div>
 		);
-		
-		const playerList = () => this.players.map(player => {
-			return(
-				<li
-				key = {player.id}
-				>
-					<h2>player.tag</h2>
-					<h3>player.score</h3>
-					<progress id="player-health" value={player.health} max="100">Health</progress>
-				</li>
+
+
+		let gamers = this.players;
+		const playerList = gamers.length !== 0 ? this.players.map(player => {
+			return (
+				<PlayerListItem
+					key={player.id}
+					player={player}
+					/>
 			);
 		})
+			: <li>Loading...</li>
 
 		return (
 			<div className='gameboard-parent'>
 				<div className='board-header'>
-					<h3>Timer:{this.state.time}</h3>
-					<h3>Rounds Left:{this.state.round}</h3>
+					<h3 id='timer'>Timer:{this.state.time}</h3>
+					<h3 id='rounds'>Rounds Left:{this.state.round}</h3>
 				</div>
-				<div className='board-container'>
-					<ul className="side-bar">
+				{/* <div> */}
+				{/* <div 100% 0%></div>
+					</div>
+					<progress></progress> */}
 
-					</ul>
-					<canvas 
-						id='can1' 
+				<div className='board-container'>
+					<canvas
+						id='can1'
 						// ref={this.canvasRef} 
-						width='1300' 
+						width='1300'
 						height='750'
-						// style={{ position: 'absolute', top: 0 }}
+						style={{ position: 'relative', top: 0 }}
 					/>
-					<canvas 
+					<canvas
 						id='can2'
 						// ref={this.canvasRef} 
-						width='1300' 
-						height='750' 
-						style={{ position: 'absolute', top: 0 }}
+						width='1300'
+						height='750'
+						style={{ position: 'absolute', top: 0, left: 0 }}
 					/>
 				</div>
+				<ul className="side-bar">
+					<h1>Players</h1>
+					{playerList}
+				</ul>
 			</div>
 		);
 	}
