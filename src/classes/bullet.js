@@ -3,12 +3,13 @@ const Player = require("./player");
 // const Hazard = require('./hazard');
 
 class Bullet extends MovingObject {
-    constructor(pos, vel, size, playerId, damage, playerObj) {
+    constructor(pos, vel, size, playerId, damage, playerObj, color) {
         super(pos, vel, size);
         this.playerId = playerId;
         this.damage = damage;
         this.player = playerObj;
         this.collided = false;
+        this.color = color;
     }
 
     move(deltaTime) {

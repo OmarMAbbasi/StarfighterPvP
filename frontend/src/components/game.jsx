@@ -91,7 +91,7 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			if (object instanceof Player) {
+			if (object instanceof Player || object instanceof Bullet) {
 				object.draw(can1Ctx, object.color);
 			} else {
 				object.draw(can1Ctx);

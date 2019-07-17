@@ -10,7 +10,7 @@ const greenShip = require("../style/images/greenshipfire.png");
 const yellowShip = require("../style/images/yellowshipfire.png");
 
 
-const PLAYER_RADIUS = 11;
+const PLAYER_RADIUS = 15;
 const PLAYER_SPEED = 30;
 const ROTATE_SPEED = 90;
 
@@ -42,6 +42,13 @@ class Player extends MovingObject {
 	}
 
 	drawShip(ctx, color) {
+		// for hitbox
+		// ctx.fillStyle = "#00FF00";
+		// ctx.beginPath();
+		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
+		// ctx.fill();
+		// ctx.closePath();
+		
 		let img = new Image();
 		let rotateDir = Math.atan(this.dir.y / this.dir.x);
 		if (this.dir.x < 0) {
@@ -60,7 +67,7 @@ class Player extends MovingObject {
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.drawImage(img, this.pos.x - this.radius - 1, this.pos.y - this.radius - 3, this.radius * 2 + 5, this.radius * 2 + 5);
 		ctx.restore();
 	}
 
