@@ -58,6 +58,9 @@ class Game {
 			this.lastUpdate = Date.now();
 			await sleep(1000 / FPS);
 		}
+		this.players.forEach(player => {
+			player.clearEffects();
+		});
 	}
 
 	appyPowerups() {}
@@ -141,8 +144,15 @@ class Game {
 	}
 
 	initRound() {
+		this.players.forEach(player => {
+			player.applyEffects();
+		});
 		this.populateHazards();
 		this.bullets = [];
+		this.players.forEach(player => {
+			player.applyEffects();
+		});
+
 		this.timer = this.roundLength;
 	}
 
