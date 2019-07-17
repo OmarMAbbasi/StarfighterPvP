@@ -10,10 +10,11 @@ const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
 	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1400, y: 600 }, dir: { x: -1, y: 0 } },
+	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
 	{ pos: { x: 200, y: 600 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1400, y: 150 }, dir: { x: -1, y: 0 } }
+	{ pos: { x: 1150, y: 150 }, dir: { x: -1, y: 0 } }
 ];
+const COLORS = ['RED', 'BLUE', 'YELLOW', 'GREEN'];
 
 class Game {
 	constructor(
@@ -148,36 +149,38 @@ class Game {
 			return null;
 		}
 
-		let playerParams = START_LOCS[Object.keys(this.players).length];
+        let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
-		player.playerTag = playerTag;
-		player.gameId = gameId;
-		this.players[playerId] = player;
+		player.color = COLORS.shift();
+        player.playerTag = playerTag;
+        player.gameId = gameId;
+        this.players[playerId] = player;
 		this.playerSockets[playerId] = socket;
 		this.chat.joinChat(player, socket);
-		return player;
-	}
+        return player;
+    }
 
-	removePlayer(playerId) {
-		delete this.players[playerId];
-		delete this.playerSockets[playerId];
-	}
+    removePlayer(playerId) {
+		COLORS.push(this.players[playerId].color);
+        delete this.players[playerId];
+        delete this.playerSockets[playerId];
+    }
 
-	populateHazards() {
-		this.hazards = [];
-		for (let i = 0; i < HAZARD_COUNT; i++) {
-			const hazard = new Hazard();
-			this.hazards.push(hazard);
-		}
-		console.log(this.hazards.length);
-	}
+    populateHazards() {
+        this.hazards = [];
+        for (let i = 0; i < HAZARD_COUNT; i++) {
+            const hazard = new Hazard();
+            this.hazards.push(hazard);
+        }
+        console.log(this.hazards.length);
+    }
 
 	initRound() {
 		this.populateHazards();
 		this.bullets = [];
-		Object.values(this.players).forEach(player => {
-			player.applyEffects();
-		});
+		// Object.values(this.players).forEach(player => {
+		// 	player.applyEffects();
+		// });
 
 		this.timer = this.roundLength;
 	}

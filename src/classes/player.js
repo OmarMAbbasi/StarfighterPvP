@@ -2,7 +2,7 @@ const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
-const PLAYER_RADIUS = 11;
+const PLAYER_RADIUS = 18;
 let player_speed = 150;
 const ROTATE_SPEED = 180;
 const BULLET_SPEED = 450;
@@ -27,6 +27,7 @@ class Player extends MovingObject {
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
+		this.color = '';
 	}
 
 	setHealth(hp) {
@@ -142,7 +143,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -154,7 +156,8 @@ class Player extends MovingObject {
 				4,
 				this.id,
 				4,
-				this
+				this,
+				this.color
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -170,7 +173,8 @@ class Player extends MovingObject {
 					5,
 					this.id,
 					5,
-					this
+					this,
+					this.color
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar;
@@ -186,7 +190,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -197,7 +202,8 @@ class Player extends MovingObject {
 				15,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -208,7 +214,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				20,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -219,7 +226,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -231,7 +239,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -247,7 +256,8 @@ class Player extends MovingObject {
 					3,
 					this.id,
 					2,
-					this
+					this,
+					this.color
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar;
@@ -261,7 +271,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			newVec = this.rotateVector([this.dir.x, this.dir.y], 70);
@@ -271,7 +282,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -280,7 +292,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			// bullet = new Bullet(
@@ -307,10 +320,11 @@ class Player extends MovingObject {
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				5,
+				7,
 				this.id,
-				50,
-				this
+				10,
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -353,9 +367,9 @@ class Player extends MovingObject {
 		if (this.inputs.a && this.inputs.d) {
 			dir = 0;
 		} else if (this.inputs.a) {
-			dir = -1;
-		} else if (this.inputs.d) {
 			dir = 1;
+		} else if (this.inputs.d) {
+			dir = -1;
 		}
 
 		this.dir = this.rotateVector(

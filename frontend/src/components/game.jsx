@@ -9,7 +9,7 @@ import PlayerListItem from "./player_list_item";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-staging.herokuapp.com/";
+	socketURL = "https://starfight.herokuapp.com/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
@@ -91,8 +91,12 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1);
-		});
+			if (object instanceof Player || object instanceof Bullet) {
+				object.draw(can1Ctx, object.color);
+			} else {
+				object.draw(can1Ctx);
+			}
+		})
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
 	}
