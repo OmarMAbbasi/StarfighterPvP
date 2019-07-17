@@ -19,7 +19,12 @@ const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 30, round: 5 };
+		this.state = {
+			time: 30,
+			round: 5,
+			players: [],
+			gameStarted: false
+		};
 		this.input = {
 			w: false,
 			s: false,
@@ -37,6 +42,7 @@ class Canvas extends React.Component {
 		this.canvasRef = React.createRef();
 		this.drawObj = this.drawObj.bind(this);
 		this.joinRoom = this.joinRoom.bind(this);
+		this.startGame = this.startGame.bind(this);
 		this.userTag =
 			this.props.history.location.userTag ||
 			PILOTS[Math.floor(Math.random() * Math.floor(5))];
@@ -50,8 +56,15 @@ class Canvas extends React.Component {
 			console.log("Ayyy! Websockets!");
 		});
 
-		socket.emit("c2s", {
-			event: "Client Talks to Server"
+		socket.on("playerJoin", data => {
+			this.setState({ players: data.players });
+			this.players = data.players.map(player =>
+				Object.assign(new Player(), player)
+			);
+		});
+
+		socket.on("readyUpdate", data => {
+			this.setState({ players: data.players });
 		});
 
 		// socket.emit("joinRoom", {
@@ -200,10 +213,15 @@ class Canvas extends React.Component {
 		let socket = this.socket;
 		const payload = {
 			type: this.props.history.location.type,
-			userTag: this.userTag,
-			roomId: this.roomId
+			userTag: this.props.history.location.userTag,
+			userTag: this.userTag
 		};
 		socket.emit("joinRoom", payload);
+	}
+
+	startGame() {
+		this.socket.emit("startGame", { roomId: this.roomId });
+		this.setState({ gameStarted: true });
 	}
 
 	render() {
@@ -223,11 +241,21 @@ class Canvas extends React.Component {
 			</div>
 		);
 
-		let gamers = this.players;
+		let gamers = this.state.gameStarted ? this.players : this.state.players;
+		debugger;
 		const playerList =
 			gamers.length !== 0 ? (
-				this.players.map(player => {
-					return <PlayerListItem key={player.id} player={player} />;
+				gamers.map(player => {
+					return (
+						<PlayerListItem
+							key={player.id}
+							player={player}
+							socket={this.socket}
+							gameStarted={this.state.gameStarted}
+							gameId={this.props.match.params.gameId}
+							myTag={this.props.history.location.userTag}
+						/>
+					);
 				})
 			) : (
 				<li>Loading...</li>
@@ -262,7 +290,13 @@ class Canvas extends React.Component {
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
+					{this.props.history.location.isHost ? (
+						<div className="start-game-container">
+							<button onClick={this.startGame}>Start Game</button>
+						</div>
+					) : null}
 				</div>
+
 				<div className="board-container">
 					<canvas
 						id="can1"
@@ -283,7 +317,7 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
+				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
 			</div>
 		);
 	}

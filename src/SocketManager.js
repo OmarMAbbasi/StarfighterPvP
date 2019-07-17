@@ -5,7 +5,6 @@ const Player = require("./classes/player");
 let ROOM_LIST = {};
 let PLAYER_LIST = {};
 
-
 module.exports = function(socket) {
 	socket.on("joinRoom", data => {
 		console.log(data);
@@ -23,8 +22,6 @@ module.exports = function(socket) {
 		} else {
 			socket.emit("roomFull", false);
 		}
-
-		socket.emit("playerJoin", { players: game.players });
 	});
 
 	socket.on("playerInput", data => {
@@ -56,7 +53,8 @@ module.exports = function(socket) {
 
 	socket.on("playerReady", data => {
 		PLAYER_LIST[socket.id].ready = !PLAYER_LIST[socket.id].ready;
-		socket.emit("readyUpdate", { players: ROOM_LIST[data.roomId] });
+		ROOM_LIST[data.roomId].updateReady();
+		console.log("player ready");
 	});
 
 	socket.on("startGame", data => {
