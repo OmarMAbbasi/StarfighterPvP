@@ -74,7 +74,7 @@ class PlayerForm extends React.Component {
 						<img
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
-							alt="logo"
+							alt="logo-another"
 							width="1200"
 							height="332"
 						/>
