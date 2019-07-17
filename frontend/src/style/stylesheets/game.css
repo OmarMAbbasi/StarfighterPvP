@@ -33,12 +33,6 @@
 .text h3{
     color: #ffffff;
 }
-/* .board-header h3 {
-    display: flex;
-    position: relative;
-    align-items: center;
-    grid-area: a;
-} */
 
 .player-game-logo {
     margin-left: 2px;
@@ -81,9 +75,19 @@
     font-size: 16px;
 }
 
-/* .progressParent {
-    width: 200px;
-    height: 18px;
-    background: gray;
-    border-radius: 2px;
-}; */
+.start-game-container {
+    margin-left: 25px;
+    margin-bottom: 110px;
+    justify-content: flex-start;
+}
+
+
+.start-game-container button {
+    background: #fe0000;
+    border: 0.5px solid #ffffff;
+    border-radius: 100%;
+    height: 120px;
+    width: 120px;
+    color: white;
+    font-size: 16px
+}
