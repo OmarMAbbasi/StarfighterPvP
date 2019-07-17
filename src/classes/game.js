@@ -33,6 +33,7 @@ class Game {
 		// create players array with host POJO
 		// this.players = [new Player(START_LOCS[0].pos, hostId, START_LOCS[0].dir)];
 		this.players = {};
+		this.colors = COLORS.slice(0);
 
 		// create hazards array
 		this.hazards = [];
@@ -151,7 +152,7 @@ class Game {
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
-		player.color = COLORS.shift();
+		player.color = this.colors.shift();
 		player.playerTag = playerTag;
 		player.gameId = gameId;
 		this.players[playerId] = player;
@@ -161,7 +162,7 @@ class Game {
 	}
 
 	removePlayer(playerId) {
-		COLORS.push(this.players[playerId].color);
+		this.colors.push(this.players[playerId].color);
 		delete this.players[playerId];
 		delete this.playerSockets[playerId];
 	}
