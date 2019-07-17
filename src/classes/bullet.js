@@ -52,7 +52,7 @@ class Bullet extends MovingObject {
         if (this.isCollidedWith(obj) && !(obj.id === this.playerId)) {
                 this.collided = true;
             if ((obj.health - this.damage) <= 0) {
-                console.log('add score');
+                console.log(obj.health);
                 this.player.addScore(obj.points);
             }
         }

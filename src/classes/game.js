@@ -167,7 +167,7 @@ class Game {
     }
 
     allObjects() {
-        return [].concat(Object.values(this.players), this.hazards, this.bullets);
+		return [].concat(this.bullets, Object.values(this.players), this.hazards );
     }
 }
 
