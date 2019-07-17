@@ -9,7 +9,7 @@ import PlayerListItem from "./player_list_item";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight.herokuapp.com/";
+	socketURL = "https://starfight-staging.herokuapp.com/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
@@ -162,7 +162,6 @@ class Canvas extends React.Component {
 	// };
 
 	componentWillMount() {
-		console.log("window.location.href");
 		debugger;
 
 		this.openSocket();
