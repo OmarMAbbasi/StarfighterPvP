@@ -38,3 +38,66 @@ StarfighterPvP comes equipped with everything you will need for an exciting, act
  
 ## About the Project
 An eageer group of four software engineers designed and built StarfighterPvP over five days. A proposal was drafted, which included a database schema, a sample-state, timeline, and frontend and backend routes. The work was equally divided and the timeline was systematically followed from start to finish, to create an exciting and playable game.
+
+![starfighter](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/redshipfire.png)
+
+## The Technology
+### Backend
+StarfighterPvP is a MERN stack game. The backend is built with MongoDb and Express.js. Backend-frontend integration is achieved through axios. We used Socket.io to create web sockets that allowed for multiplayer.
+
+#### Session Management
+Creating or joining a game is as easy as a mouse click. Gamers have the option to join a demo room and test the game out themselves, or they can create a room or join a friends room. The database stores player nicknames and scores to create a high score list shown at the end of games.
+
+Here is a snipped from the Player model:
+
+```javascript
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const PlayerSchema = new Schema({
+    tag: {
+        type: String,
+        required: true
+    },
+    score: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+```
+
+We built web sockets, allowing for multiplayer functionality, with the following code on the backend:
+
+```javascript
+	socket.on("joinRoom", data => {
+		console.log(data);
+		socket.id = Math.random();
+		let game = null;
+		if (data.type === "createRoom") {
+			game = ROOM_LIST[data.roomId] = new Game(data.roomId, socket.id);
+			game.startGame();
+		} else {
+			game = ROOM_LIST[data.roomId];
+		}
+		let player = game.addPlayer(socket.id, socket, data.userTag, data.roomId);
+		if (player) {
+			PLAYER_LIST[socket.id] = player;
+		} else {
+			socket.emit("roomFull", false);
+		}
+	});
+
+	socket.on("playerInput", data => {
+		player = PLAYER_LIST[socket.id];
+		player.setInputs(data);
+		// console.log(data);
+	});
+```
+
+This code allows for the creation of rooms, which players can invite their friends to joinm, as well as the joining of rooms. The game can manage multiple multiplayer games at once.
+
+### Frontend
