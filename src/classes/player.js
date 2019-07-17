@@ -71,8 +71,7 @@ class Player extends MovingObject {
 	}
 
 	collideWith(obj) {
-		if (this.respawning > 0) {
-			console.log("im respawning");
+		if (this.respawning > 0 || this.invuln > 0) {
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
@@ -111,6 +110,7 @@ class Player extends MovingObject {
 		} else {
 			this.health = 100;
 		}
+		this.invuln = 1.5;
 		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
@@ -329,6 +329,11 @@ class Player extends MovingObject {
 		} else if (this.respawning < 0) {
 			this.respawn();
 			this.respawning = 0;
+		}
+		if (this.invuln > 0) {
+			this.invuln -= deltaTime;
+		} else if (this.invuln < 0) {
+			this.invuln = 0;
 		}
 		// rotate player
 		this.rotate(deltaTime);

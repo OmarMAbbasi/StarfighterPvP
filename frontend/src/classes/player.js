@@ -9,6 +9,11 @@ const blueShip = require("../style/images/blueshipfire.png");
 const greenShip = require("../style/images/greenshipfire.png");
 const yellowShip = require("../style/images/yellowshipfire.png");
 
+const redGod = require("../style/images/redgod.png");
+const blueGod = require("../style/images/bluegod.png");
+const greenGod = require("../style/images/greengod.png");
+const yellowGod = require("../style/images/yellowgod.png");
+
 
 const PLAYER_RADIUS = 15;
 const PLAYER_SPEED = 30;
@@ -41,7 +46,7 @@ class Player extends MovingObject {
 
 	}
 
-	drawShip(ctx, color) {
+	drawShip(ctx, player) {
 		// for hitbox
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
@@ -54,14 +59,30 @@ class Player extends MovingObject {
 		if (this.dir.x < 0) {
 			rotateDir = rotateDir + Math.PI;
 		}
-		if (color === 'RED') {
-			img.src = redShip;
-		} else if (color === 'BLUE') {
-			img.src = blueShip;
-		} else if (color === 'GREEN') {
-			img.src = greenShip;
-		} else if (color === 'YELLOW') {
-			img.src = yellowShip;
+		if (player.color === 'RED') {
+			if (player.invuln > 0) {
+				img.src = redGod;
+			} else {
+				img.src = redShip;
+			}
+		} else if (player.color === 'BLUE') {
+			if (player.invuln > 0) {
+				img.src = blueGod;
+			} else {
+				img.src = blueShip;
+			}
+		} else if (player.color === 'GREEN') {
+			if (player.invuln > 0) {
+				img.src = greenGod;
+			} else {
+				img.src = greenShip;
+			}
+		} else if (player.color === 'YELLOW') {
+			if (player.invuln > 0) {
+				img.src = yellowGod;
+			} else {
+				img.src = yellowShip;
+			}
 		}
 		ctx.save();
 		ctx.translate(this.pos.x, this.pos.y);
