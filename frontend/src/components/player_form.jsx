@@ -91,6 +91,12 @@ class PlayerForm extends React.Component {
 							className="room-btn"
 						>Join Room
 						</button>
+						<button
+							onClick={() => this.props.openModal("joinDemoRoom")}
+							className="room-btn"
+							id="demo-btn"
+						>Demo Room
+						</button>
 					</div>
 				)}
 			</div>
