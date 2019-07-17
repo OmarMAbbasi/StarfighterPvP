@@ -24,7 +24,8 @@ class CreateRoom extends React.Component {
 					pathname: `/game/${roomId}`,
 					type: "createRoom",
 					userTag: userTag,
-					roomId: roomId
+                    roomId: roomId,
+                    isHost: true
 				});
 			});
 		}
