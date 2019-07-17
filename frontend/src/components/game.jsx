@@ -91,7 +91,11 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1);
+			if (object instanceof Player || object instanceof Bullet) {
+				object.draw(can1Ctx, object.color);
+			} else {
+				object.draw(can1Ctx);
+			}
 		});
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
@@ -162,8 +166,6 @@ class Canvas extends React.Component {
 	// };
 
 	componentWillMount() {
-		debugger;
-
 		this.openSocket();
 		this.joinRoom();
 	}
@@ -197,6 +199,7 @@ class Canvas extends React.Component {
 		socket.emit("joinRoom", payload);
 	}
 
+	/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */
 	render() {
 		if (!this.props) {
 			return null;
