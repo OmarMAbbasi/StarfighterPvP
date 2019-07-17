@@ -288,6 +288,13 @@ class Canvas extends React.Component {
 				{this.props.modal ? <Modal /> : null}
 
 				<audio src={backSound} autoPlay loop />
+
+				{this.props.history.location.isHost ? (
+					<div className="start-game-container">
+						<button onClick={this.startGame}>Start Game</button>
+					</div>
+				) : null}
+				
 				<div className="board-header">
 					<img
 						className="player-game-logo"
@@ -300,11 +307,7 @@ class Canvas extends React.Component {
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
-					{this.props.history.location.isHost ? (
-						<div className="start-game-container">
-							<button onClick={this.startGame}>Start Game</button>
-						</div>
-					) : null}
+
 				</div>
 
 				<div className="board-container">
