@@ -2,6 +2,7 @@ const Player = require("./player");
 const Hazard = require("./hazard");
 const Constants = require("./constants");
 const Bullet = require("./bullet");
+const Chat = require("./chatroom");
 
 const FPS = 60;
 const HAZARD_COUNT = 15;
@@ -35,7 +36,8 @@ class Game {
 
         this.playerSockets = {};
 
-        this.timer = 0;
+		this.timer = 0;
+		this.chat = new Chat();
     }
 
     async startGame() {
@@ -58,7 +60,10 @@ class Game {
             this.update();
             this.lastUpdate = Date.now();
             await sleep(1000 / FPS);
-        }
+		}
+		Object.values(this.players).forEach(player => {
+			player.clearEffects();
+		});
 	}
 
 	appyPowerups() { }
@@ -70,6 +75,8 @@ class Game {
         this.timer -= deltaTime;
 
         let allObjects = this.allObjects();
+		// this.lastUpdate = Date.now();
+		
 
         Object.values(this.players).forEach(player => {
             let bullets = player.shoot(deltaTime);
@@ -105,20 +112,20 @@ class Game {
 				this.removeObject(bullet)
 			} 
 		});
-        // update clients with new positions
-        Object.values(this.playerSockets).forEach(socket => {
-            // emit game state to client
-            socket.emit("newPosition", {
-                players: Object.values(this.players),
-                hazards: this.hazards,
-                bullets: this.bullets,
-                score: this.players[socket.id].score,
-                timer: this.timer,
-                rounds: this.rounds
-            });
-        });
-        // console.log(this.bullets);
-    }
+
+		// update clients with new positions
+		Object.values(this.playerSockets).forEach(socket => {
+			// emit game state to client
+			socket.emit("newPosition", {
+				players: Object.values(this.players),
+				hazards: this.hazards,
+				bullets: this.bullets,
+				score: this.players[socket.id].score,
+				timer: this.timer,
+				rounds: this.rounds
+			});
+		});
+	}
 
     removeObject(obj) {
         if (obj instanceof Bullet) {
@@ -142,7 +149,8 @@ class Game {
         player.playerTag = playerTag;
         player.gameId = gameId;
         this.players[playerId] = player;
-        this.playerSockets[playerId] = socket;
+		this.playerSockets[playerId] = socket;
+		this.chat.joinChat(player, socket);
         return player;
     }
 
@@ -160,11 +168,16 @@ class Game {
         console.log(this.hazards.length);
     }
 
-    initRound() {
-        this.populateHazards();
-        this.bullets = [];
-        this.timer = this.roundLength;
-    }
+	initRound() {
+		
+		this.populateHazards();
+		this.bullets = [];
+		Object.values(this.players).forEach(player => {
+			player.applyEffects();
+		});
+
+		this.timer = this.roundLength;
+	}
 
     allObjects() {
 		return [].concat(this.bullets, Object.values(this.players), this.hazards );

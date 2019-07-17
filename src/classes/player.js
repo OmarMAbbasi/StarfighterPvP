@@ -24,10 +24,48 @@ class Player extends MovingObject {
 		this.respawning = 0;
 		this.bulletType = "normal";
 		this.powerUps = [];
+		this.shield = 0;
+		this.shieldInterval = {};
+		this.regenInterval = {};
 	}
 
 	setHealth(hp) {
 		this.health = hp;
+	}
+
+	createShield() {
+		this.shieldInterval = setInterval(() => {
+			this.shield = 50;
+		}, 30 * 1000);
+	}
+
+	startRegen() {
+		this.regenInterval = setInterval(() => {
+			this.health += 5;
+		}, 5 * 1000);
+	}
+
+	applyEffects() {
+		powerUps.forEach(powerup => {
+			switch (powerup) {
+			case "miniShield":
+				this.createShield();
+				break;
+			case "bigShield":
+				this.shield = 100;
+				break;
+			case "regen":
+				this.startRegen();
+				break;
+			default:
+				break;
+			}
+		});
+	}
+
+	clearEffects() {
+		clearInterval(this.regenInterval);
+		clearInterval(this.shieldInterval);
 	}
 
 	collideWith(obj) {
