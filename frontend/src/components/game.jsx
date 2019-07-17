@@ -4,12 +4,12 @@ import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
 import Bullet from "../classes/bullet";
-import PlayerListItem from './player_list_item';
+import PlayerListItem from "./player_list_item";
 
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-michael.herokuapp.com/";
+	socketURL = "https://starfight-staging.herokuapp.com";
 }
 class Canvas extends React.Component {
 	constructor(props) {
@@ -53,11 +53,11 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-			this.setState({ time: Math.ceil(data.timer), round: data.rounds })
+			this.setState({ time: Math.ceil(data.timer), round: data.rounds });
 			console.log(data);
 			this.players = [];
 			let players = data.players;
-            players.forEach(player => {
+			players.forEach(player => {
 				let p = new Player();
 				p = Object.assign(p, player);
 				this.players.push(p);
@@ -71,7 +71,7 @@ class Canvas extends React.Component {
 			});
 			this.bullets = [];
 			let bullets = data.bullets;
-			
+
 			bullets.forEach(bullet => {
 				let b = new Bullet();
 				b = Object.assign(b, bullet);
@@ -91,8 +91,8 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1)
-		})
+			object.draw(can1Ctx, can1);
+		});
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
 	}
@@ -132,24 +132,24 @@ class Canvas extends React.Component {
 					console.log(input);
 				}
 
-                break;
-            case 32:
-                if (input.space !== down) {
-                    input.space = down;
-                    // console.log('fire!')
-                    socket.emit("playerInput", input);
-                    // socket.emit("playerInput", input);
-                }
+				break;
+			case 32:
+				if (input.space !== down) {
+					input.space = down;
+					// console.log('fire!')
+					socket.emit("playerInput", input);
+					// socket.emit("playerInput", input);
+				}
 
-                break;
-            case 16:
-                if (input.shift !== down) {
-                    input.shift = down;
-                    socket.emit("playerInput", input);
-                    console.log(input);
-                }
+				break;
+			case 16:
+				if (input.shift !== down) {
+					input.shift = down;
+					socket.emit("playerInput", input);
+					console.log(input);
+				}
 
-                break;
+				break;
 			default:
 				break;
 		}
@@ -212,22 +212,19 @@ class Canvas extends React.Component {
 			</div>
 		);
 
-
 		let gamers = this.players;
-		const playerList = gamers.length !== 0 ? this.players.map(player => {
-			return (
-				<PlayerListItem
-					key={player.id}
-					player={player}
-					/>
+		const playerList =
+			gamers.length !== 0 ? (
+				this.players.map(player => {
+					return <PlayerListItem key={player.id} player={player} />;
+				})
+			) : (
+				<li>Loading...</li>
 			);
-		})
-			: <li>Loading...</li>
 
 		return (
-			<div className='gameboard-parent'>
-				<div className='board-header'>
-
+			<div className="gameboard-parent">
+				<div className="board-header">
 					<img
 						className="player-game-logo"
 						src={require("../style/images/newLogo.png")}
@@ -235,7 +232,7 @@ class Canvas extends React.Component {
 						width="800"
 						height="64.46"
 					/>
-					<div className='text'>
+					<div className="text">
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
@@ -245,20 +242,20 @@ class Canvas extends React.Component {
 					</div>
 					<progress></progress> */}
 
-				<div className='board-container'>
+				<div className="board-container">
 					<canvas
-						id='can1'
-						// ref={this.canvasRef} 
-						width='1300'
-						height='750'
-						style={{ position: 'relative', top: 0 }}
+						id="can1"
+						// ref={this.canvasRef}
+						width="1300"
+						height="750"
+						style={{ position: "relative", top: 0 }}
 					/>
 					<canvas
-						id='can2'
-						// ref={this.canvasRef} 
-						width='1300'
-						height='750'
-						style={{ position: 'absolute', top: 0, left: 0 }}
+						id="can2"
+						// ref={this.canvasRef}
+						width="1300"
+						height="750"
+						style={{ position: "absolute", top: 0, left: 0 }}
 					/>
 				</div>
 				<ul className="side-bar">
