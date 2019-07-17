@@ -5,6 +5,7 @@ const Player = require("./classes/player");
 let ROOM_LIST = {};
 let PLAYER_LIST = {};
 
+
 module.exports = function(socket) {
 	socket.on("joinRoom", data => {
 		console.log(data);
@@ -16,7 +17,6 @@ module.exports = function(socket) {
 		} else {
 			game = ROOM_LIST[data.roomId];
 		}
-
 		let player = game.addPlayer(socket.id, socket, data.userTag, data.roomId);
 		if (player) {
 			PLAYER_LIST[socket.id] = player;

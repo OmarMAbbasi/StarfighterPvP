@@ -3,16 +3,19 @@ import io from "socket.io-client";
 import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
-import Bullet from '../classes/bullet';
-import PlayerListItem from './player_list_item';
+import Bullet from "../classes/bullet";
+import PlayerListItem from "./player_list_item";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
-import Modal from './modal';
+import Modal from "./modal";
 
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
 	socketURL = "https://starfight-staging.herokuapp.com/";
 }
+
+const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
+
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
@@ -21,7 +24,7 @@ class Canvas extends React.Component {
 			w: false,
 			s: false,
 			a: false,
-			d: false, 
+			d: false
 		};
 
 		this.players = [];
@@ -29,11 +32,14 @@ class Canvas extends React.Component {
 		this.bullets = [];
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
-
+		this.roomId = props.match.params;
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 		this.drawObj = this.drawObj.bind(this);
 		this.joinRoom = this.joinRoom.bind(this);
+		this.userTag =
+			this.props.history.location.userTag ||
+			PILOTS[Math.floor(Math.random() * Math.floor(5))];
 	}
 
 	openSocket = () => {
@@ -163,7 +169,6 @@ class Canvas extends React.Component {
 		}
 		this.input = input;
 		// debugger;
-		
 	}
 
 	// updatePos = () => {
@@ -195,8 +200,8 @@ class Canvas extends React.Component {
 		let socket = this.socket;
 		const payload = {
 			type: this.props.history.location.type,
-			userTag: this.props.history.location.userTag,
-			roomId: this.props.history.location.roomId
+			userTag: this.userTag,
+			roomId: this.roomId
 		};
 		socket.emit("joinRoom", payload);
 	}
@@ -217,18 +222,18 @@ class Canvas extends React.Component {
 				<h2>Player 2</h2>
 			</div>
 		);
-		
+
 		let gamers = this.players;
 		const playerList =
 			gamers.length !== 0 ? (
 				this.players.map(player => {
-					return <PlayerListItem key={player.id} player={player} />
+					return <PlayerListItem key={player.id} player={player} />;
 				})
 			) : (
 				<li>Loading...</li>
 			);
 
-			//change to this.state.round after round logic implemented ??
+		//change to this.state.round after round logic implemented ??
 		if (this.state.round === 0) {
 			// const canvas = document.getElementById("can1");
 			// const can1Ctx = canvas.getContext("2d");
@@ -236,15 +241,15 @@ class Canvas extends React.Component {
 
 			this.props.history.push({
 				pathname: "/gameover",
-				players: this.players,
+				players: this.players
 			});
 		}
 
 		return (
 			<div className="gameboard-parent">
-				{ this.props.modal ? <Modal/> : null }
+				{this.props.modal ? <Modal /> : null}
 
-					<audio src={backSound} autoPlay loop />
+				<audio src={backSound} autoPlay loop />
 				<div className="board-header">
 					<img
 						className="player-game-logo"
@@ -252,7 +257,7 @@ class Canvas extends React.Component {
 						alt="logo"
 						width="800"
 						height="64.46"
-						/>
+					/>
 					<div className="text">
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
@@ -278,10 +283,10 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
-			</div> 
+				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
+			</div>
 		);
 	}
 }
-	
-	export default withRouter(Canvas);
+
+export default withRouter(Canvas);
