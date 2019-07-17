@@ -40,6 +40,9 @@ module.exports = function(socket) {
 	// });
 
 	socket.on("disconnect", () => {
+		if (!PLAYER_LIST[socket.id]) {
+			return null;
+		}
 		let roomId = PLAYER_LIST[socket.id].gameId;
 		let game = ROOM_LIST[roomId];
 		game.removePlayer(socket.id);
