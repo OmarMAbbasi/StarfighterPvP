@@ -32,6 +32,7 @@ class Player extends MovingObject {
 		this.inputs.A = true;
 		this.drawDeath = this.drawDeath.bind(this);
 	}
+	
 
 	drawDeath(ctx) {
 		// debugger

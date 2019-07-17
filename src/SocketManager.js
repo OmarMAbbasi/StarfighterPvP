@@ -32,7 +32,7 @@ module.exports = function(socket) {
 
 	socket.on("submitMessage", data => {
 		let player = PLAYER_LIST[socket.id];
-		ROOM_LIST[data.roomId].chat.getMessage(player, data.message);
+		ROOM_LIST[data.roomId].chat.getMessage(player, data.body, data.nickname);
 	});
 
 	// socket.on("shoot", data => {

@@ -30,6 +30,8 @@ class Player extends MovingObject {
 		this.color = "";
 	}
 
+	
+
 	setHealth(hp) {
 		this.health = hp;
 	}
