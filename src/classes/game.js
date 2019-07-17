@@ -81,10 +81,11 @@ class Game {
 		allObjects.forEach(obj => obj.move(deltaTime));
 		
 		
-        // check collisions of players
+        // check collisions
 		allObjects.forEach(obj1 => {
 			allObjects.forEach(obj2 => {
-				obj1.collideWith(obj2);
+			if (!obj1.respawning && !obj2.respawning) {
+				obj1.collideWith(obj2);}
 			});
 		});
 		

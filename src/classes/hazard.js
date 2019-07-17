@@ -8,7 +8,8 @@ class Hazard extends MovingObject {
 		this.dir = this.randomRotation();
 		this.rotateSpeed = Math.random() * 60 + 30;
 		this.health = 100;
-		this.respawning = false;
+		this.respawning = 0;
+		this.points = 100;
 	}
 
 	respawn() {
@@ -54,7 +55,7 @@ class Hazard extends MovingObject {
 		this.health -= damage;
 
 		if (this.health <= 0) {
-			this.respawning = 1;
+			this.respawning = .5;
 		}
 	}
 

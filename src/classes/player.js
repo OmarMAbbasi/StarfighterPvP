@@ -32,18 +32,20 @@ class Player extends MovingObject {
 
 	collideWith(obj) {
 		if (this.respawning > 0) {
+			console.log('im respawning');
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
-			if ((obj instanceof Player && obj.id !== this.id) || obj instanceof Hazard) {
+			if ((obj instanceof Player && obj.id !== this.id)) {
 					this.takeDamage(100);
+					obj.takeDamage(100);
 			} else if (obj instanceof Bullet && obj.playerId !== this.id) {
 				this.takeDamage(obj.damage);
+			} else if (obj instanceof Hazard) {
+				this.takeDamage(100);
 			}
 		}
 	}
-
-	
 
 	addScore(points) {
 		this.score += points;
@@ -54,7 +56,8 @@ class Player extends MovingObject {
 		this.health -= damage;
 
 		if (this.health <= 0) {
-			this.respawning = 3;	
+			this.respawning = 3;
+			this.addScore(-250);	
 		}
 	}
 
@@ -89,7 +92,7 @@ class Player extends MovingObject {
 		// if (this.bulletType == "uzi" && !"delta" / 2) {
 		// 	powerup = "none";
 		// }
-		powerup = 'buckshot';
+		// powerup = 'buckshot';
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
@@ -268,7 +271,7 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
-				10,
+				50,
 				this
 			);
 			bullets.push(bullet);
