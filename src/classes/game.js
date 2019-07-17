@@ -45,7 +45,7 @@ class Game {
 		this.playerSockets = {};
 
 		this.timer = 0;
-		this.chat = new Chat();
+        this.chat = new Chat();
 	}
 
 	async startGame() {
@@ -128,7 +128,6 @@ class Game {
 				players: Object.values(this.players),
 				hazards: this.hazards,
 				bullets: this.bullets,
-				score: this.players[socket.id].score,
 				timer: this.timer,
 				rounds: this.rounds
 			});
@@ -149,7 +148,8 @@ class Game {
 
 	addPlayer(playerId, socket, playerTag, gameId) {
 		if (this.players.length === 4 || this.started) {
-			return null;
+            this.playerSockets[playerId] = socket;
+            return {gameId, spectator: true}
 		}
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
