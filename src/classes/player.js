@@ -22,6 +22,7 @@ class Player extends MovingObject {
 		this.shooting = false;
 		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
+		this.invuln = 0;
 		this.bulletType = "normal";
 		this.powerUps = ["nothing"];
 		this.shield = 0;
