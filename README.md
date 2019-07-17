@@ -2,8 +2,7 @@
 
 ![logo](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/newLogo.png)
 
-Attention all pilots, man your battlestations! Grab a spaceship and get ready for battle in StarfighterPvp. Challenge your friends, dodge 
-asteroids, collect powerups, and find out if you have what it takes to become an ace pilot in this arcade-style game!
+Attention all pilots, man your battlestations! Grab a spaceship and get ready for battle in StarfighterPvp. Challenge your friends, dodge asteroids, collect powerups, and find out if you have what it takes to become an ace pilot in this arcade-style game!
 
 ## Features
 StarfighterPvP comes equipped with everything you will need for an exciting, action-packed, multiplayer space adventure.
