@@ -4,6 +4,7 @@ import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
 import PlayerListItem from './player_list_item';
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
 let socketURL = "http://localhost:5000";
 
@@ -13,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 0, round: 5};
+		this.state = { time: 0, round: 5, gameOver: false};
 		this.input = {
 			w: false,
 			s: false,
@@ -140,9 +141,6 @@ class Canvas extends React.Component {
 	}
 
 	componentDidMount() {
-		if (this.props.roundsLeft === 0) {
-			this.props.history.push("/gameover");
-		}
 		const can1 = document.getElementById("can1");
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
@@ -173,6 +171,13 @@ class Canvas extends React.Component {
 			return null;
 		}
 
+		if (this.props.round === 0) {
+			this.setState({ gameOver: true })
+			.then(() => this.props.history.push("/gameOver"))
+
+		}
+
+
 		if (this.props.timeLeft === 0) {
 			this.props.openModal("nextRound");
 		}
@@ -199,6 +204,8 @@ class Canvas extends React.Component {
 
 		return (
 			<div className='gameboard-parent'>
+				<audio src={backSound} autoPlay loop />
+
 				<div className='board-header'>
 
 					<img

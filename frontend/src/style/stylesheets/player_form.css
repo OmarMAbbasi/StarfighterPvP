@@ -189,7 +189,8 @@
 }
 
 audio { 
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
 }
 
 .round-over {

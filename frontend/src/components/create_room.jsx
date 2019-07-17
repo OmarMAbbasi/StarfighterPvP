@@ -65,7 +65,7 @@ class CreateRoom extends React.Component {
 					<button className="player-btn" type="submit">
 						Play
 					</button>
-					{this.state.roomId !== "" ? shownView() : null}
+					{this.state.userTag !== "" ? shownView() : null}
 				</form>
 			</div>
 		);
