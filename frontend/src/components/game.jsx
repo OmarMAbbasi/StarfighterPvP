@@ -45,7 +45,9 @@ class Canvas extends React.Component {
 		this.startGame = this.startGame.bind(this);
 		this.userTag =
 			this.props.history.location.userTag ||
-			PILOTS[Math.floor(Math.random() * Math.floor(5))];
+            PILOTS[Math.floor(Math.random() * Math.floor(5))];
+
+        this.spectator = false;
 	}
 
 	openSocket = () => {
@@ -54,7 +56,12 @@ class Canvas extends React.Component {
 		// !Socket Tests
 		socket.on("connect", () => {
 			console.log("Ayyy! Websockets!");
-		});
+        });
+        
+        socket.on("roomFullOrStarted", () => {
+            this.spectator = true;
+            this.setState({gameStarted: true});
+        })
 
 		socket.on("playerJoin", data => {
 			this.setState({ players: data.players });
@@ -201,12 +208,15 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		this.drawObj();
 
-		document.addEventListener("keydown", event => {
-			this._handleKey(event, true);
-		});
-		document.addEventListener("keyup", event => {
-			this._handleKey(event, false);
-		});
+        if (!this.spectator) {
+            document.addEventListener("keydown", event => {
+                this._handleKey(event, true);
+            });
+            document.addEventListener("keyup", event => {
+                this._handleKey(event, false);
+            });
+        }
+
 	}
 
 	joinRoom() {

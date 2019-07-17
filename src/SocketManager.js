@@ -16,16 +16,18 @@ module.exports = function(socket) {
 			game = ROOM_LIST[data.roomId];
 		}
 		let player = game.addPlayer(socket.id, socket, data.userTag, data.roomId);
-		if (player) {
+		if (!player.spectator) {
 			PLAYER_LIST[socket.id] = player;
 		} else {
-			socket.emit("roomFull", false);
+			socket.emit("roomFullOrStarted");
 		}
 	});
 
 	socket.on("playerInput", data => {
-		player = PLAYER_LIST[socket.id];
-		player.setInputs(data);
+        player = PLAYER_LIST[socket.id];
+        if (player) {
+            player.setInputs(data);
+        }
 		// console.log(data);
 	});
 
