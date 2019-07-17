@@ -74,7 +74,14 @@ class Canvas extends React.Component {
 		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
-			this.setState({ time: Math.ceil(data.timer), round: data.rounds });
+			
+			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
+			if (data.rounds === 1) {
+				this.props.history.push({
+					pathname: "/gameover",
+					players: this.players
+				});
+			}
 			console.log(data);
 			this.players = [];
 			let players = data.players;
@@ -102,26 +109,29 @@ class Canvas extends React.Component {
 	};
 
 	drawObj() {
-		const can1 = document.getElementById("can1");
-		const can1Ctx = can1.getContext("2d");
-		const can2 = document.getElementById("can2");
-		const can2Ctx = can2.getContext("2d");
-		can1Ctx.clearRect(0, 0, 1600, 900);
-		can1Ctx.rect(0, 0, 1600, 900);
-		can1Ctx.fillStyle = "black";
-		can1Ctx.fill();
-		let objects = this.players.concat(this.hazards).concat(this.bullets);
-		objects.forEach(object => {
-			if (object instanceof Player) {
-				object.draw(can1Ctx, object);
-			} else if (object instanceof Bullet) {
-				object.draw(can1Ctx, object.color);
-			} else {
-				object.draw(can1Ctx);
-			}
-		});
+		
+		if (this.state.round !== 0) {
+			const can1 = document.getElementById("can1");
+			const can1Ctx = can1.getContext("2d");
+			const can2 = document.getElementById("can2");
+			const can2Ctx = can2.getContext("2d");
+			can1Ctx.clearRect(0, 0, 1600, 900);
+			can1Ctx.rect(0, 0, 1600, 900);
+			can1Ctx.fillStyle = "black";
+			can1Ctx.fill();
+			let objects = this.players.concat(this.hazards).concat(this.bullets);
+			objects.forEach(object => {
+				if (object instanceof Player) {
+					object.draw(can1Ctx, object);
+				} else if (object instanceof Bullet) {
+					object.draw(can1Ctx, object.color);
+				} else {
+					object.draw(can1Ctx);
+				}
+			});
+			requestAnimationFrame(this.drawObj);
+		}
 		// can2Ctx.drawImage(can1, 0, 0);
-		requestAnimationFrame(this.drawObj);
 	}
 
 	_handleKey(event, down) {
@@ -242,7 +252,6 @@ class Canvas extends React.Component {
 		);
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
-		debugger;
 		const playerList =
 			gamers.length !== 0 ? (
 				gamers.map(player => {
@@ -262,16 +271,16 @@ class Canvas extends React.Component {
 			);
 
 		//change to this.state.round after round logic implemented ??
-		if (this.state.round === 0) {
-			// const canvas = document.getElementById("can1");
-			// const can1Ctx = canvas.getContext("2d");
-			// can1Ctx.clearRect(0, 0, 1600, 900);
-
-			this.props.history.push({
-				pathname: "/gameover",
-				players: this.players
-			});
-		}
+		// if (this.state.round === 0) {
+		// 	// const canvas = document.getElementById("can1");
+		// 	// const can1Ctx = canvas.getContext("2d");
+		// 	// can1Ctx.clearRect(0, 0, 1600, 900);
+			
+		// 	this.props.history.push({
+		// 		pathname: "/gameover",
+		// 		players: this.players
+		// 	});
+		// }
 
 		return (
 			<div className="gameboard-parent">
