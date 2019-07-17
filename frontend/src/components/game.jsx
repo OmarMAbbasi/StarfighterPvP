@@ -13,12 +13,12 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 0, round: 5 };
+		this.state = { time: 0, round: 5};
 		this.input = {
 			w: false,
 			s: false,
 			a: false,
-			d: false
+			d: false, 
 		};
 
 		this.players = [];
