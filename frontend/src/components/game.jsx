@@ -6,6 +6,7 @@ import Hazard from "../classes/hazard";
 import Bullet from '../classes/bullet';
 import PlayerListItem from './player_list_item';
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+import Modal from './modal';
 
 let socketURL = "http://localhost:5000";
 
@@ -15,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 0, round: 5, gameOver: false};
+		this.state = { time: 30, round: 5 };
 		this.input = {
 			w: false,
 			s: false,
@@ -156,6 +157,7 @@ class Canvas extends React.Component {
 		}
 		this.input = input;
 		// debugger;
+		
 	}
 
 	// updatePos = () => {
@@ -198,16 +200,9 @@ class Canvas extends React.Component {
 			return null;
 		}
 
-		if (this.props.round === 0) {
-			this.setState({ gameOver: true })
-			.then(() => this.props.history.push("/gameOver"))
-
-		}
-
-
-		if (this.props.timeLeft === 0) {
-			this.props.openModal("nextRound");
-		}
+		// if (this.props.timeLeft === 0) {
+		// 	this.props.openModal("nextRound");
+		// }
 
 		const roundOver = () => (
 			<div className="roundOver">
@@ -227,8 +222,22 @@ class Canvas extends React.Component {
 				<li>Loading...</li>
 			);
 
+			//change to this.state.round after round logic implemented
+		if (this.state.time === 0) {
+			const canvas = document.getElementById("can1");
+			const can1Ctx = canvas.getContext("2d");
+			can1Ctx.clearRect(0, 0, 1600, 900);
+
+			this.props.history.push({
+				pathname: "/gameover",
+				players: this.players,
+			});
+		}
+
 		return (
 			<div className="gameboard-parent">
+				{ this.props.modal ? <Modal/> : null }
+
 					<audio src={backSound} autoPlay loop />
 				<div className="board-header">
 					<img
@@ -264,9 +273,9 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-			</div>
+			</div> 
 		);
 	}
 }
-
-export default withRouter(Canvas);
+	
+	export default withRouter(Canvas);

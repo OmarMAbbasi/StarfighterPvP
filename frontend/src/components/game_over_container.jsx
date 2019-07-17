@@ -4,7 +4,6 @@ import { selectBestPlayers } from '../reducers/selectors';
 import { fetchPlayers } from '../actions/players';
 
 const mapSTP = (state, ownProps) => {
-    debugger
     const bestPlayers = selectBestPlayers(state) || [];
     return ({
         players: bestPlayers

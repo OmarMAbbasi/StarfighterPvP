@@ -23,6 +23,7 @@ class JoinRoom extends React.Component {
 				userTag: this.state.userTag,
 				roomId: roomId
 			});
+			this.props.closeModal();
 		}
 	}
 
