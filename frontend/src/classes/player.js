@@ -5,8 +5,17 @@ import Bullet from "./bullet";
 import Hazard from "./hazard";
 
 const redShip = require("../style/images/redshipfire.png");
+const blueShip = require("../style/images/blueshipfire.png");
+const greenShip = require("../style/images/greenshipfire.png");
+const yellowShip = require("../style/images/yellowshipfire.png");
 
-const PLAYER_RADIUS = 11;
+const redGod = require("../style/images/redgod.png");
+const blueGod = require("../style/images/bluegod.png");
+const greenGod = require("../style/images/greengod.png");
+const yellowGod = require("../style/images/yellowgod.png");
+
+
+const PLAYER_RADIUS = 15;
 const PLAYER_SPEED = 30;
 const ROTATE_SPEED = 90;
 
@@ -28,44 +37,67 @@ class Player extends MovingObject {
 		this.inputs.A = true;
 		this.drawDeath = this.drawDeath.bind(this);
 	}
+	
 
 	drawDeath(ctx) {
 		// debugger
 		let boom = new Image();
 		boom.src = boomImg;
-
-		// // ctx.save();
-		// setTimeout(() => ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 15, 15), 1000)
-		// // ctx.clearRect(0,0,1600,900);
-		// setTimeout(() => ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 20, 20), 1000)
-		// // ctx.clearRect(0, 0, 1600, 900);
-		// setTimeout(() => ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 25, 25), 1000)
 		ctx.drawImage(boom, this.pos.x - 17, this.pos.y - 17, 25, 25);
-		// // ctx.clearRect(0, 0, 1600, 900);
-		// setTimeout(() => ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 30, 30), 1000)
-		// // ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 30, 30);
+
 	}
 
-	drawShip(ctx) {
+	drawShip(ctx, player) {
+		// for hitbox
+		// ctx.fillStyle = "#00FF00";
+		// ctx.beginPath();
+		// ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, true);
+		// ctx.fill();
+		// ctx.closePath();
+		
 		let img = new Image();
 		let rotateDir = Math.atan(this.dir.y / this.dir.x);
 		if (this.dir.x < 0) {
 			rotateDir = rotateDir + Math.PI;
 		}
-		img.src = redShip;
+		if (player.color === 'RED') {
+			if (player.invuln > 0) {
+				img.src = redGod;
+			} else {
+				img.src = redShip;
+			}
+		} else if (player.color === 'BLUE') {
+			if (player.invuln > 0) {
+				img.src = blueGod;
+			} else {
+				img.src = blueShip;
+			}
+		} else if (player.color === 'GREEN') {
+			if (player.invuln > 0) {
+				img.src = greenGod;
+			} else {
+				img.src = greenShip;
+			}
+		} else if (player.color === 'YELLOW') {
+			if (player.invuln > 0) {
+				img.src = yellowGod;
+			} else {
+				img.src = yellowShip;
+			}
+		}
 		ctx.save();
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.drawImage(img, this.pos.x - this.radius - 1, this.pos.y - this.radius - 3, this.radius * 2 + 5, this.radius * 2 + 5);
 		ctx.restore();
 	}
 
-	draw(ctx, canvas) {
+	draw(ctx, color) {
 		if (this.health <= 0) {
 			this.drawDeath(ctx);
 		} else {
-			this.drawShip(ctx);
+			this.drawShip(ctx, color);
 		}
 	}
 }

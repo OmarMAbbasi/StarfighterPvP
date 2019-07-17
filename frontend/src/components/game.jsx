@@ -3,23 +3,25 @@ import io from "socket.io-client";
 import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
-import Bullet from "../classes/bullet";
-import PlayerListItem from "./player_list_item";
+import Bullet from '../classes/bullet';
+import PlayerListItem from './player_list_item';
+import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+import Modal from './modal';
 
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight.herokuapp.com/";
+	socketURL = "https://starfight-staging.herokuapp.com/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 0, round: 5 };
+		this.state = { time: 30, round: 5 };
 		this.input = {
 			w: false,
 			s: false,
 			a: false,
-			d: false
+			d: false, 
 		};
 
 		this.players = [];
@@ -91,7 +93,13 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1);
+			if (object instanceof Player) {
+				object.draw(can1Ctx, object);
+			} else if (object instanceof Bullet) {
+				object.draw(can1Ctx, object.color);
+			} else {
+				object.draw(can1Ctx);
+			}
 		});
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
@@ -155,6 +163,7 @@ class Canvas extends React.Component {
 		}
 		this.input = input;
 		// debugger;
+		
 	}
 
 	// updatePos = () => {
@@ -167,9 +176,6 @@ class Canvas extends React.Component {
 	}
 
 	componentDidMount() {
-		if (this.props.roundsLeft === 0) {
-			this.props.history.push("/gameover");
-		}
 		const can1 = document.getElementById("can1");
 		const can1Ctx = can1.getContext("2d");
 		can1Ctx.rect(0, 0, can1.width, can1.height);
@@ -200,9 +206,9 @@ class Canvas extends React.Component {
 			return null;
 		}
 
-		if (this.props.timeLeft === 0) {
-			this.props.openModal("nextRound");
-		}
+		// if (this.props.timeLeft === 0) {
+		// 	this.props.openModal("nextRound");
+		// }
 
 		const roundOver = () => (
 			<div className="roundOver">
@@ -211,19 +217,34 @@ class Canvas extends React.Component {
 				<h2>Player 2</h2>
 			</div>
 		);
-
+		
 		let gamers = this.players;
 		const playerList =
 			gamers.length !== 0 ? (
 				this.players.map(player => {
-					return <PlayerListItem key={player.id} player={player} />;
+					return <PlayerListItem key={player.id} player={player} />
 				})
 			) : (
 				<li>Loading...</li>
 			);
 
+			//change to this.state.round after round logic implemented ??
+		if (this.state.round === 0) {
+			// const canvas = document.getElementById("can1");
+			// const can1Ctx = canvas.getContext("2d");
+			// can1Ctx.clearRect(0, 0, 1600, 900);
+
+			this.props.history.push({
+				pathname: "/gameover",
+				players: this.players,
+			});
+		}
+
 		return (
 			<div className="gameboard-parent">
+				{ this.props.modal ? <Modal/> : null }
+
+					<audio src={backSound} autoPlay loop />
 				<div className="board-header">
 					<img
 						className="player-game-logo"
@@ -231,17 +252,12 @@ class Canvas extends React.Component {
 						alt="logo"
 						width="800"
 						height="64.46"
-					/>
+						/>
 					<div className="text">
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
 				</div>
-				{/* <div> */}
-				{/* <div 100% 0%></div>
-					</div>
-					<progress></progress> */}
-
 				<div className="board-container">
 					<canvas
 						id="can1"
@@ -262,9 +278,10 @@ class Canvas extends React.Component {
 					<h1>Players</h1>
 					{playerList}
 				</ul>
-			</div>
+				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
+			</div> 
 		);
 	}
 }
-
-export default withRouter(Canvas);
+	
+	export default withRouter(Canvas);

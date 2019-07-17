@@ -2,7 +2,7 @@ const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
 const Hazard = require("./hazard");
 
-const PLAYER_RADIUS = 11;
+const PLAYER_RADIUS = 18;
 let player_speed = 150;
 const ROTATE_SPEED = 180;
 const BULLET_SPEED = 450;
@@ -22,11 +22,13 @@ class Player extends MovingObject {
 		this.shooting = false;
 		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
+		this.invuln = 0;
 		this.bulletType = "normal";
 		this.powerUps = ["nothing"];
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
+		this.color = "";
 	}
 
 	setHealth(hp) {
@@ -69,8 +71,7 @@ class Player extends MovingObject {
 	}
 
 	collideWith(obj) {
-		if (this.respawning > 0) {
-			console.log("im respawning");
+		if (this.respawning > 0 || this.invuln > 0) {
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
@@ -109,6 +110,7 @@ class Player extends MovingObject {
 		} else {
 			this.health = 100;
 		}
+		this.invuln = 1.5;
 		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
@@ -116,7 +118,11 @@ class Player extends MovingObject {
 		if (this.respawning > 0) {
 			return;
 		}
-		if (this.lastShotDelta < 1 / FIRE_RATE || !this.inputs.space) {
+		let fireRate = FIRE_RATE;
+		// if (this.bulletType === "uzi") {
+		// 	fireRate = 1;
+		// }
+		if (this.lastShotDelta < 1 / fireRate || !this.inputs.space) {
 			this.lastShotDelta += deltaTime;
 			return;
 		}
@@ -124,16 +130,10 @@ class Player extends MovingObject {
 		let bullets = [];
 		let bullet;
 		let powerup = this.bulletType;
-		// if (!"delta" && !this.bulletType === "littleBoy") {
-		// 	powerup = "noshoot";
-		// }
-		// if (this.bulletType == "uzi" && !"delta" / 2) {
-		// 	powerup = "none";
-		// }
-		// powerup = 'buckshot';
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
+		// powerup = 'shotgun';
 		switch (powerup) {
 		case "littleBoy": //experimental
 			bullet = new Bullet(
@@ -142,7 +142,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -154,7 +155,8 @@ class Player extends MovingObject {
 				4,
 				this.id,
 				4,
-				this
+				this,
+				this.color
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -170,7 +172,8 @@ class Player extends MovingObject {
 					5,
 					this.id,
 					5,
-					this
+					this,
+					this.color
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar;
@@ -186,7 +189,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -197,7 +201,8 @@ class Player extends MovingObject {
 				15,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -208,7 +213,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				20,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -219,7 +225,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -231,7 +238,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -247,7 +255,8 @@ class Player extends MovingObject {
 					3,
 					this.id,
 					2,
-					this
+					this,
+					this.color
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar;
@@ -261,7 +270,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			newVec = this.rotateVector([this.dir.x, this.dir.y], 70);
@@ -271,7 +281,8 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -280,37 +291,23 @@ class Player extends MovingObject {
 				5,
 				this.id,
 				10,
-				this
+				this,
+				this.color
 			);
 			bullets.push(bullet);
-			// bullet = new Bullet(
-			// 	Object.assign({}, this.pos),
-			// 	{ x: (1 -this.dir.y) * BULLET_SPEED, y: (1 - this.dir.x) * BULLET_SPEED },
-			// 	5,
-			// 	this.id,
-			// 	10
-			// );
-			// bullets.push(bullet);
-			// bullet = new Bullet(
-			// 	Object.assign({}, this.pos),
-			// 	{
-			// 		x: this.dir.y * BULLET_SPEED * -1,
-			// 		y: this.dir.x * BULLET_SPEED * -1
-			// 	},
-			// 	5,
-			// 	this.id,
-			// 	10
-			// );
-			// bullets.push(bullet);
+			break;
+		case "uzi":
+			this.lastShotDelta += 1 / FIRE_RATE / 2;
 			break;
 		default:
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				5,
+				7,
 				this.id,
-				50,
-				this
+				35,
+				this,
+				this.color
 			);
 			bullets.push(bullet);
 			break;
@@ -338,6 +335,11 @@ class Player extends MovingObject {
 			this.respawn();
 			this.respawning = 0;
 		}
+		if (this.invuln > 0) {
+			this.invuln -= deltaTime;
+		} else if (this.invuln < 0) {
+			this.invuln = 0;
+		}
 		// rotate player
 		this.rotate(deltaTime);
 		this.pos.x += this.dir.x * this.speed * deltaTime;
@@ -353,9 +355,9 @@ class Player extends MovingObject {
 		if (this.inputs.a && this.inputs.d) {
 			dir = 0;
 		} else if (this.inputs.a) {
-			dir = -1;
-		} else if (this.inputs.d) {
 			dir = 1;
+		} else if (this.inputs.d) {
+			dir = -1;
 		}
 
 		this.dir = this.rotateVector(

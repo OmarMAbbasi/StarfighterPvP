@@ -5,13 +5,17 @@ class Chat {
 	}
 
 	joinChat(player, socket) {
-		this.memberData.push = { player: player, socket: socket };
+		this.memberData.push = { player: player, socketId: socket };
 	}
 
 	getMessage(player, message) {
-		this.messages.push({ message: message, playerId: player.id });
+		this.messages.push({
+			body: message.body,
+			playerId: player.id,
+			nickname: player.nickname
+		});
 		this.memberData.forEach(member => {
-			member.socket.emit(this.messages);
+			member.socket.emit("updateChat", this.messages);
 		});
 	}
 }
