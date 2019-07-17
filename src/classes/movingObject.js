@@ -3,7 +3,7 @@ const { WIDTH, HEIGHT } = require("./constants");
 
 class MovingObject {
 	constructor(pos, vel, radius) {
-		this.radius = radius ? radius : this.randomRadius(20, 40);
+		this.radius = radius ? radius : this.randomRadius(20, 35);
 		this.vel = vel ? vel : this.randomVelocity(75, 150);
 		this.pos = pos ? pos : this.randomPosition(this.radius);
 	}

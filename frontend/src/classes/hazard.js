@@ -2,6 +2,7 @@ import MovingObject from "./movingObject";
 import Bullet from "./bullet";
 import hazard1 from "../style/images/asteroid1.png";
 import hazard2 from "../style/images/asteroid2.png";
+import boomImg from "../style/images/boom.png";
 const HAZARDS = [hazard1, hazard2];
 
 // const HAZARD1_RADIUS = 10;
@@ -14,12 +15,15 @@ class Hazard extends MovingObject {
 		this.dir = this.randomRotation();
 		this.health = 100;
 		this.rotateSpeed = Math.random() * 60 + 30;
+		this.powerUps = [];
 	}
 
 	move(deltaTime) {
 		super.move(deltaTime);
 		this.rotate(deltaTime);
 	}
+
+	
 
 	rotate(deltaTime) {
 		let ang = -this.rotateSpeed * (Math.PI / 180) * deltaTime;
@@ -32,7 +36,7 @@ class Hazard extends MovingObject {
 		this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
 	}
 
-	draw(ctx) {
+	drawHazard(ctx) {
 		let img = new Image();
 		let rotateDir = Math.atan(this.dir.y / this.dir.x);
 		if (this.dir.x < 0) {
@@ -43,8 +47,22 @@ class Hazard extends MovingObject {
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - 17, this.pos.y - 17, 35, 35);
+		ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
 		ctx.restore();
+	}
+
+	drawBlownup(ctx) {
+		let boom = new Image();
+		boom.src = boomImg;
+		ctx.drawImage(boom, this.pos.x, this.pos.y, 5, 5);
+	}
+
+	draw(ctx) {
+		if (this.health <= 0) {
+			this.drawBlownup(ctx);
+		} else {
+			this.drawHazard(ctx);
+		}
 	}
 }
 

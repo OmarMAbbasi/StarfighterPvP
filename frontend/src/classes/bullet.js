@@ -1,5 +1,6 @@
 import MovingObject from "./movingObject";
 import redBlast from "../style/images/redblast.png";
+import Player from "./player";
 // import Player from "./player";//! user but not defined
 // const Hazard = require('./hazard');
 
@@ -8,6 +9,7 @@ class Bullet extends MovingObject {
 		super(pos, vel, size);
 		this.playerId = playerId;
 		this.damage = damage;
+		this.powerUps = [];
 	}
 
 	rewardPoints(players, obj) {
@@ -20,6 +22,33 @@ class Bullet extends MovingObject {
 		}
 	}
 
+	setType(type) {
+		let dir = {};
+		let player;
+		let pos = this.pos;
+		dir.x = this.vel.x;
+		dir.y = this.vel.y;
+		player = Player.new(pos, this.playerId, {
+			x: dir.x * -1,
+			y: dir.y * -1
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		player = Player.new(pos, this.playerId, {
+			y: dir.y * -1,
+			x: dir.x * -1
+		});
+
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+		player = Player.new(pos, this.playerId, {
+			y: dir.y,
+			x: dir.x
+		});
+		player.bulletType("littleboypellet");
+		player.shoot(1000000);
+	}
+
 	draw(ctx) {
 		// to see hit circle
 		// ctx.fillStyle = "#00FF00";
@@ -30,21 +59,17 @@ class Bullet extends MovingObject {
 		//
 
 		let img = new Image();
-		// let rotateDir;
-		// if (this.dir.x === 0) {
-		//     rotateDir = (this.dir.y * (-Math.PI / 2))
-		// } else {
-		//     rotateDir = Math.atan(this.dir.y / this.dir.x);
-		// }
-		img.onload = () => {
-			// ctx.save();
-			// ctx.translate(this.pos.x, this.pos.y);
-			// ctx.rotate(rotateDir);
-			// ctx.translate(-this.pos.x, -this.pos.y);
-			ctx.drawImage(img, this.pos.x - 6, this.pos.y - 5, 12, 15);
-			// ctx.restore();
-		};
+		let rotateDir = Math.atan(this.vel.y / this.vel.x);
+		if (this.vel.x < 0) {
+			rotateDir = rotateDir + Math.PI;
+		}
 		img.src = redBlast;
+		ctx.save();
+		ctx.translate(this.pos.x, this.pos.y);
+		ctx.rotate(rotateDir);
+		ctx.translate(-this.pos.x, -this.pos.y);
+		ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
+		ctx.restore();
 	}
 }
 
