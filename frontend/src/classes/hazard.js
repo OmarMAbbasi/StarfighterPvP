@@ -22,6 +22,8 @@ class Hazard extends MovingObject {
 		this.rotate(deltaTime);
 	}
 
+	
+
 	rotate(deltaTime) {
 		let ang = -this.rotateSpeed * (Math.PI / 180) * deltaTime;
 		let vec = [this.dir.x, this.dir.y];

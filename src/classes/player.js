@@ -35,9 +35,8 @@ class Player extends MovingObject {
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
-			if (obj instanceof Player || obj instanceof Hazard) {
+			if ((obj instanceof Player && obj.id !== this.id) || obj instanceof Hazard) {
 					this.takeDamage(100);
-					obj.takeDamage(100);
 			} else if (obj instanceof Bullet && obj.playerId !== this.id) {
 				this.takeDamage(obj.damage);
 			}
@@ -90,7 +89,7 @@ class Player extends MovingObject {
 		// if (this.bulletType == "uzi" && !"delta" / 2) {
 		// 	powerup = "none";
 		// }
-		powerup = 'shotgun';
+		powerup = 'buckshot';
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
@@ -101,7 +100,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -112,7 +112,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				4,
 				this.id,
-				4
+				4,
+				this
 			);
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
@@ -127,7 +128,8 @@ class Player extends MovingObject {
 					{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
 					5,
 					this.id,
-					5
+					5,
+					this
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar
@@ -142,7 +144,8 @@ class Player extends MovingObject {
 				},
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			break;
@@ -152,7 +155,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				15,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			break;
@@ -162,7 +166,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
-				20
+				20,
+				this
 			);
 			bullets.push(bullet);
 			break;
@@ -172,7 +177,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -183,7 +189,8 @@ class Player extends MovingObject {
 				},
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			break;
@@ -198,7 +205,8 @@ class Player extends MovingObject {
 					{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
 					3,
 					this.id,
-					2
+					2,
+					this
 				);
 				bullets.push(bullet);
 				baseVec -= vecScalar
@@ -211,7 +219,8 @@ class Player extends MovingObject {
 				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED},
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			newVec = this.rotateVector([this.dir.x, this.dir.y], 70);
@@ -220,7 +229,8 @@ class Player extends MovingObject {
 				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED},
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			bullet = new Bullet(
@@ -228,7 +238,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED},
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			// bullet = new Bullet(
@@ -257,7 +268,8 @@ class Player extends MovingObject {
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
-				10
+				10,
+				this
 			);
 			bullets.push(bullet);
 			break;

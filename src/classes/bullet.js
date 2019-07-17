@@ -3,10 +3,12 @@ const Player = require("./player");
 // const Hazard = require('./hazard');
 
 class Bullet extends MovingObject {
-    constructor(pos, vel, size, playerId, damage) {
+    constructor(pos, vel, size, playerId, damage, playerObj) {
         super(pos, vel, size);
         this.playerId = playerId;
         this.damage = damage;
+        this.player = playerObj;
+        this.collided = false;
     }
 
     move(deltaTime) {
@@ -43,13 +45,15 @@ class Bullet extends MovingObject {
         player.shoot(1000000);
     }
 
-    rewardPoints(players, obj) {
-        if (this.isCollidedWith(obj) && obj.health <= 0) {
-            players.forEach(player => {
-                if (player.id === this.playerId) {
-                    player.addScore(obj.points);
-                }
-            });
+    collideWith(obj) {
+        if ((obj instanceof Bullet)) {
+            return;
+        }
+        if (this.isCollidedWith(obj) && !(obj.id === this.playerId)) {
+                this.collided = true;
+            if (obj.health <= 0) {
+                this.player.addScore(obj.points);
+            }
         }
     }
 }

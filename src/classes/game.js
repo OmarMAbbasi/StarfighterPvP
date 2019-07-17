@@ -74,14 +74,24 @@ class Game {
         Object.values(this.players).forEach(player => {
             let bullets = player.shoot(deltaTime);
             if (bullets) {
-                console.log(bullets);
                 this.bullets = this.bullets.concat(bullets);
             }
         });
         // move all objects
 		allObjects.forEach(obj => obj.move(deltaTime));
 		
-		this.bullets.forEach( bullet => {
+		
+        // check collisions of players
+		allObjects.forEach(obj1 => {
+			allObjects.forEach(obj2 => {
+				obj1.collideWith(obj2);
+			});
+		});
+		
+		this.bullets.forEach(bullet => {
+			if (bullet.collided) {
+				this.removeObject(bullet);
+			}
 			if (bullet.pos.x < 0 - bullet.radius) {
 				this.removeObject(bullet)
 			} else if (bullet.pos.x > Constants.WIDTH + bullet.radius) {
@@ -94,14 +104,6 @@ class Game {
 				this.removeObject(bullet)
 			} 
 		});
-
-        // check collisions
-		Object.values(this.players).forEach(player => {
-			this.hazards.concat(this.bullets).forEach(obj2 => {
-				player.collideWith(obj2);
-			});
-		});
-
         // update clients with new positions
         Object.values(this.playerSockets).forEach(socket => {
             // emit game state to client
