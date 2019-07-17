@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "./modal";
-
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
 const redShip = require("../style/images/redshipfire.png");
@@ -55,11 +54,11 @@ class PlayerForm extends React.Component {
 		img.src = redShip;
 	}
 
+
 	render() {
 		return (
 			<div className="player-form-parent">
-				<audio src={backSound} autoPlay loop />
-
+				<audio src={backSound} autoPlay loop controls />
 				<canvas
 					ref={this.canvasRef}
 					id="my-canvas"
@@ -68,9 +67,11 @@ class PlayerForm extends React.Component {
 				></canvas>
 
 				{this.props.modal ? (
+
 					<Modal />
 				) : (
 					<div className="player-form">
+
 						<img
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
@@ -78,25 +79,23 @@ class PlayerForm extends React.Component {
 							width="1200"
 							height="332"
 						/>
-
-						{/* <img className='star1' src={require('../style/images/star1.png')} alt="star1" width='250' height='191' />
-                        <img className='star2' src={require('../style/images/star2.png')} alt="star2" width='250' height='191' />
-                        <img className='star3' src={require('../style/images/star3.png')} alt="star3" width='250' height='191' />
-                      */}
 						<div className="btns">
-							{/* <button onClick={this.handleCreateRoom} className='room-btn'>Create Room</button> */}
 							<button
 								onClick={() => this.props.openModal("createRoom")}
 								className="room-btn"
-							>
-								Create Room
+							>Create Room
 							</button>
 						</div>
 						<button
 							onClick={() => this.props.openModal("joinRoom")}
 							className="room-btn"
-						>
-							Join Room
+						>Join Room
+						</button>
+						<button
+							onClick={() => this.props.openModal("joinDemoRoom")}
+							className="room-btn"
+							id="demo-btn"
+						>Demo Room
 						</button>
 					</div>
 				)}

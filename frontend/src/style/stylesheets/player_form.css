@@ -189,7 +189,8 @@
 }
 
 audio { 
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
 }
 
 .round-over {
@@ -207,4 +208,8 @@ audio {
     font-family: 'Press Start 2P', cursive;
     font-size: 28px;
     color: #3500fa;
+}
+
+#demo-btn {
+    margin-top: 25px;
 }

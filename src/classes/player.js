@@ -22,6 +22,7 @@ class Player extends MovingObject {
 		this.shooting = false;
 		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
+		this.invuln = 0;
 		this.bulletType = "normal";
 		this.powerUps = ["nothing"];
 		this.shield = 0;
@@ -29,8 +30,6 @@ class Player extends MovingObject {
 		this.regenInterval = {};
 		this.color = "";
 	}
-
-	
 
 	setHealth(hp) {
 		this.health = hp;
@@ -72,8 +71,7 @@ class Player extends MovingObject {
 	}
 
 	collideWith(obj) {
-		if (this.respawning > 0) {
-			console.log("im respawning");
+		if (this.respawning > 0 || this.invuln > 0) {
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
@@ -112,6 +110,7 @@ class Player extends MovingObject {
 		} else {
 			this.health = 100;
 		}
+		this.invuln = 1.5;
 		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
 	}
 
@@ -134,7 +133,7 @@ class Player extends MovingObject {
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
-		powerup = "uzi";
+		// powerup = 'shotgun';
 		switch (powerup) {
 		case "littleBoy": //experimental
 			bullet = new Bullet(
@@ -297,13 +296,16 @@ class Player extends MovingObject {
 			);
 			bullets.push(bullet);
 			break;
+		case "uzi":
+			this.lastShotDelta += 1 / FIRE_RATE / 2;
+			break;
 		default:
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				7,
 				this.id,
-				10,
+				35,
 				this,
 				this.color
 			);
@@ -332,6 +334,11 @@ class Player extends MovingObject {
 		} else if (this.respawning < 0) {
 			this.respawn();
 			this.respawning = 0;
+		}
+		if (this.invuln > 0) {
+			this.invuln -= deltaTime;
+		} else if (this.invuln < 0) {
+			this.invuln = 0;
 		}
 		// rotate player
 		this.rotate(deltaTime);
