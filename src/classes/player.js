@@ -45,23 +45,23 @@ class Player extends MovingObject {
 		}, 5 * 1000);
 	}
 
-	applyEffects() {
-		powerUps.forEach(powerup => {
-			switch (powerup) {
-			case "miniShield":
-				this.createShield();
-				break;
-			case "bigShield":
-				this.shield = 100;
-				break;
-			case "regen":
-				this.startRegen();
-				break;
-			default:
-				break;
-			}
-		});
-	}
+	// applyEffects() {
+	// 	powerUps.forEach(powerup => {
+	// 		switch (powerup) {
+	// 		case "miniShield":
+	// 			this.createShield();
+	// 			break;
+	// 		case "bigShield":
+	// 			this.shield = 100;
+	// 			break;
+	// 		case "regen":
+	// 			this.startRegen();
+	// 			break;
+	// 		default:
+	// 			break;
+	// 		}
+	// 	});
+	// }
 
 	clearEffects() {
 		clearInterval(this.regenInterval);
@@ -354,9 +354,9 @@ class Player extends MovingObject {
 		if (this.inputs.a && this.inputs.d) {
 			dir = 0;
 		} else if (this.inputs.a) {
-			dir = -1;
-		} else if (this.inputs.d) {
 			dir = 1;
+		} else if (this.inputs.d) {
+			dir = -1;
 		}
 
 		this.dir = this.rotateVector([this.dir.x, this.dir.y], dir * ROTATE_SPEED * deltaTime);
