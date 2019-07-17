@@ -37,20 +37,16 @@ StarfighterPvP comes equipped with everything you will need for an exciting, act
  5. Start using StarfighterPvP
  
 ## About the Project
-An eageer group of four software engineers designed and built StarfighterPvP over five days. A proposal was drafted, which included a 
-database schema, a sample-state, timeline, and frontend and backend routes. The work was equally divided and the timeline was 
-systematically followed from start to finish, to create an exciting and playable game.
+An eageer group of four software engineers designed and built StarfighterPvP over five days. A proposal was drafted, which included a database schema, a sample-state, timeline, and frontend and backend routes. The work was equally divided and the timeline was systematically followed from start to finish, to create an exciting and playable game.
 
 ![starfighter](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/redshipfire.png)
 
 ## The Technology
 ### Backend
-StarfighterPvP is a MERN stack game. The backend is built with MongoDb and Express.js. Backend-frontend integration is achieved through 
-axios. We used Socket.io to create web sockets that allow for multiplayer.
+StarfighterPvP is a MERN stack game. The backend is built with MongoDb and Express.js. Backend-frontend integration is achieved through axios. We used Socket.io to create web sockets that allow for multiplayer.
 
 #### Session Management
-Creating or joining a game is as easy as a mouse click. Gamers have the option to join a demo room and test the game out themselves, or 
-they can create a room or join a friends room. The database stores player nicknames and scores to create a high score list shown at the end 
+Creating or joining a game is as easy as a mouse click. Gamers have the option to join a demo room and test the game out themselves, or they can create a room or join a friends room. The database stores player nicknames and scores to create a high score list shown at the end 
 of games.
 
 Here is a snipped from the Player model:
@@ -102,29 +98,23 @@ We built web sockets, allowing for multiplayer functionality, with the following
 	});
 ```
 
-This code allows for the creation of rooms, which players can invite their friends to join, as well as the joining of rooms. The game can 
-manage multiple multiplayer games at once.
+This code allows for the creation of rooms, which players can invite their friends to join, as well as the joining of rooms. The game can manage multiple multiplayer games at once.
 
 ### Frontend
 
 ![game](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/board.png)
 
-StarfighterPvP's frontend was built using React-Redux. These choices allowed for a unidirectional dataflow, single-source of truth, and 
-dynamic state management. Multiplayer was implemented using Socket.io. HTML canvas was used to render the board, game pieces, and 
-animations, while CSS was used for styling.
+StarfighterPvP's frontend was built using React-Redux. These choices allowed for a unidirectional dataflow, single-source of truth, and dynamic state management. Multiplayer was implemented using Socket.io. HTML canvas was used to render the board, game pieces, and animations, while CSS was used for styling.
 
 #### Frontend Dependencies
-Node package manager (npm) was used to install and save frontend dependencies. Axios was used to interact with the backend API. Other 
-frontend dependencies include React-DOM, React DOM-Router, Provider, and Babel.
+Node package manager (npm) was used to install and save frontend dependencies. Axios was used to interact with the backend API. Other frontend dependencies include React-DOM, React DOM-Router, Provider, and Babel.
 
 #### Game
-Upon creating or joining a room, the user is brought to the game page, where they have the abililty to dodge and destroy asteroids, 
-while battling their friends to get the highest score possible. A single round is two minutes. The player with the highest score 
+Upon creating or joining a room, the user is brought to the game page, where they have the abililty to dodge and destroy asteroids, while battling their friends to get the highest score possible. A single round is two minutes. The player with the highest score at the end of all the rounds wins.
 
 ![splash](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/splash.png)
 
-The game class is resonsibile for bringing together all of the states, objects, and elements of the frontend. For example, the following 
-function, the ```joinRoom()``` function, manages the creation and joining of rooms:
+The game class is resonsibile for bringing together all of the states, objects, and elements of the frontend. For example, the following function, the ```joinRoom()``` function, manages the creation and joining of rooms:
 
 ```javascript
 joinRoom() {
@@ -139,8 +129,7 @@ joinRoom() {
 
 ```
 
-The above code, which receieves its information from the forms, sends the type to the Socket manager allowing for the proper function to 
-be carried out. 
+The above code, which receieves its information from the forms, sends the type to the Socket manager allowing for the proper function to be carried out. 
 
 As for rendering our game canvas, we use the following code: 
 
@@ -164,8 +153,7 @@ As for rendering our game canvas, we use the following code:
 
 ```
 
-A problem we encountered early on was that we would get flashing effects on the gamepieces when the canvas was re-drawn. We mitigated 
-this problem with the creation of a second overlaying canvas.
+A problem we encountered early on was that we would get flashing effects on the gamepieces when the canvas was re-drawn. We mitigated this problem with the creation of a second overlaying canvas.
 
 Finally, we broadcast player name, score and health live with a sidebar, the code is shown here:
 ```javascript
@@ -177,8 +165,7 @@ Finally, we broadcast player name, score and health live with a sidebar, the cod
 				})
 			)
 ```
-Score can be negative, as there is a penalty for one's ship blowing up. The healthbar can also change color and style if a player has a 
-certain powerup.
+Score can be negative, as there is a penalty for one's ship blowing up. The healthbar can also change color and style if a player has a certain powerup.
 
 #### Hazards
 
