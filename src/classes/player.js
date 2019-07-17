@@ -128,6 +128,7 @@ class Player extends MovingObject {
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
+		powerup = 'uzi';
 		switch (powerup) {
 		case "littleBoy": //experimental
 			bullet = new Bullet(
@@ -290,13 +291,15 @@ class Player extends MovingObject {
 			);
 			bullets.push(bullet);
 			break;
+		case 'uzi': 
+			this.lastShotDelta += (1 / FIRE_RATE) / 2;
 		default:
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
 				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				7,
 				this.id,
-				10,
+				35,
 				this,
 				this.color
 			);

@@ -178,9 +178,9 @@ class Game {
 	initRound() {
 		this.populateHazards();
 		this.bullets = [];
-		// Object.values(this.players).forEach(player => {
-		// 	player.applyEffects();
-		// });
+		Object.values(this.players).forEach(player => {
+			player.applyEffects();
+		});
 
 		this.timer = this.roundLength;
 	}
