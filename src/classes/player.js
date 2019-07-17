@@ -23,7 +23,7 @@ class Player extends MovingObject {
 		this.lastShotDelta = 1 / FIRE_RATE;
 		this.respawning = 0;
 		this.bulletType = "normal";
-		this.powerUps = [];
+		this.powerUps = ["nothing"];
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
@@ -46,23 +46,23 @@ class Player extends MovingObject {
 		}, 5 * 1000);
 	}
 
-	// applyEffects() {
-	// 	powerUps.forEach(powerup => {
-	// 		switch (powerup) {
-	// 		case "miniShield":
-	// 			this.createShield();
-	// 			break;
-	// 		case "bigShield":
-	// 			this.shield = 100;
-	// 			break;
-	// 		case "regen":
-	// 			this.startRegen();
-	// 			break;
-	// 		default:
-	// 			break;
-	// 		}
-	// 	});
-	// }
+	applyEffects() {
+		this.powerUps.forEach(powerup => {
+			switch (powerup) {
+			case "miniShield":
+				this.createShield();
+				break;
+			case "bigShield":
+				this.shield = 100;
+				break;
+			case "regen":
+				this.startRegen();
+				break;
+			default:
+				break;
+			}
+		});
+	}
 
 	clearEffects() {
 		clearInterval(this.regenInterval);
@@ -71,13 +71,13 @@ class Player extends MovingObject {
 
 	collideWith(obj) {
 		if (this.respawning > 0) {
-			console.log('im respawning');
+			console.log("im respawning");
 			return;
 		}
 		if (this.isCollidedWith(obj)) {
-			if ((obj instanceof Player && obj.id !== this.id)) {
-					this.takeDamage(100);
-					obj.takeDamage(100);
+			if (obj instanceof Player && obj.id !== this.id) {
+				this.takeDamage(100);
+				obj.takeDamage(100);
 			} else if (obj instanceof Bullet && obj.playerId !== this.id) {
 				this.takeDamage(obj.damage);
 			} else if (obj instanceof Hazard) {
@@ -96,7 +96,7 @@ class Player extends MovingObject {
 
 		if (this.health <= 0) {
 			this.respawning = 3;
-			this.addScore(-250);	
+			this.addScore(-250);
 		}
 	}
 
@@ -177,7 +177,7 @@ class Player extends MovingObject {
 					this.color
 				);
 				bullets.push(bullet);
-				baseVec -= vecScalar
+				baseVec -= vecScalar;
 			}
 			break;
 		case "speedybullets": //works
@@ -260,14 +260,14 @@ class Player extends MovingObject {
 					this.color
 				);
 				bullets.push(bullet);
-				baseVec -= vecScalar
+				baseVec -= vecScalar;
 			}
 			break;
 		case "sideshot": // works
 			let newVec = this.rotateVector([this.dir.x, this.dir.y], -70);
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
-				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED},
+				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
 				5,
 				this.id,
 				10,
@@ -278,7 +278,7 @@ class Player extends MovingObject {
 			newVec = this.rotateVector([this.dir.x, this.dir.y], 70);
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
-				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED},
+				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
 				5,
 				this.id,
 				10,
@@ -288,7 +288,7 @@ class Player extends MovingObject {
 			bullets.push(bullet);
 			bullet = new Bullet(
 				Object.assign({}, this.pos),
-				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED},
+				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
 				5,
 				this.id,
 				10,
@@ -332,7 +332,6 @@ class Player extends MovingObject {
 
 		return bullets; //console.log(input);
 	}
-	
 
 	setInputs(inputs) {
 		console.log(inputs);
@@ -373,7 +372,10 @@ class Player extends MovingObject {
 			dir = -1;
 		}
 
-		this.dir = this.rotateVector([this.dir.x, this.dir.y], dir * ROTATE_SPEED * deltaTime);
+		this.dir = this.rotateVector(
+			[this.dir.x, this.dir.y],
+			dir * ROTATE_SPEED * deltaTime
+		);
 	}
 
 	rotateVector(vec, ang) {
@@ -382,10 +384,10 @@ class Player extends MovingObject {
 		var sin = Math.sin(ang);
 		// this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
 		// this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
-		return { 
+		return {
 			x: Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000,
 			y: Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000
-		}
+		};
 	}
 }
 
