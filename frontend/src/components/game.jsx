@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Player from "../classes/player";
 import { withRouter } from "react-router-dom";
 import Hazard from "../classes/hazard";
+import Bullet from '../classes/bullet';
 import PlayerListItem from './player_list_item';
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
 
