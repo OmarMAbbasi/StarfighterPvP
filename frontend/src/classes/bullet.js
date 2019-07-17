@@ -1,5 +1,8 @@
 import MovingObject from "./movingObject";
 import redBlast from "../style/images/redblast.png";
+import blueBlast from "../style/images/blueblast.png";
+import greenBlast from "../style/images/greenblast.png";
+import yellowBlast from "../style/images/yellowblast.png";
 import Player from "./player";
 // import Player from "./player";//! user but not defined
 // const Hazard = require('./hazard');
@@ -49,7 +52,7 @@ class Bullet extends MovingObject {
 		player.shoot(1000000);
 	}
 
-	draw(ctx) {
+	draw(ctx, color) {
 		// to see hit circle
 		// ctx.fillStyle = "#00FF00";
 		// ctx.beginPath();
@@ -63,12 +66,20 @@ class Bullet extends MovingObject {
 		if (this.vel.x < 0) {
 			rotateDir = rotateDir + Math.PI;
 		}
-		img.src = redBlast;
+		if (color === 'RED') {
+			img.src = redBlast;
+		} else if (color === 'BLUE') {
+			img.src = blueBlast;
+		} else if (color === 'GREEN') {
+			img.src = greenBlast;
+		} else if (color === 'YELLOW') {
+			img.src = yellowBlast;
+		}
 		ctx.save();
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
+		ctx.drawImage(img, this.pos.x - (this.radius * 1.5), this.pos.y - this.radius, this.radius * 2.5, this.radius * 2);
 		ctx.restore();
 	}
 }

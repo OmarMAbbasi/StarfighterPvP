@@ -9,7 +9,7 @@ import PlayerListItem from "./player_list_item";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight.herokuapp.com/";
+	socketURL = "https://starfight-staging.herokuapp.com/";
 }
 class Canvas extends React.Component {
 	constructor(props) {
@@ -91,7 +91,11 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1);
+			if (object instanceof Player || object instanceof Bullet) {
+				object.draw(can1Ctx, object.color);
+			} else {
+				object.draw(can1Ctx);
+			}
 		});
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
@@ -199,11 +203,11 @@ class Canvas extends React.Component {
 		if (!this.props) {
 			return null;
 		}
-
+		
 		if (this.props.timeLeft === 0) {
 			this.props.openModal("nextRound");
 		}
-
+		
 		const roundOver = () => (
 			<div className="roundOver">
 				<h1>Round Over</h1>
@@ -211,19 +215,20 @@ class Canvas extends React.Component {
 				<h2>Player 2</h2>
 			</div>
 		);
-
+		
 		let gamers = this.players;
 		const playerList =
-			gamers.length !== 0 ? (
-				this.players.map(player => {
-					return <PlayerListItem key={player.id} player={player} />;
-				})
+		gamers.length !== 0 ? (
+			this.players.map(player => {
+				return <PlayerListItem key={player.id} player={player} />;
+			})
 			) : (
 				<li>Loading...</li>
-			);
-
-		return (
-			<div className="gameboard-parent">
+				);
+				
+				return (
+					<div className="gameboard-parent">
+					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
 				<div className="board-header">
 					<img
 						className="player-game-logo"
@@ -231,7 +236,7 @@ class Canvas extends React.Component {
 						alt="logo"
 						width="800"
 						height="64.46"
-					/>
+						/>
 					<div className="text">
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
