@@ -20,7 +20,7 @@ class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: 30,
+			time: 120,
 			round: 5,
 			players: [],
 			gameStarted: false
@@ -298,7 +298,7 @@ class Canvas extends React.Component {
 
 				<audio src={backSound} autoPlay loop />
 
-				{this.props.history.location.isHost ? (
+				{(this.props.history.location.isHost || !this.state.gameStarted) ? (
 					<div className="start-game-container">
 						<button onClick={this.startGame}>Start Game</button>
 					</div>

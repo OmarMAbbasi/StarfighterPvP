@@ -5,9 +5,9 @@ const Bullet = require("./bullet");
 const Chat = require("./chatroom");
 
 const FPS = 60;
-const HAZARD_COUNT = 15;
-const NUM_ROUNDS = 2;
-const ROUND_LENGTH = 5;
+const HAZARD_COUNT = 12;
+const NUM_ROUNDS = 5;
+const ROUND_LENGTH = 120;
 const START_LOCS = [
 	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
 	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
@@ -49,6 +49,9 @@ class Game {
 	}
 
 	async startGame() {
+		if (this.started) {
+			return;
+		}
 		this.started = true;
 		console.log("Starting game");
 		while (this.rounds > 0) {

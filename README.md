@@ -1,4 +1,4 @@
-# [StarfighterPvP](https://starfight-staging.herokuapp.com/)
+# [StarfighterPvP](http://starfight.herokuapp.com/#/)
 
 ![logo](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/newLogo.png)
 
