@@ -12,7 +12,6 @@ module.exports = function(socket) {
         let game = null;
         if (data.type === "createRoom") {
             game = ROOM_LIST[data.roomId] = new Game(data.roomId, socket.id);
-            game.startGame();
         } else {
             game = ROOM_LIST[data.roomId];
         }
@@ -24,7 +23,6 @@ module.exports = function(socket) {
             socket.emit("roomFull", false);
         }
 
-        socket.emit("playerJoin", { players: game.players });
     });
 
     socket.on("playerInput", data => {
@@ -56,7 +54,8 @@ module.exports = function(socket) {
 
     socket.on("playerReady", data => {
         PLAYER_LIST[socket.id].ready = !PLAYER_LIST[socket.id].ready;
-        socket.emit("readyUpdate", { players: ROOM_LIST[data.roomId] });
+        ROOM_LIST[data.roomId].updateReady();
+        console.log('player ready');
     });
 
     socket.on("startGame", data => {
