@@ -49,6 +49,9 @@ class Game {
 	}
 
 	async startGame() {
+		if (this.started) {
+			return;
+		}
 		this.started = true;
 		console.log("Starting game");
 		while (this.rounds > 0) {
