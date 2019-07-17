@@ -40,6 +40,7 @@ class Canvas extends React.Component {
         this.canvasRef = React.createRef();
         this.drawObj = this.drawObj.bind(this);
         this.joinRoom = this.joinRoom.bind(this);
+        this.startGame = this.startGame.bind(this);
     }
 
     openSocket = () => {
@@ -52,11 +53,13 @@ class Canvas extends React.Component {
 
         socket.on("playerJoin", data => {
             this.setState({ players: data.players })
-            this.players = data.players;
+            this.players = data.players.map(player => (
+                Object.assign(new Player(), player)
+            ));
         });
 
         socket.on("readyUpdate", data => {
-            this.setState({ players: data.players});
+            this.setState({ players: data.players });
         });
 
         // socket.emit("joinRoom", {
@@ -112,9 +115,7 @@ class Canvas extends React.Component {
             }
         });
         // can2Ctx.drawImage(can1, 0, 0);
-        if (this.state.gameStarted) {
-            requestAnimationFrame(this.drawObj);
-        }
+        requestAnimationFrame(this.drawObj);
     }
 
     _handleKey(event, down) {
@@ -213,6 +214,11 @@ class Canvas extends React.Component {
         socket.emit("joinRoom", payload);
     }
 
+    startGame() {
+        this.socket.emit("startGame", { roomId: this.props.history.location.roomId })
+        this.setState({ gameStarted: true });
+    }
+
     render() {
         if (!this.props) {
             return null;
@@ -235,7 +241,7 @@ class Canvas extends React.Component {
         const playerList =
             gamers.length !== 0 ? (
                 gamers.map(player => {
-                    return <PlayerListItem key={player.id} player={player} socket={this.socket} gameStarted={this.state.gameStarted} gameId={this.props.match.params.gameId} myTag={this.props.history.location.userTag}/>
+                    return <PlayerListItem key={player.id} player={player} socket={this.socket} gameStarted={this.state.gameStarted} gameId={this.props.match.params.gameId} myTag={this.props.history.location.userTag} />
                 })
             ) : (
                     <li>Loading...</li>
@@ -270,6 +276,14 @@ class Canvas extends React.Component {
                         <h3>Timer:{this.state.time}</h3>
                         <h3>Rounds Left:{this.state.round}</h3>
                     </div>
+                    {
+                        (this.props.history.location.isHost) ?
+                            <div className='start-game-container'>
+                                <button onClick={this.startGame}>
+                                    Start Game</button>
+                            </div> :
+                            null
+                    }
                 </div>
 
                 <div className="board-container">
