@@ -11,9 +11,9 @@ const PlayerListItem = ({ player }) => (
                     backgroundColor: `grey`, height: `20px`, color: "white", display: "flex", justifyContent: "center", verticalAlign: "center",
                     borderRadius: "2px"}}>
                 <div style={{ width: `${player.health}%`, 
-            backgroundColor: `#3500fa`, height: `100%`, color: "white", 
-            fontSize: "14px", display: "flex", justifyContent: "center", verticalAlign: "center",
-                    borderRadius: "2px", paddingTop: "7px"
+                    backgroundColor: `#3500fa`, height: `20px`, color: "white", 
+                    fontSize: "14px", display: "flex", justifyContent: "center", verticalAlign: "center",
+                    borderRadius: "2px", alignItems: "center"
                 }}><i className="fas fa-shield-alt">&#160;&#160;{player.health}%</i></div>
         </div>
 			    :
@@ -24,8 +24,8 @@ const PlayerListItem = ({ player }) => (
                     borderRadius: "2px"
                 }}>
                 <div style={{ width: `${player.health}%`, backgroundColor: `red`, 
-                    height: `100%`, color: "white", fontSize: "14px", display: "flex", 
-                    justifyContent: "center", verticalAlign: "center", borderRadius: "2px", paddingTop: "7px"
+                    height: `20px`, color: "white", fontSize: "14px", display: "flex", 
+                    justifyContent: "center", verticalAlign: "center", borderRadius: "2px", alignItems: "center"
                 }}><i className="fas fa-plus">&#160;&#160;{player.health}%</i></div>
 		</div>
 				}

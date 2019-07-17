@@ -221,7 +221,7 @@ class Canvas extends React.Component {
 		const playerList =
 			gamers.length !== 0 ? (
 				this.players.map(player => {
-					return <PlayerListItem key={player.id} player={player} />;
+					return <PlayerListItem key={player.id} player={player} />
 				})
 			) : (
 				<li>Loading...</li>
@@ -243,10 +243,6 @@ class Canvas extends React.Component {
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
 				</div>
-				{/* <div> */}
-				{/* <div 100% 0%></div>
-					</div>
-					<progress></progress> */}
 
 				<div className="board-container">
 					<canvas
