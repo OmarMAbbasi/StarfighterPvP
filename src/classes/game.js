@@ -1,6 +1,7 @@
 const Player = require("./player");
 const Hazard = require("./hazard");
 const Constants = require("./constants");
+const Bullet = require("./bullet");
 
 const FPS = 60;
 const HAZARD_COUNT = 15;
@@ -78,7 +79,21 @@ class Game {
             }
         });
         // move all objects
-        allObjects.forEach(obj => obj.move(deltaTime));
+		allObjects.forEach(obj => obj.move(deltaTime));
+		
+		this.bullets.forEach( bullet => {
+			if (bullet.pos.x < 0 - bullet.radius) {
+				this.removeObject(bullet)
+			} else if (bullet.pos.x > Constants.WIDTH + bullet.radius) {
+				this.removeObject(bullet)
+			}
+
+			if (bullet.pos.y < 0 - bullet.radius) {
+				this.removeObject(bullet)
+			} else if (bullet.pos.y > Constants.HEIGHT + bullet.radius) {
+				this.removeObject(bullet)
+			} 
+		});
 
         // check collisions
 		Object.values(this.players).forEach(player => {

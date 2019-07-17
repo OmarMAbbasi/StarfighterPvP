@@ -16,6 +16,33 @@ class Bullet extends MovingObject {
         // console.log(this);
     }
 
+    setType(type) {
+        let dir = {};
+        let player;
+        let pos = this.pos;
+        dir.x = this.vel.x;
+        dir.y = this.vel.y;
+        player = Player.new(pos, this.playerId, {
+            x: dir.x * -1,
+            y: dir.y * -1
+        });
+        player.bulletType("littleboypellet");
+        player.shoot(1000000);
+        player = Player.new(pos, this.playerId, {
+            y: dir.y * -1,
+            x: dir.x * -1
+        });
+
+        player.bulletType("littleboypellet");
+        player.shoot(1000000);
+        player = Player.new(pos, this.playerId, {
+            y: dir.y,
+            x: dir.x
+        });
+        player.bulletType("littleboypellet");
+        player.shoot(1000000);
+    }
+
     rewardPoints(players, obj) {
         if (this.isCollidedWith(obj) && obj.health <= 0) {
             players.forEach(player => {

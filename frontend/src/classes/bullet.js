@@ -24,23 +24,24 @@ class Bullet extends MovingObject {
 
 	setType(type) {
 		let dir = {};
+		let player;
 		let pos = this.pos;
-		dir.x = vel.x;
-		dir.y = vel.y;
-		let player = Player.new(pos, this.playerId, {
+		dir.x = this.vel.x;
+		dir.y = this.vel.y;
+		player = Player.new(pos, this.playerId, {
 			x: dir.x * -1,
 			y: dir.y * -1
 		});
 		player.bulletType("littleboypellet");
 		player.shoot(1000000);
-		let player = Player.new(pos, this.playerId, {
+		player = Player.new(pos, this.playerId, {
 			y: dir.y * -1,
 			x: dir.x * -1
 		});
 
 		player.bulletType("littleboypellet");
 		player.shoot(1000000);
-		let player = Player.new(pos, this.playerId, {
+		player = Player.new(pos, this.playerId, {
 			y: dir.y,
 			x: dir.x
 		});
@@ -67,7 +68,7 @@ class Bullet extends MovingObject {
 		ctx.translate(this.pos.x, this.pos.y);
 		ctx.rotate(rotateDir);
 		ctx.translate(-this.pos.x, -this.pos.y);
-		ctx.drawImage(img, this.pos.x - 6, this.pos.y - 5, 12, 15);
+		ctx.drawImage(img, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 2, this.radius * 2);
 		ctx.restore();
 	}
 }
