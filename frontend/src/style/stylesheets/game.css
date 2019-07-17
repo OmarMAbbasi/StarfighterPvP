@@ -7,10 +7,6 @@
     grid-template-columns: 1fr 1300px 1fr 
 }
 
-
-
-
-
 .board-container {
     margin: 0 auto;
     position: relative;
@@ -22,16 +18,39 @@
 .board-header {
     display: flex;
     justify-content: center;
+    align-items: center;
     grid-area: a;
 }
 
-.board-header h3 {
-    margin-left: 265px;
-    margin-right: 260px;
+.text {
+    display: block;
+    padding-left: 20px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+}
+
+.text h3{
+    color: #ffffff;
+}
+/* .board-header h3 {
+    display: flex;
+    position: relative;
+    align-items: center;
+    grid-area: a;
+} */
+
+.player-game-logo {
+    margin-left: 2px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .side-bar {
-    color: #3500fa;
+    color: #ffffff;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -47,7 +66,7 @@
 .side-bar li {
     font-size: 20px;
     list-style: none;
-    padding: 5px 20px;
+    padding: 10px 30px;
 }
 
 .side-bar li > h2 {
@@ -55,7 +74,6 @@
     font-size: 18px;
      overflow: hidden;
     text-overflow: ellipsis;
-
 }
 
 .side-bar li > h3 {
@@ -63,14 +81,8 @@
     font-size: 16px;
 }
 
-.board-header h3 {
-    color: #3500fa;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 24px;
-}
-
 .progressParent {
-    width: 130px;
+    width: 200px;
     height: 18px;
     background: gray;
     border-radius: 2px;

@@ -200,8 +200,18 @@ class Canvas extends React.Component {
 		return (
 			<div className='gameboard-parent'>
 				<div className='board-header'>
-					<h3 id='timer'>Timer:{this.state.time}</h3>
-					<h3 id='rounds'>Rounds Left:{this.state.round}</h3>
+
+					<img
+						className="player-game-logo"
+						src={require("../style/images/newLogo.png")}
+						alt="logo"
+						width="800"
+						height="64.46"
+					/>
+					<div className='text'>
+						<h3>Timer:{this.state.time}</h3>
+						<h3>Rounds Left:{this.state.round}</h3>
+					</div>
 				</div>
 				{/* <div> */}
 				{/* <div 100% 0%></div>
