@@ -27,6 +27,7 @@ class Player extends MovingObject {
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
+		this.color = '';
 	}
 
 	setHealth(hp) {

@@ -14,6 +14,7 @@ const START_LOCS = [
 	{ pos: { x: 200, y: 600 }, dir: { x: 1, y: 0 } },
 	{ pos: { x: 1400, y: 150 }, dir: { x: -1, y: 0 } }
 ];
+const COLORS = ['RED', 'BLUE', 'YELLOW', 'GREEN'];
 
 class Game {
     constructor(gameId, hostId, numRounds = NUM_ROUNDS, roundLength = ROUND_LENGTH) {
@@ -145,7 +146,8 @@ class Game {
         };
 
         let playerParams = START_LOCS[Object.keys(this.players).length];
-        let player = new Player(playerParams.pos, playerId, playerParams.dir);
+		let player = new Player(playerParams.pos, playerId, playerParams.dir);
+		player.color = COLORS.shift();
         player.playerTag = playerTag;
         player.gameId = gameId;
         this.players[playerId] = player;
@@ -155,6 +157,7 @@ class Game {
     }
 
     removePlayer(playerId) {
+		COLORS.push(this.players[playerId].color);
         delete this.players[playerId];
         delete this.playerSockets[playerId];
     }
