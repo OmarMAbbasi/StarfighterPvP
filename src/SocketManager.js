@@ -30,8 +30,9 @@ module.exports = function(socket) {
 		// console.log(data);
 	});
 
-	socket.on("receivePlayerMessage", data => {
-		ROOM_LIST[data.roomId].chat.getMessage(data.player, data.message);
+	socket.on("submitMessage", data => {
+		let player = PLAYER_LIST[socket.id];
+		ROOM_LIST[data.roomId].chat.getMessage(player, data.message);
 	});
 
 	// socket.on("shoot", data => {

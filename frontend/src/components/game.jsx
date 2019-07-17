@@ -96,7 +96,7 @@ class Canvas extends React.Component {
 			} else {
 				object.draw(can1Ctx);
 			}
-		})
+		});
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
 	}
@@ -199,6 +199,7 @@ class Canvas extends React.Component {
 		socket.emit("joinRoom", payload);
 	}
 
+{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.props.history.location.userTag} message = {'somestring'} /> */}
 	render() {
 		if (!this.props) {
 			return null;

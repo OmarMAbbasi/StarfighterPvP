@@ -27,7 +27,7 @@ class Player extends MovingObject {
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
-		this.color = '';
+		this.color = "";
 	}
 
 	setHealth(hp) {
@@ -125,13 +125,6 @@ class Player extends MovingObject {
 		let bullets = [];
 		let bullet;
 		let powerup = this.bulletType;
-		// if (!"delta" && !this.bulletType === "littleBoy") {
-		// 	powerup = "noshoot";
-		// }
-		// if (this.bulletType == "uzi" && !"delta" / 2) {
-		// 	powerup = "none";
-		// }
-		// powerup = 'buckshot';
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
@@ -296,25 +289,6 @@ class Player extends MovingObject {
 				this.color
 			);
 			bullets.push(bullet);
-			// bullet = new Bullet(
-			// 	Object.assign({}, this.pos),
-			// 	{ x: (1 -this.dir.y) * BULLET_SPEED, y: (1 - this.dir.x) * BULLET_SPEED },
-			// 	5,
-			// 	this.id,
-			// 	10
-			// );
-			// bullets.push(bullet);
-			// bullet = new Bullet(
-			// 	Object.assign({}, this.pos),
-			// 	{
-			// 		x: this.dir.y * BULLET_SPEED * -1,
-			// 		y: this.dir.x * BULLET_SPEED * -1
-			// 	},
-			// 	5,
-			// 	this.id,
-			// 	10
-			// );
-			// bullets.push(bullet);
 			break;
 		default:
 			bullet = new Bullet(
