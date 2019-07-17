@@ -10,9 +10,9 @@ const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 30;
 const START_LOCS = [
 	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1400, y: 600 }, dir: { x: -1, y: 0 } },
+	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
 	{ pos: { x: 200, y: 600 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1400, y: 150 }, dir: { x: -1, y: 0 } }
+	{ pos: { x: 1150, y: 150 }, dir: { x: -1, y: 0 } }
 ];
 const COLORS = ['RED', 'BLUE', 'YELLOW', 'GREEN'];
 

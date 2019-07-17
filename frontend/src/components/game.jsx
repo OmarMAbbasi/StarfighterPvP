@@ -91,7 +91,11 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		let objects = this.players.concat(this.hazards).concat(this.bullets);
 		objects.forEach(object => {
-			object.draw(can1Ctx, can1)
+			if (object instanceof Player) {
+				object.draw(can1Ctx, object.color);
+			} else {
+				object.draw(can1Ctx);
+			}
 		})
 		// can2Ctx.drawImage(can1, 0, 0);
 		requestAnimationFrame(this.drawObj);
