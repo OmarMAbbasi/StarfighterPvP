@@ -116,7 +116,11 @@ class Player extends MovingObject {
 		if (this.respawning > 0) {
 			return;
 		}
-		if (this.lastShotDelta < 1 / FIRE_RATE || !this.inputs.space) {
+		let fireRate = FIRE_RATE;
+		// if (this.bulletType === "uzi") {
+		// 	fireRate = 1;
+		// }
+		if (this.lastShotDelta < 1 / fireRate || !this.inputs.space) {
 			this.lastShotDelta += deltaTime;
 			return;
 		}
@@ -134,6 +138,7 @@ class Player extends MovingObject {
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
+		powerup = "uzi";
 		switch (powerup) {
 		case "littleBoy": //experimental
 			bullet = new Bullet(
