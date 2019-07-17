@@ -39,7 +39,7 @@ class Player extends MovingObject {
 	startRegen() {
 		this.regenInterval = setInterval(() => {
 			this.health += 5;
-		});
+		}, 5 * 1000);
 	}
 
 	applyEffects() {

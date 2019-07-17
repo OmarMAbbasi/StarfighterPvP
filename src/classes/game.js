@@ -35,6 +35,8 @@ class Game {
 		this.playerSockets = {};
 
 		this.timer = 0;
+
+		this.chat = new Chat();
 	}
 
 	async startGame() {
@@ -127,6 +129,7 @@ class Game {
 		this.players[playerId] = player;
 		this.playerSockets[playerId] = socket;
 		return player;
+		this.chat.joinChat(player, socket);
 	}
 
 	removePlayer(playerId) {
