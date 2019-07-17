@@ -20,7 +20,7 @@ class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: 30,
+			time: 120,
 			round: 5,
 			players: [],
 			gameStarted: false
