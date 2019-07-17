@@ -2,7 +2,8 @@
 
 ![logo](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/newLogo.png)
 
-Attention all pilots, man your battlestations! Grab a spaceship and get ready for battle in StarfighterPvp. Challenge your friends, dodge asteroids, collect powerups, and find out if you have what it takes to become an ace pilot in this arcade-style game!
+Attention all pilots, man your battlestations! Grab a spaceship and get ready for battle in StarfighterPvp. Challenge your friends, dodge 
+asteroids, collect powerups, and find out if you have what it takes to become an ace pilot in this arcade-style game!
 
 ## Features
 StarfighterPvP comes equipped with everything you will need for an exciting, action-packed, multiplayer space adventure.
@@ -10,7 +11,7 @@ StarfighterPvP comes equipped with everything you will need for an exciting, act
 * #### Web sockets, which allow for the creation of rooms, where you can invite your friends to play or join a friend's room
 * #### Live chat allows for spaceship to spaceship transmission
 * #### Powerups, wich players can select at the end of each round, which can help (or hurt) themselves and opponents
-* #### Arcade aesthetics, from the graphics to the music. Game music is Interplanetary Odyssey by [Patrick de Arteaga(https://patrickdearteaga.com/arcade-music/) and game images from [Master484](http://m484games.ucoz.com/)
+* #### Arcade aesthetics, from the graphics to the music. Game music is Interplanetary Odyssey by [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music/) and game images from [Master484](http://m484games.ucoz.com/)
 * #### High score list shown at the end of a game. Do you have what it takes to get to the top?
 
 ## Requirements
@@ -37,16 +38,21 @@ StarfighterPvP comes equipped with everything you will need for an exciting, act
  5. Start using StarfighterPvP
  
 ## About the Project
-An eageer group of four software engineers designed and built StarfighterPvP over five days. A proposal was drafted, which included a database schema, a sample-state, timeline, and frontend and backend routes. The work was equally divided and the timeline was systematically followed from start to finish, to create an exciting and playable game.
+An eageer group of four software engineers designed and built StarfighterPvP over five days. A proposal was drafted, which included a 
+database schema, a sample-state, timeline, and frontend and backend routes. The work was equally divided and the timeline was 
+systematically followed from start to finish, to create an exciting and playable game.
 
 ![starfighter](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/redshipfire.png)
 
 ## The Technology
 ### Backend
-StarfighterPvP is a MERN stack game. The backend is built with MongoDb and Express.js. Backend-frontend integration is achieved through axios. We used Socket.io to create web sockets that allowed for multiplayer.
+StarfighterPvP is a MERN stack game. The backend is built with MongoDb and Express.js. Backend-frontend integration is achieved through 
+axios. We used Socket.io to create web sockets that allow for multiplayer.
 
 #### Session Management
-Creating or joining a game is as easy as a mouse click. Gamers have the option to join a demo room and test the game out themselves, or they can create a room or join a friends room. The database stores player nicknames and scores to create a high score list shown at the end of games.
+Creating or joining a game is as easy as a mouse click. Gamers have the option to join a demo room and test the game out themselves, or 
+they can create a room or join a friends room. The database stores player nicknames and scores to create a high score list shown at the end 
+of games.
 
 Here is a snipped from the Player model:
 
@@ -97,24 +103,29 @@ We built web sockets, allowing for multiplayer functionality, with the following
 	});
 ```
 
-This code allows for the creation of rooms, which players can invite their friends to joinm, as well as the joining of rooms. The game can manage multiple multiplayer games at once.
+This code allows for the creation of rooms, which players can invite their friends to join, as well as the joining of rooms. The game can 
+manage multiple multiplayer games at once.
 
 ### Frontend
 
-![game]()
+![game](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/board.png)
 
-StarfighterPvP's frontend was built using React-Redux. These choices allowed for a unidirectional dataflow, single-source of truth, and dynamic state management. Multiplayer was implemented using Socket.io. HTML canvas was used to render the board, game pieces, and animations, while CSS was used for styling.
+StarfighterPvP's frontend was built using React-Redux. These choices allowed for a unidirectional dataflow, single-source of truth, and 
+dynamic state management. Multiplayer was implemented using Socket.io. HTML canvas was used to render the board, game pieces, and 
+animations, while CSS was used for styling.
 
 #### Frontend Dependencies
-Node package manager (npm) was used to install and save frontend dependencies. Axios was used to interact with the backend API. Other frontend dependencies include React-DOM, React DOM-Router, Provider, and Babel.
+Node package manager (npm) was used to install and save frontend dependencies. Axios was used to interact with the backend API. Other 
+frontend dependencies include React-DOM, React DOM-Router, Provider, and Babel.
 
 #### Game
-Upon creating or joining a room, the user is brought to the game page, where they have the abililty to dodge and destroy asteroids, while battling their friends to get the highest score possible. A single round is two minutes. The player with the highest score 
+Upon creating or joining a room, the user is brought to the game page, where they have the abililty to dodge and destroy asteroids, 
+while battling their friends to get the highest score possible. A single round is two minutes. The player with the highest score 
 
 ![splash](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/splash.png)
 
-The game class is resonsibile for bringing together all of the states, objects, and elements of the frontend. For example, the following function, the ```joinRoom()``` function, manages the creation and joining of rooms:
-
+The game class is resonsibile for bringing together all of the states, objects, and elements of the frontend. For example, the following 
+function, the ```joinRoom()``` function, manages the creation and joining of rooms:
 
 ```javascript
 joinRoom() {
@@ -129,7 +140,8 @@ joinRoom() {
 
 ```
 
-The above code, which receieves its information from the forms, sends the tyoe to the Socket manager allowing for the proper function to be carried out. 
+The above code, which receieves its information from the forms, sends the type to the Socket manager allowing for the proper function to 
+be carried out. 
 
 As for rendering our game canvas, we use the following code: 
 
@@ -153,7 +165,8 @@ As for rendering our game canvas, we use the following code:
 
 ```
 
-A problem we encountered early on was that we would get flashing effects on the gamepieces when the canvas was re-drawn. We mitigated this problem with the creation of a second overlaying canvas.
+A problem we encountered early on was that we would get flashing effects on the gamepieces when the canvas was re-drawn. We mitigated 
+this problem with the creation of a second overlaying canvas.
 
 Finally, we broadcast player name, score and health live with a sidebar, the code is shown here:
 ```javascript
@@ -165,12 +178,12 @@ Finally, we broadcast player name, score and health live with a sidebar, the cod
 				})
 			)
 ```
-Score can be negative, as there is a penalty for one's ship blowing up. The healthbar can also change color and style if a player has a certain powerup.
+Score can be negative, as there is a penalty for one's ship blowing up. The healthbar can also change color and style if a player has a 
+certain powerup.
 
 #### Hazards
 
-![asteroid](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/asteroid1.png
-)
+![asteroid](https://github.com/OmarMAbbasi/StarfighterPvP/blob/master/frontend/src/style/images/asteroid1.png)
 
 Dodging and blowing up hazards is necessary for a high score, we created collision logic and hazard movement with the following code:
 
@@ -187,11 +200,11 @@ Dodging and blowing up hazards is necessary for a high score, we created collisi
 	}
 ```
 
-We also game these hazards random behavior, from speed, to rotation, to spawning location, to size:
+We also gave the hazards random behavior, speed, rotation, spawning location, and size:
+
 ```javascript
 	randomPosition(radius) {
 		let x, y;
-
 		if (this.randomDirection === 1) {
 			if (this.vel.x > 0) {
 				x = -radius;
@@ -237,7 +250,7 @@ We also game these hazards random behavior, from speed, to rotation, to spawning
 With the above code, asteroids are generated on demand, which can make (or break) a player's score.
 
 ## Future Directions
-While we are proud of our work thus far, we want to add MANY more features to this game:
+While we are proud of our work thus far, we want to add MANY more features to the game:
 * More hazards, including UFOs that shoot, stars, and comets.
 * In-game temporary powerups, like the Super Star in Nintendo's Super Mario Bros.
 * Coop-mode
