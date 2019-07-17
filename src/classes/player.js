@@ -129,7 +129,7 @@ class Player extends MovingObject {
 		this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
-		powerup = 'shotgun';
+		// powerup = 'shotgun';
 		switch (powerup) {
 		case "littleBoy": //experimental
 			bullet = new Bullet(
