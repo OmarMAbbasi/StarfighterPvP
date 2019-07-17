@@ -76,7 +76,7 @@
 }
 
 .start-game-container {
-    margin-left: 25px;
+    margin-left: 30px;
     margin-bottom: 110px;
     justify-content: flex-start;
 }
@@ -90,4 +90,27 @@
     width: 120px;
     color: white;
     font-size: 16px
+}
+
+.start-game-container button:hover {
+    cursor: pointer;
+    background: #fe0000;
+    opacity: 0.9;
+}
+
+.readyButton {
+    background: #fcd02f;
+    border: 0.5px solid #ffffff;
+    border-radius: 100%;
+    height: 70px;
+    width: 70px;
+    color: black;
+    font-size: 13px;
+    margin-left: 18px;
+}
+
+.readyButton:hover {
+    cursor: pointer;
+    background: #fcd02f;
+    opacity: 0.9;
 }
