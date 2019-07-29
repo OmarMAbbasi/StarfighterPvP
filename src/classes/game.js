@@ -53,7 +53,6 @@ class Game {
 			return;
 		}
 		this.started = true;
-		console.log("Starting game");
 		while (this.rounds > 0) {
 			await this.playRound();
 			this.rounds--;
@@ -62,7 +61,6 @@ class Game {
 	}
 
 	async playRound() {
-		console.log(`Round ${this.rounds}`);
 		const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 		this.initRound();
@@ -189,7 +187,6 @@ class Game {
 			const hazard = new Hazard();
 			this.hazards.push(hazard);
 		}
-		console.log(this.hazards.length);
 	}
 
 	initRound() {

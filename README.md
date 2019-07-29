@@ -75,7 +75,6 @@ We built web sockets, allowing for multiplayer functionality, with the following
 
 ```javascript
 	socket.on("joinRoom", data => {
-		console.log(data);
 		socket.id = Math.random();
 		let game = null;
 		if (data.type === "createRoom") {

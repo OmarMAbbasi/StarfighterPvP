@@ -55,7 +55,6 @@ class Canvas extends React.Component {
 		let socket = this.socket;
 		// !Socket Tests
 		socket.on("connect", () => {
-			console.log("Ayyy! Websockets!");
         });
         
         socket.on("roomFullOrStarted", () => {
@@ -78,8 +77,6 @@ class Canvas extends React.Component {
 		// 	event: "Client Talks to Server"
 		// });
 
-		socket.on("s2c", data => console.log(data.event));
-
 		socket.on("newPosition", data => {
 			
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
@@ -89,7 +86,6 @@ class Canvas extends React.Component {
 					players: this.players
 				});
 			}
-			console.log(data);
 			this.players = [];
 			let players = data.players;
 			players.forEach(player => {
@@ -144,13 +140,11 @@ class Canvas extends React.Component {
 	_handleKey(event, down) {
 		let input = this.input;
 		let socket = this.socket;
-		console.log(event.keyCode);
 		switch (event.keyCode) {
 			case 87:
 				if (input.w !== down) {
 					input.w = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
@@ -158,7 +152,6 @@ class Canvas extends React.Component {
 				if (input.s !== down) {
 					input.s = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
@@ -166,23 +159,19 @@ class Canvas extends React.Component {
 				if (input.a !== down) {
 					input.a = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 				break;
 			case 68:
 				if (input.d !== down) {
 					input.d = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
 			case 32:
 				if (input.space !== down) {
 					input.space = down;
-					// console.log('fire!')
 					socket.emit("playerInput", input);
-					// socket.emit("playerInput", input);
 				}
 
 				break;
@@ -190,7 +179,6 @@ class Canvas extends React.Component {
 				if (input.shift !== down) {
 					input.shift = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
