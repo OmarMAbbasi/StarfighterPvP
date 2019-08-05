@@ -58,6 +58,7 @@ module.exports = function(socket) {
 	});
 
 	socket.on("startGame", data => {
+		console.log('Starting game');
 		ROOM_LIST[data.roomId].startGame();
 	});
 };

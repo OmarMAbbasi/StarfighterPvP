@@ -47,7 +47,9 @@ class Canvas extends React.Component {
 			this.props.history.location.userTag ||
             PILOTS[Math.floor(Math.random() * Math.floor(5))];
 
-        this.spectator = false;
+		this.spectator = false;
+		this.isHost = this.props.history.location.isHost;
+		this.startBtnRef = React.createRef();
 	}
 
 	openSocket = () => {
@@ -67,10 +69,20 @@ class Canvas extends React.Component {
 			this.players = data.players.map(player =>
 				Object.assign(new Player(), player)
 			);
+			
+			if (this.isHost) this.startBtnRef.current.disabled = true;
 		});
 
 		socket.on("readyUpdate", data => {
 			this.setState({ players: data.players });
+
+			if (this.isHost) {
+				if (data.players.every(player => player.ready)) {
+					this.startBtnRef.current.disabled = false;
+				} else {
+					this.startBtnRef.current.disabled = true;
+				}
+			}
 		});
 
 		socket.on("gameStart", () => this.setState({ gameStarted: true }));
@@ -215,8 +227,9 @@ class Canvas extends React.Component {
             document.addEventListener("keyup", event => {
                 this._handleKey(event, false);
             });
-        }
-
+		}
+		
+		if (this.isHost) this.startBtnRef.current.addEventListener('click', this.startGame);
 	}
 
 	joinRoom() {
@@ -289,7 +302,7 @@ class Canvas extends React.Component {
 
 				{(this.props.history.location.isHost && !this.state.gameStarted) ? (
 					<div className="start-game-container">
-						<button onClick={this.startGame}>Start Game</button>
+						<button id='start-game-btn' ref={this.startBtnRef}>Start Game</button>
 					</div>
 				) : null}
 				
