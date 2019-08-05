@@ -73,6 +73,8 @@ class Canvas extends React.Component {
 			this.setState({ players: data.players });
 		});
 
+		socket.on("gameStart", () => this.setState({ gameStarted: true }));
+
 		// socket.emit("joinRoom", {
 		// 	event: "Client Talks to Server"
 		// });
@@ -229,7 +231,6 @@ class Canvas extends React.Component {
 
 	startGame() {
 		this.socket.emit("startGame", { roomId: this.roomId });
-		this.setState({ gameStarted: true });
 	}
 
 	render() {
@@ -286,7 +287,7 @@ class Canvas extends React.Component {
 
 				<audio src={backSound} autoPlay loop />
 
-				{(this.props.history.location.isHost || !this.state.gameStarted) ? (
+				{(this.props.history.location.isHost && !this.state.gameStarted) ? (
 					<div className="start-game-container">
 						<button onClick={this.startGame}>Start Game</button>
 					</div>

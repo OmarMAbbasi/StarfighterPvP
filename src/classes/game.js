@@ -52,6 +52,9 @@ class Game {
 		if (this.started) {
 			return;
 		}
+
+		Object.values(this.playerSockets).forEach(socket => socket.emit("gameStart"));
+
 		this.started = true;
 		while (this.rounds > 0) {
 			await this.playRound();
