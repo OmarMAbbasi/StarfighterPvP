@@ -11,6 +11,7 @@ import Modal from "./modal";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
+	console.log(`env socket url: ${process.env.SOCKET_URL}`);
 	socketURL = process.env.SOCKET_URL || "https://starfight.herokuapp.com/";
 }
 
