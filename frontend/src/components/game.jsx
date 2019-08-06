@@ -85,7 +85,10 @@ class Canvas extends React.Component {
 			}
 		});
 
-		socket.on("gameStart", () => this.setState({ gameStarted: true }));
+		socket.on("gameStart", () => {
+			console.log('game started');
+			this.setState({ gameStarted: true });
+		});
 
 		// socket.emit("joinRoom", {
 		// 	event: "Client Talks to Server"
