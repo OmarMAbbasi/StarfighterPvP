@@ -11,7 +11,7 @@ import Modal from "./modal";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-michael.herokuapp.com/";
+	socketURL = process.env.SOCKET_URL || "https://starfight.herokuapp.com/";
 }
 
 const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
