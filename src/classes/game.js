@@ -53,7 +53,10 @@ class Game {
 			return;
 		}
 
-		Object.values(this.playerSockets).forEach(socket => socket.emit("gameStart"));
+		Object.values(this.playerSockets).forEach(socket => {
+			console.log(`Emitting to ${socket.id}`);
+			socket.emit("gameStart");
+		});
 
 		this.started = true;
 		while (this.rounds > 0) {
