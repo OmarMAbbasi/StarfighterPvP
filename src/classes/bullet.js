@@ -16,7 +16,6 @@ class Bullet extends MovingObject {
         // increment position by time-scaled velocity
         this.pos.x += this.vel.x * deltaTime;
         this.pos.y += this.vel.y * deltaTime;
-        // console.log(this);
     }
 
     setType(type) {
@@ -53,7 +52,6 @@ class Bullet extends MovingObject {
         if (this.isCollidedWith(obj) && !(obj.id === this.playerId)) {
                 this.collided = true;
             if ((obj.health - this.damage) <= 0) {
-                console.log(obj.health);
                 this.player.addScore(obj.points);
             }
         }

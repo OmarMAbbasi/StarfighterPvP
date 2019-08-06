@@ -11,7 +11,7 @@ import Modal from "./modal";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-staging.herokuapp.com/";
+	socketURL = "https://starfight-michael.herokuapp.com/";
 }
 
 const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
@@ -20,7 +20,7 @@ class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: 30,
+			time: 120,
 			round: 5,
 			players: [],
 			gameStarted: false
@@ -45,7 +45,11 @@ class Canvas extends React.Component {
 		this.startGame = this.startGame.bind(this);
 		this.userTag =
 			this.props.history.location.userTag ||
-			PILOTS[Math.floor(Math.random() * Math.floor(5))];
+            PILOTS[Math.floor(Math.random() * Math.floor(5))];
+
+		this.spectator = false;
+		this.isHost = this.props.history.location.isHost;
+		this.startBtnRef = React.createRef();
 	}
 
 	openSocket = () => {
@@ -53,25 +57,42 @@ class Canvas extends React.Component {
 		let socket = this.socket;
 		// !Socket Tests
 		socket.on("connect", () => {
-			console.log("Ayyy! Websockets!");
-		});
+        });
+        
+        socket.on("roomFullOrStarted", () => {
+            this.spectator = true;
+            this.setState({gameStarted: true});
+        })
 
 		socket.on("playerJoin", data => {
 			this.setState({ players: data.players });
 			this.players = data.players.map(player =>
 				Object.assign(new Player(), player)
 			);
+			
+			if (this.isHost) this.startBtnRef.current.disabled = true;
 		});
 
 		socket.on("readyUpdate", data => {
 			this.setState({ players: data.players });
+
+			if (this.isHost) {
+				if (data.players.every(player => player.ready)) {
+					this.startBtnRef.current.disabled = false;
+				} else {
+					this.startBtnRef.current.disabled = true;
+				}
+			}
+		});
+
+		socket.on("gameStart", () => {
+			console.log('game started');
+			this.setState({ gameStarted: true });
 		});
 
 		// socket.emit("joinRoom", {
 		// 	event: "Client Talks to Server"
 		// });
-
-		socket.on("s2c", data => console.log(data.event));
 
 		socket.on("newPosition", data => {
 			
@@ -82,7 +103,6 @@ class Canvas extends React.Component {
 					players: this.players
 				});
 			}
-			console.log(data);
 			this.players = [];
 			let players = data.players;
 			players.forEach(player => {
@@ -137,13 +157,11 @@ class Canvas extends React.Component {
 	_handleKey(event, down) {
 		let input = this.input;
 		let socket = this.socket;
-		console.log(event.keyCode);
 		switch (event.keyCode) {
 			case 87:
 				if (input.w !== down) {
 					input.w = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
@@ -151,7 +169,6 @@ class Canvas extends React.Component {
 				if (input.s !== down) {
 					input.s = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
@@ -159,23 +176,19 @@ class Canvas extends React.Component {
 				if (input.a !== down) {
 					input.a = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 				break;
 			case 68:
 				if (input.d !== down) {
 					input.d = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
 			case 32:
 				if (input.space !== down) {
 					input.space = down;
-					// console.log('fire!')
 					socket.emit("playerInput", input);
-					// socket.emit("playerInput", input);
 				}
 
 				break;
@@ -183,7 +196,6 @@ class Canvas extends React.Component {
 				if (input.shift !== down) {
 					input.shift = down;
 					socket.emit("playerInput", input);
-					console.log(input);
 				}
 
 				break;
@@ -211,12 +223,16 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		this.drawObj();
 
-		document.addEventListener("keydown", event => {
-			this._handleKey(event, true);
-		});
-		document.addEventListener("keyup", event => {
-			this._handleKey(event, false);
-		});
+        if (!this.spectator) {
+            document.addEventListener("keydown", event => {
+                this._handleKey(event, true);
+            });
+            document.addEventListener("keyup", event => {
+                this._handleKey(event, false);
+            });
+		}
+		
+		if (this.isHost) this.startBtnRef.current.addEventListener('click', this.startGame);
 	}
 
 	joinRoom() {
@@ -231,7 +247,6 @@ class Canvas extends React.Component {
 
 	startGame() {
 		this.socket.emit("startGame", { roomId: this.roomId });
-		this.setState({ gameStarted: true });
 	}
 
 	render() {
@@ -287,6 +302,13 @@ class Canvas extends React.Component {
 				{this.props.modal ? <Modal /> : null}
 
 				<audio src={backSound} autoPlay loop />
+
+				{(this.props.history.location.isHost && !this.state.gameStarted) ? (
+					<div className="start-game-container">
+						<button id='start-game-btn' ref={this.startBtnRef}>Start Game</button>
+					</div>
+				) : null}
+				
 				<div className="board-header">
 					<img
 						className="player-game-logo"
@@ -299,11 +321,7 @@ class Canvas extends React.Component {
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
-					{this.props.history.location.isHost ? (
-						<div className="start-game-container">
-							<button onClick={this.startGame}>Start Game</button>
-						</div>
-					) : null}
+
 				</div>
 
 				<div className="board-container">

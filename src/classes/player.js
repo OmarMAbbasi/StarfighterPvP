@@ -314,11 +314,10 @@ class Player extends MovingObject {
 			break;
 		}
 
-		return bullets; //console.log(input);
+		return bullets;
 	}
 
 	setInputs(inputs) {
-		console.log(inputs);
 		this.inputs = inputs;
 		if (inputs.w) {
 			this.speed = player_speed;

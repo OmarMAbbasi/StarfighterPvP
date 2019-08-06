@@ -35,7 +35,6 @@ class Game {
 	}
 
 	async startGame() {
-		console.log("Starting game");
 		while (this.rounds > 0) {
 			await this.playRound();
 			this.rounds--;
@@ -44,7 +43,6 @@ class Game {
 	}
 
 	async playRound() {
-		console.log(`Round ${this.rounds}`);
 		const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 		this.initRound();
@@ -80,7 +78,6 @@ class Game {
 	gameOver() {}
 
 	addPlayer(playerId, socket) {
-		console.log(player);
 		let playerParams = START_LOCS[this.players.length];
 		let player = new Player(playerParams.pos, playerId, playerParams.dir);
 		this.players.push(player);
@@ -110,4 +107,3 @@ class Game {
 module.exports = Game;
 
 const game = new Game(5).addPlayer(1, 1);
-console.log(game.players);

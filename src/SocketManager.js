@@ -7,7 +7,6 @@ let PLAYER_LIST = {};
 
 module.exports = function(socket) {
 	socket.on("joinRoom", data => {
-		console.log(data);
 		socket.id = Math.random();
 		let game = null;
 		if (data.type === "createRoom") {
@@ -16,17 +15,18 @@ module.exports = function(socket) {
 			game = ROOM_LIST[data.roomId];
 		}
 		let player = game.addPlayer(socket.id, socket, data.userTag, data.roomId);
-		if (player) {
+		if (!player.spectator) {
 			PLAYER_LIST[socket.id] = player;
 		} else {
-			socket.emit("roomFull", false);
+			socket.emit("roomFullOrStarted");
 		}
 	});
 
 	socket.on("playerInput", data => {
-		player = PLAYER_LIST[socket.id];
-		player.setInputs(data);
-		// console.log(data);
+        player = PLAYER_LIST[socket.id];
+        if (player) {
+            player.setInputs(data);
+        }
 	});
 
 	socket.on("submitMessage", data => {
@@ -48,7 +48,6 @@ module.exports = function(socket) {
 		game.removePlayer(socket.id);
 		delete PLAYER_LIST[socket.id];
 		if (Object.keys(game.players).length === 0) {
-			console.log(`Closing room: ${roomId}`);
 			delete ROOM_LIST[roomId];
 		}
 	});
@@ -56,10 +55,10 @@ module.exports = function(socket) {
 	socket.on("playerReady", data => {
 		PLAYER_LIST[socket.id].ready = !PLAYER_LIST[socket.id].ready;
 		ROOM_LIST[data.roomId].updateReady();
-		console.log("player ready");
 	});
 
 	socket.on("startGame", data => {
+		console.log('Starting game');
 		ROOM_LIST[data.roomId].startGame();
 	});
 };

@@ -5,9 +5,9 @@ const Bullet = require("./bullet");
 const Chat = require("./chatroom");
 
 const FPS = 60;
-const HAZARD_COUNT = 15;
-const NUM_ROUNDS = 2;
-const ROUND_LENGTH = 5;
+const HAZARD_COUNT = 12;
+const NUM_ROUNDS = 5;
+const ROUND_LENGTH = 60;
 const START_LOCS = [
 	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
 	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
@@ -45,12 +45,20 @@ class Game {
 		this.playerSockets = {};
 
 		this.timer = 0;
-		this.chat = new Chat();
+        this.chat = new Chat();
 	}
 
 	async startGame() {
+		if (this.started) {
+			return;
+		}
+
+		Object.values(this.playerSockets).forEach(socket => {
+			console.log(`Emitting to ${socket.id}`);
+			socket.emit("gameStart");
+		});
+
 		this.started = true;
-		console.log("Starting game");
 		while (this.rounds > 0) {
 			await this.playRound();
 			this.rounds--;
@@ -59,7 +67,6 @@ class Game {
 	}
 
 	async playRound() {
-		console.log(`Round ${this.rounds}`);
 		const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 		this.initRound();
@@ -128,7 +135,6 @@ class Game {
 				players: Object.values(this.players),
 				hazards: this.hazards,
 				bullets: this.bullets,
-				score: this.players[socket.id].score,
 				timer: this.timer,
 				rounds: this.rounds
 			});
@@ -149,7 +155,8 @@ class Game {
 
 	addPlayer(playerId, socket, playerTag, gameId) {
 		if (this.players.length === 4 || this.started) {
-			return null;
+            this.playerSockets[playerId] = socket;
+            return {gameId, spectator: true}
 		}
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
@@ -186,7 +193,6 @@ class Game {
 			const hazard = new Hazard();
 			this.hazards.push(hazard);
 		}
-		console.log(this.hazards.length);
 	}
 
 	initRound() {
