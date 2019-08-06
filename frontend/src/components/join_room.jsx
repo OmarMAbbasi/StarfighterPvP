@@ -46,8 +46,8 @@ class JoinRoom extends React.Component {
 						className="player-header"
 						src={require("../style/images/logoFinal.png")}
 						alt="logo"
-						width="1200"
-						height="332"
+						// width="1200"
+						// height="332"
 					/>
 
 					<input

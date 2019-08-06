@@ -76,8 +76,8 @@ class PlayerForm extends React.Component {
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
 							alt="logo-another"
-							width="1200"
-							height="332"
+							// width="1200"
+							// height="332"
 						/>
 						<div className="btns">
 							<button
@@ -85,18 +85,18 @@ class PlayerForm extends React.Component {
 								className="room-btn"
 							>Create Room
 							</button>
+							<button
+								onClick={() => this.props.openModal("joinRoom")}
+								className="room-btn"
+							>Join Room
+							</button>
+							<button
+								onClick={() => this.props.openModal("joinDemoRoom")}
+								className="room-btn"
+								id="demo-btn"
+							>Demo Room
+							</button>
 						</div>
-						<button
-							onClick={() => this.props.openModal("joinRoom")}
-							className="room-btn"
-						>Join Room
-						</button>
-						<button
-							onClick={() => this.props.openModal("joinDemoRoom")}
-							className="room-btn"
-							id="demo-btn"
-						>Demo Room
-						</button>
 					</div>
 				)}
 			</div>

@@ -1,4 +1,5 @@
 import React from "react";
+import './style/stylesheets/css-reset.css';
 import './style/stylesheets/player_form.css';
 import './style/stylesheets/game_over.css';
 import './style/stylesheets/game.css';
