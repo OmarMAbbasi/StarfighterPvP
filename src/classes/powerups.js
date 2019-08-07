@@ -31,14 +31,14 @@ PowerUps.fatman = {
     }
 };
 
-PowerUps.doubleDamage = {
-    type: 'WEAPON',
-    name: 'Double Damage',
-    options: {
-        type: 'DOUBLEDAMAGE',
-        damage: 70
-    }
-};
+// PowerUps.doubleDamage = {
+//     type: 'WEAPON',
+//     name: 'Double Damage',
+//     options: {
+//         type: 'DOUBLEDAMAGE',
+//         damage: 70
+//     }
+// };
 
 PowerUps.backshot = {
     type: 'WEAPON',
