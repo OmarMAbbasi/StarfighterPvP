@@ -4,11 +4,19 @@ const Bullet = require("./bullet");
 class Weapon {
     constructor(player) {
         this.player = player;
+
+        this.lastShotDelta = 1 / this.fireRate;
+
+        this.setDefaults();
+    }
+
+    setDefaults() {
+        // modifiable attributes
+        this.type = '';
         this.fireRate = 3.5;
         this.damage = 35;
+        this.bulletSize = 7;
         this.bulletSpeed = 600;
-        this.type = 'shotgun';
-        this.lastShotDelta = 1 / this.fireRate;
     }
 
     setType(type) {
@@ -27,40 +35,17 @@ class Weapon {
 
         let bullet;
         switch (this.type) {
-            case 'shotgun':
+            case 'SHOTGUN':
                 return this._shotgun();
-            case 'speedybullets':
-                speedMulti = 2;
-                bullet = new Bullet(
-                    Object.assign({}, this.player.pos),
-                    new Vector2(this.player.dir.x * this.bulletSpeed * speedMulti, this.player.dir.y * this.bulletSpeed * speedMulti),
-                    7, this.player.id, this.damage, this.player, this.player.color
-                );
-                return [bullet];
-            case 'fatman':
-                speedMulti = 0.75;
-                bullet = new Bullet(
-                    Object.assign({}, this.player.pos),
-                    new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed),
-                    15, this.player.id, 70, this.player, this.player.color
-                );
-                return [bullet];
-            case 'doubleDamage':
-                bullet = new Bullet(
-                    Object.assign({}, this.player.pos),
-                    new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed),
-                    7, this.player.id, this.damage, this.player, this.player.color
-                );
-                return [bullet];
-            case 'backshot':
+            case 'BACKSHOT':
                 return this._backshot();
-            case 'sideshot':
+            case 'SIDESHOT':
                 return this._sideshot();
             default:
                 bullet = new Bullet(
                     Object.assign({}, this.player.pos),
                     new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed),
-                    7, this.player.id, this.damage, this.player, this.player.color
+                    this.bulletSize, this.player.id, this.damage, this.player, this.player.color
                 );
                 return [bullet];
         }
@@ -76,7 +61,7 @@ class Weapon {
             let bullet = new Bullet(
                 Object.assign({}, this.player.pos), 
                 new Vector2(newVec.x * this.bulletSpeed, newVec.y * this.bulletSpeed),
-                5, this.player.id, 10, this.player, this.player.color
+                this.bulletSize, this.player.id, this.damage, this.player, this.player.color
             );
             bullets.push(bullet);
             baseVec -= vecScalar;
@@ -91,14 +76,14 @@ class Weapon {
         let bullet = new Bullet(
             Object.assign({}, this.player.pos),
             new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed),
-            7, this.player.id, this.damage, this.player, this.player.color
+            this.bulletSize, this.player.id, this.damage, this.player, this.player.color
         );
         bullets.push(bullet);
 
         bullet = new Bullet(
             Object.assign({}, this.player.pos),
             new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed).rotate(180),
-            7, this.player.id, this.damage, this.player, this.player.color
+            this.bulletSize, this.player.id, this.damage, this.player, this.player.color
         );
         bullets.push(bullet);
 
@@ -111,21 +96,21 @@ class Weapon {
         let bullet = new Bullet(
             Object.assign({}, this.player.pos),
             new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed),
-            7, this.player.id, this.damage, this.player, this.player.color
+            this.bulletSize, this.player.id, this.damage, this.player, this.player.color
         );
         bullets.push(bullet);
 
         bullet = new Bullet(
             Object.assign({}, this.player.pos),
             new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed).rotate(90),
-            7, this.player.id, this.damage, this.player, this.player.color
+            this.bulletSize, this.player.id, this.damage, this.player, this.player.color
         );
         bullets.push(bullet);
 
         bullet = new Bullet(
             Object.assign({}, this.player.pos),
             new Vector2(this.player.dir.x * this.bulletSpeed, this.player.dir.y * this.bulletSpeed).rotate(-90),
-            7, this.player.id, this.damage, this.player, this.player.color
+            this.bulletSize, this.player.id, this.damage, this.player, this.player.color
         );
         bullets.push(bullet);
 

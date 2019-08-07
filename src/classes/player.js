@@ -5,37 +5,54 @@ const Weapon = require("./weapon");
 const Vector2 = require("../utils/vector2");
 
 const PLAYER_RADIUS = 18;
-let player_speed = 200;
+const PLAYER_SPEED = 200;
 const ROTATE_SPEED = 180;
-const BULLET_SPEED = 450;
-const FIRE_RATE = 3.5;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
 		super(pos, new Vector2(0, 0), PLAYER_RADIUS);
+		
+		// player weapon ref
+		this.weapon = new Weapon(this);
+
+		// player info
 		this.id = id;
-		this.health = 100;
-		this.totalScore = 0;
-		this.score = 0;
+		this.color = "";
+
+		// player score attributes
 		this.points = 1000;
+		this.totalScore = 0;
+
+		// player state attributes
+		this.ready = false;
+
+		// input attributes
 		this.inputs = {};
-		this.dir = dir;
 		this.speed = 0;
+		this.dir = dir;
 		this.shooting = false;
-		this.respawning = 0;
-		this.invuln = 0;
-		this.powerUps = ["nothing"];
+
+		// gameplay attributes
+		this.setDefaults();
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
-        this.color = "";
-		this.ready = false;
-
-		this.weapon = new Weapon(this);
 	}
 
-	setHealth(hp) {
-		this.health = hp;
+	setDefaults() {
+		this.respawning = 0;
+		this.invuln = 0;
+
+		// round score
+		this.score = 0;
+
+		// modifiable attributes
+		this.maxHealth = 100;
+		this.health = this.maxHealth;
+		this.radius = 18;
+		this.shipSpeed = 200;
+		this.rotateSpeed = 180;
+		this.weapon.setDefaults();
 	}
 
 	createShield() {
@@ -48,6 +65,14 @@ class Player extends MovingObject {
 		this.regenInterval = setInterval(() => {
 			this.health += 5;
 		}, 5 * 1000);
+	}
+
+	applyPowerUp(powerUp) {
+		switch (powerUp.type) {
+			case 'WEAPON':
+				this.weapon = Object.assign(this.weapon, powerUp.options);
+				return;
+		}
 	}
 
 	applyEffects() {
@@ -108,11 +133,12 @@ class Player extends MovingObject {
 	}
 
 	respawn() {
-		if (this.powerUps.includes("shields")) {
-			this.health = 200;
-		} else {
-			this.health = 100;
-		}
+		// if (this.powerUps.includes("shields")) {
+		// 	this.health = 200;
+		// } else {
+		// 	this.health = 100;
+		// }
+		this.health = this.maxHealth;
 		this.invuln = 1.5;
 		this.pos.x = Math.random() * 1000 + 200;
 		this.pos.y = Math.random() * 400 + 200;
@@ -210,7 +236,7 @@ class Player extends MovingObject {
 	setInputs(inputs) {
 		this.inputs = inputs;
 		if (inputs.w) {
-			this.speed = player_speed;
+			this.speed = PLAYER_SPEED;
 		} else {
 			this.speed = 0;
 		}

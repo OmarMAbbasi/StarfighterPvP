@@ -4,6 +4,7 @@ const Constants = require("./constants");
 const Bullet = require("./bullet");
 const Vector2 = require("../utils/vector2");
 const Chat = require("./chatroom");
+const PowerUps = require('./powerups');
 
 const FPS = 60;
 const HAZARD_COUNT = 12;
@@ -228,7 +229,7 @@ class Game {
 		this.populateHazards();
 		this.bullets = [];
 		Object.values(this.players).forEach(player => {
-			player.applyEffects();
+			player.applyPowerUp(PowerUps.shotgun);
 		});
 
 		this.timer = this.roundLength;
