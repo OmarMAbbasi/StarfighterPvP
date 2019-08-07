@@ -172,7 +172,12 @@ class Game {
 					invuln: player.invuln,
 					color: player.color
 				})),
-				hazards: this.hazards,
+				hazards: this.hazards.map(hazard => ({
+					pos: hazard.pos,
+					dir: hazard.dir,
+					radius: hazard.radius,
+					health: hazard.health
+				})),
 				bullets: this.bullets.map(bullet => ({
 					pos: bullet.pos,
 					vel: bullet.vel,
