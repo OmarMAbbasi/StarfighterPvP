@@ -116,13 +116,17 @@ class Player extends MovingObject {
 			this.health = 100;
 		}
 		this.invuln = 1.5;
-		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
+		this.pos.x = Math.random() * 1000 + 200;
+		this.pos.y = Math.random() * 400 + 200;
 	}
 
 	shoot(deltaTime) {
 		if (this.respawning > 0) {
 			return;
 		}
+
+		return this.weapon.shoot(deltaTime, this.inputs.space);
+
 		let fireRate = FIRE_RATE;
 		// if (this.bulletType === "uzi") {
 		// 	fireRate = 1;
@@ -364,10 +368,12 @@ class Player extends MovingObject {
 			dir = -1;
 		}
 
-		this.dir = this.rotateVector(
-			[this.dir.x, this.dir.y],
-			dir * ROTATE_SPEED * deltaTime
-		);
+		// this.dir = this.rotateVector(
+		// 	[this.dir.x, this.dir.y],
+		// 	dir * ROTATE_SPEED * deltaTime
+		// );
+
+		this.dir.rotate(dir * ROTATE_SPEED * deltaTime);
 	}
 
 	rotateVector(vec, ang) {
