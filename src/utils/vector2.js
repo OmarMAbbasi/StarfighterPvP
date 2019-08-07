@@ -34,6 +34,10 @@ class Vector2 {
 
         return this;
     }
+
+    dup() {
+        return new Vector2(this.x, this.y);
+    }
 }
 
 module.exports = Vector2;

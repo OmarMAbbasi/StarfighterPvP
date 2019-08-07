@@ -7,6 +7,8 @@ const Chat = require("./chatroom");
 const PowerUps = require('./powerups');
 
 const FPS = 60;
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+
 const HAZARD_COUNT = 12;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 60;
@@ -69,8 +71,6 @@ class Game {
 	}
 
 	async playRound() {
-		const sleep = ms => new Promise(res => setTimeout(res, ms));
-
 		this.initRound();
 
 		this.lastUpdate = Date.now();
@@ -79,12 +79,40 @@ class Game {
 			this.lastUpdate = Date.now();
 			await sleep(1000 / FPS);
 		}
+
+		// set player stats back to defaults
 		Object.values(this.players).forEach(player => {
-			player.clearEffects();
+			player.setDefaults();
 		});
+
+		if (this.rounds === 1) {
+			return;
+		} else {
+			await this.selectPowerUps();
+		}
 	}
 
-	appyPowerups() {}
+	async selectPowerUps() {
+		// power up list
+		const powerUps = Object.values(PowerUps);
+		
+		// pick order based on score
+		const pickOrder = Object.values(this.players).sort(
+			(a, b) => a.totalScore - b.totalScore
+		);
+
+		for (let i=0; i < pickOrder.length; i++) {
+			const player = pickOrder[i];
+			const choice = Math.floor(Math.random() * powerUps.length);
+			// await sleep(5000);
+			player.applyPowerUp(powerUps[choice]);
+			powerUps.splice(choice, 1);
+		}
+	}
+
+	applyPowerUp(playerId, powerUp) {
+		this.players[playerId].applyPowerUp(PowerUps[powerUp]);
+	}
 
 	update() {
 		// calculate time since last update
@@ -165,8 +193,6 @@ class Game {
 		}
 	}
 
-	selectPowerups() {}
-
 	gameOver() {}
 
 	addPlayer(playerId, socket, playerTag, gameId) {
@@ -176,7 +202,7 @@ class Game {
 		}
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
-		let player = new Player(playerParams.pos, playerId, playerParams.dir);
+		let player = new Player(playerParams.pos.dup(), playerId, playerParams.dir.dup());
 		player.color = this.colors.shift();
 		player.playerTag = playerTag;
 		player.gameId = gameId;
@@ -228,9 +254,15 @@ class Game {
 	initRound() {
 		this.populateHazards();
 		this.bullets = [];
-		Object.values(this.players).forEach(player => {
-			player.applyPowerUp(PowerUps.shotgun);
-		});
+		// Object.values(this.players).forEach(player => {
+		// 	player.applyPowerUp(PowerUps.shotgun);
+		// });
+
+		let players = Object.values(this.players);
+		for (let i=0; i < players.length; i++) {
+			players[i].pos = START_LOCS[i].pos.dup();
+			players[i].dir = START_LOCS[i].dir.dup();
+		}
 
 		this.timer = this.roundLength;
 	}
