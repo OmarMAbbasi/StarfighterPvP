@@ -96,7 +96,7 @@ class Canvas extends React.Component {
 		// });
 
 		socket.on("newPosition", data => {
-			
+			// console.log(data);
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
 			if (data.rounds === 1) {
 				this.props.history.push({

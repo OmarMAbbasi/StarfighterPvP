@@ -2,6 +2,7 @@ const Player = require("./player");
 const Hazard = require("./hazard");
 const Constants = require("./constants");
 const Bullet = require("./bullet");
+const Vector2 = require("../utils/vector2");
 const Chat = require("./chatroom");
 
 const FPS = 60;
@@ -9,10 +10,10 @@ const HAZARD_COUNT = 12;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 60;
 const START_LOCS = [
-	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
-	{ pos: { x: 200, y: 600 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1150, y: 150 }, dir: { x: -1, y: 0 } }
+	{ pos: new Vector2(200, 150), dir: new Vector2(1, 0) },
+	{ pos: new Vector2(1150, 600), dir: new Vector2(-1, 0) },
+	{ pos: new Vector2(200, 600), dir: new Vector2(1, 0) },
+	{ pos: new Vector2(1150, 150), dir: new Vector2(-1, 0) }
 ];
 const COLORS = ["RED", "BLUE", "YELLOW", "GREEN"];
 
@@ -132,9 +133,23 @@ class Game {
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
 			socket.emit("newPosition", {
-				players: Object.values(this.players),
+				players: Object.values(this.players).map(player => ({
+					id: player.id,
+					playerTag: player.playerTag,
+					health: player.health,
+					totalScore: player.totalScore,
+					pos: player.pos,
+					dir: player.dir,
+					invuln: player.invuln,
+					color: player.color
+				})),
 				hazards: this.hazards,
-				bullets: this.bullets,
+				bullets: this.bullets.map(bullet => ({
+					pos: bullet.pos,
+					vel: bullet.vel,
+					radius: bullet.radius,
+					color: bullet.color
+				})),
 				timer: this.timer,
 				rounds: this.rounds
 			});
@@ -169,7 +184,14 @@ class Game {
 		this.chat.joinChat(playerId, playerTag, socket);
 
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("playerJoin", { players: Object.values(this.players) });
+			socket.emit("playerJoin", { players: Object.values(this.players).map(player => ({
+				id: player.id,
+				playerTag: player.playerTag,
+				ready: player.ready,
+				pos: player.pos,
+				dir: player.dir,
+				color: player.color
+			}))});
 		});
 
 		return player;
@@ -177,7 +199,14 @@ class Game {
 
 	updateReady() {
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("readyUpdate", { players: Object.values(this.players) });
+			socket.emit("readyUpdate", { players: Object.values(this.players).map(player => ({
+				id: player.id,
+				playerTag: player.playerTag,
+				ready: player.ready,
+				pos: player.pos,
+				dir: player.dir,
+				color: player.color
+			}))});
 		});
 	}
 

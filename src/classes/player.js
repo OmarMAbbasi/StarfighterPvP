@@ -1,6 +1,8 @@
 const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
 const Hazard = require("./hazard");
+const Weapon = require("./weapon");
+const Vector2 = require("../utils/vector2");
 
 const PLAYER_RADIUS = 18;
 let player_speed = 150;
@@ -10,7 +12,7 @@ const FIRE_RATE = 3.5;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
-		super(pos, { x: 0, y: 0 }, PLAYER_RADIUS);
+		super(pos, new Vector2(0, 0), PLAYER_RADIUS);
 		this.id = id;
 		this.health = 100;
 		this.totalScore = 0;
@@ -29,7 +31,9 @@ class Player extends MovingObject {
 		this.shieldInterval = {};
 		this.regenInterval = {};
         this.color = "";
-        this.ready = false;
+		this.ready = false;
+
+		this.weapon = new Weapon(this);
 	}
 
 	setHealth(hp) {
