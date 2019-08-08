@@ -10,8 +10,8 @@ const FPS = 60;
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 const HAZARD_COUNT = 12;
-const NUM_ROUNDS = 2;
-const ROUND_LENGTH = 10;
+const NUM_ROUNDS = 5;
+const ROUND_LENGTH = 60;
 const START_LOCS = [
 	{ pos: new Vector2(200, 150), dir: new Vector2(1, 0) },
 	{ pos: new Vector2(1150, 600), dir: new Vector2(-1, 0) },
