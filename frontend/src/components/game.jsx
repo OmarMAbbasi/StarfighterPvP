@@ -65,9 +65,7 @@ class Canvas extends React.Component {
 		});
 
 		socket.on("nullRoomError", () => {
-			// throw new Error("Room does not exist")
 			this.props.history.push("/game/error");
-			// window.location.replace("/");
 		});
 
 		socket.on("playerJoin", data => {
@@ -206,7 +204,6 @@ class Canvas extends React.Component {
 				break;
 		}
 		this.input = input;
-		// debugger;
 	}
 
 	// updatePos = () => {
@@ -241,7 +238,6 @@ class Canvas extends React.Component {
 
 	joinRoom() {
 		let socket = this.socket;
-		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			roomId: this.roomId,
@@ -272,7 +268,6 @@ class Canvas extends React.Component {
 		);
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
-		debugger;
 		// if (gamers.length < 1) {
 		// 	window.location.replace("");
 		// }

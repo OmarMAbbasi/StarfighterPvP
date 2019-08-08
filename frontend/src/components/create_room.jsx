@@ -17,7 +17,7 @@ class CreateRoom extends React.Component {
 		let roomId = "";
 		if (this.state.userTag !== "") {
 			let userTag = this.state.userTag;
-			this.props.closeModal();
+			// this.props.closeModal();
 			createRoom().then(res => {
 				roomId = res.data.gameId;
 				this.props.history.push({
@@ -28,6 +28,8 @@ class CreateRoom extends React.Component {
                     isHost: true
 				});
 			});
+			this.props.closeModal();
+
 		}
 	}
 

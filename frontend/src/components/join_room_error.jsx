@@ -14,7 +14,17 @@ class JoinRoomError extends React.Component {
         };
         this.canvasRef = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.homeRedirect = this.homeRedirect.bind(this);
     }
+
+    homeRedirect(e) {
+        e.preventDefault();
+        this.setState({ roomId: "", userTag: "" })
+        this.props.history.push({
+            pathname: "/",
+            action: "createRoom",
+            });
+    };
 
     componentDidMount() {
         let canvas = this.canvasRef.current;
@@ -126,6 +136,7 @@ class JoinRoomError extends React.Component {
 					</button>
                     {this.state.roomId && this.state.userTag !== "" ? shownView() : errorView()}
                 </form>
+                <button id="back-home" onClick={this.homeRedirect}>Create Room Instead?</button>
             </div>
         );
     }

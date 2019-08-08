@@ -31,7 +31,6 @@ class GameOver extends React.Component {
 	}
 
 	componentDidMount() {
-		// debugger
 		this.props.createPlayer({
 			tag: this.props.location.currPlayer.playerTag,
 			score: this.props.location.currPlayer.totalScore
