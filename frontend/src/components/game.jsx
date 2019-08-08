@@ -303,13 +303,14 @@ class Canvas extends React.Component {
 
 				<audio src={backSound} autoPlay loop />
 
-				{(this.props.history.location.isHost && !this.state.gameStarted) ? (
-					<div className="start-game-container">
-						<button id='start-game-btn' ref={this.startBtnRef}>Start Game</button>
-					</div>
-				) : null}
+				
 				
 				<div className="board-header">
+					{(this.props.history.location.isHost && !this.state.gameStarted) ? (
+						<div className="start-game-container">
+							<button id='start-game-btn' ref={this.startBtnRef}>Start Game</button>
+						</div>
+					) : null}
 					<img
 						className="player-game-logo"
 						src={require("../style/images/newLogo.png")}
@@ -324,27 +325,25 @@ class Canvas extends React.Component {
 
 				</div>
 
-				<div className="board-container">
-					<canvas
-						id="can1"
-						// ref={this.canvasRef}
-						width="1300"
-						height="750"
-						style={{ position: "relative", top: 0 }}
-					/>
-					<canvas
-						id="can2"
-						// ref={this.canvasRef}
-						width="1300"
-						height="750"
-						style={{ position: "absolute", top: 0, left: 0 }}
-					/>
+				<div className="main-board">
+					<ul className="side-bar">
+						<h1>Players</h1>
+						{playerList}
+					</ul>
+					<div className="board-container">
+						<canvas
+							id="can1"
+							// ref={this.canvasRef}
+							style={{ position: "relative", top: 0 }}
+						/>
+						<canvas
+							id="can2"
+							// ref={this.canvasRef}
+							style={{ position: "absolute", top: 0, left: 0 }}
+						/>
+					</div>
+					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 				</div>
-				<ul className="side-bar">
-					<h1>Players</h1>
-					{playerList}
-				</ul>
-				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 			</div>
 		);
 	}
