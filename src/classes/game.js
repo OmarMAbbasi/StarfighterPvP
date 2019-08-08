@@ -2,17 +2,21 @@ const Player = require("./player");
 const Hazard = require("./hazard");
 const Constants = require("./constants");
 const Bullet = require("./bullet");
+const Vector2 = require("../utils/vector2");
 const Chat = require("./chatroom");
+const PowerUps = require('./powerups');
 
 const FPS = 60;
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+
 const HAZARD_COUNT = 12;
 const NUM_ROUNDS = 2;
 const ROUND_LENGTH = 10;
 const START_LOCS = [
-	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },
-	{ pos: { x: 200, y: 600 }, dir: { x: 1, y: 0 } },
-	{ pos: { x: 1150, y: 150 }, dir: { x: -1, y: 0 } }
+	{ pos: new Vector2(200, 150), dir: new Vector2(1, 0) },
+	{ pos: new Vector2(1150, 600), dir: new Vector2(-1, 0) },
+	{ pos: new Vector2(200, 600), dir: new Vector2(1, 0) },
+	{ pos: new Vector2(1150, 150), dir: new Vector2(-1, 0) }
 ];
 const COLORS = ["RED", "BLUE", "YELLOW", "GREEN"];
 
@@ -67,8 +71,6 @@ class Game {
 	}
 
 	async playRound() {
-		const sleep = ms => new Promise(res => setTimeout(res, ms));
-
 		this.initRound();
 
 		this.lastUpdate = Date.now();
@@ -77,12 +79,40 @@ class Game {
 			this.lastUpdate = Date.now();
 			await sleep(1000 / FPS);
 		}
+
+		// set player stats back to defaults
 		Object.values(this.players).forEach(player => {
-			player.clearEffects();
+			player.setDefaults();
 		});
+
+		if (this.rounds === 1) {
+			return;
+		} else {
+			await this.selectPowerUps();
+		}
 	}
 
-	appyPowerups() {}
+	async selectPowerUps() {
+		// power up list
+		const powerUps = Object.values(PowerUps);
+		
+		// pick order based on score
+		const pickOrder = Object.values(this.players).sort(
+			(a, b) => a.totalScore - b.totalScore
+		);
+
+		for (let i=0; i < pickOrder.length; i++) {
+			const player = pickOrder[i];
+			const choice = Math.floor(Math.random() * powerUps.length);
+			// await sleep(5000);
+			player.applyPowerUp(powerUps[choice]);
+			powerUps.splice(choice, 1);
+		}
+	}
+
+	applyPowerUp(playerId, powerUp) {
+		this.players[playerId].applyPowerUp(PowerUps[powerUp]);
+	}
 
 	update() {
 		// calculate time since last update
@@ -132,9 +162,28 @@ class Game {
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
 			socket.emit("newPosition", {
-				players: Object.values(this.players),
-				hazards: this.hazards,
-				bullets: this.bullets,
+				players: Object.values(this.players).map(player => ({
+					id: player.id,
+					playerTag: player.playerTag,
+					health: player.health,
+					totalScore: player.totalScore,
+					pos: player.pos,
+					dir: player.dir,
+					invuln: player.invuln,
+					color: player.color
+				})),
+				hazards: this.hazards.map(hazard => ({
+					pos: hazard.pos,
+					dir: hazard.dir,
+					radius: hazard.radius,
+					health: hazard.health
+				})),
+				bullets: this.bullets.map(bullet => ({
+					pos: bullet.pos,
+					vel: bullet.vel,
+					radius: bullet.radius,
+					color: bullet.color
+				})),
 				timer: this.timer,
 				rounds: this.rounds
 			});
@@ -149,8 +198,6 @@ class Game {
 		}
 	}
 
-	selectPowerups() {}
-
 	gameOver() {}
 
 	addPlayer(playerId, socket, playerTag, gameId) {
@@ -160,7 +207,7 @@ class Game {
 		}
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
-		let player = new Player(playerParams.pos, playerId, playerParams.dir);
+		let player = new Player(playerParams.pos.dup(), playerId, playerParams.dir.dup());
 		player.color = this.colors.shift();
 		player.playerTag = playerTag;
 		player.gameId = gameId;
@@ -169,7 +216,14 @@ class Game {
 		this.chat.joinChat(playerId, playerTag, socket);
 
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("playerJoin", { players: Object.values(this.players) });
+			socket.emit("playerJoin", { players: Object.values(this.players).map(player => ({
+				id: player.id,
+				playerTag: player.playerTag,
+				ready: player.ready,
+				pos: player.pos,
+				dir: player.dir,
+				color: player.color
+			}))});
 		});
 
 		return player;
@@ -177,7 +231,14 @@ class Game {
 
 	updateReady() {
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("readyUpdate", { players: Object.values(this.players) });
+			socket.emit("readyUpdate", { players: Object.values(this.players).map(player => ({
+				id: player.id,
+				playerTag: player.playerTag,
+				ready: player.ready,
+				pos: player.pos,
+				dir: player.dir,
+				color: player.color
+			}))});
 		});
 	}
 
@@ -198,9 +259,15 @@ class Game {
 	initRound() {
 		this.populateHazards();
 		this.bullets = [];
-		Object.values(this.players).forEach(player => {
-			player.applyEffects();
-		});
+		// Object.values(this.players).forEach(player => {
+		// 	player.applyPowerUp(PowerUps.shotgun);
+		// });
+
+		let players = Object.values(this.players);
+		for (let i=0; i < players.length; i++) {
+			players[i].pos = START_LOCS[i].pos.dup();
+			players[i].dir = START_LOCS[i].dir.dup();
+		}
 
 		this.timer = this.roundLength;
 	}

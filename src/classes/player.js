@@ -1,39 +1,58 @@
 const MovingObject = require("./movingObject");
 const Bullet = require("./bullet");
 const Hazard = require("./hazard");
+const Weapon = require("./weapon");
+const Vector2 = require("../utils/vector2");
 
 const PLAYER_RADIUS = 18;
-let player_speed = 150;
+const PLAYER_SPEED = 200;
 const ROTATE_SPEED = 180;
-const BULLET_SPEED = 450;
-const FIRE_RATE = 3.5;
 
 class Player extends MovingObject {
 	constructor(pos, id, dir) {
-		super(pos, { x: 0, y: 0 }, PLAYER_RADIUS);
+		super(pos, new Vector2(0, 0), PLAYER_RADIUS);
+		
+		// player weapon ref
+		this.weapon = new Weapon(this);
+
+		// player info
 		this.id = id;
-		this.health = 100;
-		this.totalScore = 0;
-		this.score = 0;
+		this.color = "";
+
+		// player score attributes
 		this.points = 1000;
+		this.totalScore = 0;
+
+		// player state attributes
+		this.ready = false;
+
+		// input attributes
 		this.inputs = {};
-		this.dir = dir;
 		this.speed = 0;
+		this.dir = dir;
 		this.shooting = false;
-		this.lastShotDelta = 1 / FIRE_RATE;
-		this.respawning = 0;
-		this.invuln = 0;
-		this.bulletType = "normal";
-		this.powerUps = ["nothing"];
+
+		// gameplay attributes
+		this.setDefaults();
 		this.shield = 0;
 		this.shieldInterval = {};
 		this.regenInterval = {};
-        this.color = "";
-        this.ready = false;
 	}
 
-	setHealth(hp) {
-		this.health = hp;
+	setDefaults() {
+		this.respawning = 0;
+		this.invuln = 0;
+
+		// round score
+		this.score = 0;
+
+		// modifiable attributes
+		this.maxHealth = 100;
+		this.health = this.maxHealth;
+		this.radius = 18;
+		this.shipSpeed = 200;
+		this.rotateSpeed = 180;
+		this.weapon.setDefaults();
 	}
 
 	createShield() {
@@ -46,6 +65,14 @@ class Player extends MovingObject {
 		this.regenInterval = setInterval(() => {
 			this.health += 5;
 		}, 5 * 1000);
+	}
+
+	applyPowerUp(powerUp) {
+		switch (powerUp.type) {
+			case 'WEAPON':
+				this.weapon = Object.assign(this.weapon, powerUp.options);
+				return;
+		}
 	}
 
 	applyEffects() {
@@ -106,19 +133,24 @@ class Player extends MovingObject {
 	}
 
 	respawn() {
-		if (this.powerUps.includes("shields")) {
-			this.health = 200;
-		} else {
-			this.health = 100;
-		}
+		// if (this.powerUps.includes("shields")) {
+		// 	this.health = 200;
+		// } else {
+		// 	this.health = 100;
+		// }
+		this.health = this.maxHealth;
 		this.invuln = 1.5;
-		this.pos = { x: Math.random() * 1000 + 200, y: Math.random() * 400 + 200 };
+		this.pos.x = Math.random() * 1000 + 200;
+		this.pos.y = Math.random() * 400 + 200;
 	}
 
 	shoot(deltaTime) {
 		if (this.respawning > 0) {
 			return;
 		}
+
+		return this.weapon.shoot(deltaTime, this.inputs.space);
+
 		let fireRate = FIRE_RATE;
 		// if (this.bulletType === "uzi") {
 		// 	fireRate = 1;
@@ -128,10 +160,10 @@ class Player extends MovingObject {
 			return;
 		}
 		//* Bullet: constructor(pos, vel, size, playerId, damage)
-		let bullets = [];
-		let bullet;
-		let powerup = this.bulletType;
-		this.lastShotDelta = 0;
+		// let bullets = [];
+		// let bullet;
+		// let powerup = this.bulletType;
+		// this.lastShotDelta = 0;
 		let vecScalar;
 		let baseVec;
 		// powerup = 'shotgun';
@@ -162,88 +194,6 @@ class Player extends MovingObject {
 			bullet.setType("littleBoy");
 			bullets.push(bullet);
 			break;
-		case "shotgun": // works
-			vecScalar = 5;
-			baseVec = 10;
-			for (let step = 0; step < 5; step++) {
-				let newVec = this.rotateVector([this.dir.x, this.dir.y], baseVec);
-				bullet = new Bullet(
-					Object.assign({}, this.pos),
-					{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
-					5,
-					this.id,
-					5,
-					this,
-					this.color
-				);
-				bullets.push(bullet);
-				baseVec -= vecScalar;
-			}
-			break;
-		case "speedybullets": //works
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{
-					x: this.dir.x * BULLET_SPEED * 3,
-					y: this.dir.y * BULLET_SPEED * 3
-				},
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			break;
-		case "fatman": //works but needs to be slower
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				15,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			break;
-		case "doubleDamage": //works im sure
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				5,
-				this.id,
-				20,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			break;
-		case "buttshot": //works
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{
-					x: this.dir.x * BULLET_SPEED * -1,
-					y: this.dir.y * -1 * BULLET_SPEED
-				},
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			break;
 		case "buckshot": // working
 			// scalar = Math.t(2) / 2;
 			vecScalar = 6;
@@ -262,40 +212,6 @@ class Player extends MovingObject {
 				bullets.push(bullet);
 				baseVec -= vecScalar;
 			}
-			break;
-		case "sideshot": // works
-			let newVec = this.rotateVector([this.dir.x, this.dir.y], -70);
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			newVec = this.rotateVector([this.dir.x, this.dir.y], 70);
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: newVec.x * BULLET_SPEED, y: newVec.y * BULLET_SPEED },
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
-			bullet = new Bullet(
-				Object.assign({}, this.pos),
-				{ x: this.dir.x * BULLET_SPEED, y: this.dir.y * BULLET_SPEED },
-				5,
-				this.id,
-				10,
-				this,
-				this.color
-			);
-			bullets.push(bullet);
 			break;
 		case "uzi":
 			this.lastShotDelta += 1 / FIRE_RATE / 2;
@@ -320,7 +236,7 @@ class Player extends MovingObject {
 	setInputs(inputs) {
 		this.inputs = inputs;
 		if (inputs.w) {
-			this.speed = player_speed;
+			this.speed = PLAYER_SPEED;
 		} else {
 			this.speed = 0;
 		}
@@ -360,22 +276,7 @@ class Player extends MovingObject {
 			dir = -1;
 		}
 
-		this.dir = this.rotateVector(
-			[this.dir.x, this.dir.y],
-			dir * ROTATE_SPEED * deltaTime
-		);
-	}
-
-	rotateVector(vec, ang) {
-		ang = -ang * (Math.PI / 180);
-		var cos = Math.cos(ang);
-		var sin = Math.sin(ang);
-		// this.dir.x = Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000;
-		// this.dir.y = Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000;
-		return {
-			x: Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000,
-			y: Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000
-		};
+		this.dir.rotate(dir * ROTATE_SPEED * deltaTime);
 	}
 }
 

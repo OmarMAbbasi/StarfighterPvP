@@ -11,7 +11,8 @@ import Modal from "./modal";
 let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
-	socketURL = "https://starfight-michael.herokuapp.com/";
+	console.log(`process.env: ${process.env}`);
+	socketURL = process.env.REACT_APP_SOCKET_URL || "https://starfight.herokuapp.com/";
 }
 
 const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
@@ -95,7 +96,7 @@ class Canvas extends React.Component {
 		// });
 
 		socket.on("newPosition", data => {
-			
+			// console.log(data);
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
 			if (data.rounds === 1) {
 				this.props.history.push({
