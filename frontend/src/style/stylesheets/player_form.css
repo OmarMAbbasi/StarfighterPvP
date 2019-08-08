@@ -37,6 +37,10 @@ body {
     position: relative;
 }
 
+.error {
+    position: relative;
+}
+
 .room-input {
     min-height: 6%;
     min-width: auto;

@@ -36,10 +36,6 @@ class JoinRoom extends React.Component {
 		const shownView = () => (
 			<h1 className="enter-room">Press enter to continue</h1>
 		);
-		
-		const errorView = () => (
-			<h1 className="error">Room does not exist</h1>
-		)
 
 		return (
 			<div className="player-form">
@@ -69,7 +65,6 @@ class JoinRoom extends React.Component {
 						Play
 					</button>
 					{ this.state.roomId && this.state.userTag !== "" ? shownView() : null }
-					{ this.state.error !== "" ? errorView() : null }
 				</form>
 			</div>
 		);
