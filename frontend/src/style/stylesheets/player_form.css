@@ -1,6 +1,13 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 .player-form-parent {
     font-family: 'Press Start 2P', cursive;
-    height: 100vh;
+    width: 100vw;
+    height: auto;
     display: flex;
     justify-content: center;
     vertical-align: middle;
