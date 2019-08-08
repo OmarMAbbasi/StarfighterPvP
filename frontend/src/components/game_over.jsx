@@ -25,7 +25,9 @@ class GameOver extends React.Component {
     };
 
     componentDidMount() {
-        this.props.fetchPlayers()
+        // debugger
+        this.props.createPlayer({tag: this.props.location.currPlayer.playerTag, score: this.props.location.currPlayer.totalScore});
+        this.props.fetchPlayers();
             let canvas = this.canvasRef.current;
             let ctx = canvas.getContext("2d");
             ctx.fillStyle = "#000000";
@@ -110,6 +112,7 @@ class GameOver extends React.Component {
                     <audio src={backSound} autoPlay loop />
                 <div className='other-ele'>
                     <div className='winner-announcement'>
+                        <h1 className="winner-head">Winner!</h1>
                         {currentPlayers}
                     </div>
                     <ul className='high-scorers'>

@@ -6,8 +6,8 @@ const Chat = require("./chatroom");
 
 const FPS = 60;
 const HAZARD_COUNT = 12;
-const NUM_ROUNDS = 5;
-const ROUND_LENGTH = 60;
+const NUM_ROUNDS = 2;
+const ROUND_LENGTH = 10;
 const START_LOCS = [
 	{ pos: { x: 200, y: 150 }, dir: { x: 1, y: 0 } },
 	{ pos: { x: 1150, y: 600 }, dir: { x: -1, y: 0 } },

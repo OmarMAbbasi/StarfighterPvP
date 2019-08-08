@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import GameOver from "./game_over";
 import { selectBestPlayers } from '../reducers/selectors';
-import { fetchPlayers } from '../actions/players';
+import { fetchPlayers, createPlayer } from '../actions/players';
 
 const mapSTP = (state, ownProps) => {
     const bestPlayers = selectBestPlayers(state) || [];
@@ -11,7 +11,8 @@ const mapSTP = (state, ownProps) => {
 }
 
 const mapDTP = dispatch => ({
-    fetchPlayers: () => dispatch(fetchPlayers())
+    fetchPlayers: () => dispatch(fetchPlayers()),
+    createPlayer: (player) => dispatch(createPlayer(player))
 });
 
 export default connect(mapSTP, mapDTP)(GameOver);

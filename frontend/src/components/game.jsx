@@ -20,7 +20,7 @@ class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: 120,
+			time: 60,
 			round: 5,
 			players: [],
 			gameStarted: false
@@ -100,7 +100,8 @@ class Canvas extends React.Component {
 			if (data.rounds === 1) {
 				this.props.history.push({
 					pathname: "/gameover",
-					players: this.players
+					players: this.players,
+					currPlayer: this.players.filter(player => player.playerTag === this.userTag)[0]
 				});
 			}
 			this.players = [];
@@ -334,11 +335,15 @@ class Canvas extends React.Component {
 						<canvas
 							id="can1"
 							// ref={this.canvasRef}
+							width="1300"
+							height="750"
 							style={{ position: "relative", top: 0 }}
 						/>
 						<canvas
 							id="can2"
 							// ref={this.canvasRef}
+							width="1300"
+							height="750"
 							style={{ position: "absolute", top: 0, left: 0 }}
 						/>
 					</div>

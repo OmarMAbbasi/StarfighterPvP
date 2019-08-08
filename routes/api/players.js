@@ -5,11 +5,12 @@ const Player = require('../../models/player');
 
 router.get('/', (req, res) => {
     Player.find()
-        .sort({ score: 1 })
+        .sort({ score: -1 })
         .then(players => res.json(players))
 });
 
 router.post('/', (req, res) => {
+    console.log(req.body);
     const newPlayer = new Player({
         tag: req.body.tag,
         score: req.body.score
