@@ -13,8 +13,9 @@ function App() {
 	return (
 		<div className="App">
 			<Switch>
-				<Route exact path='/' component={PlayerContainer}/>
+				<Route exact path='/' component={PlayerContainer} />
 				<Route path='/gameover' component={GameOverContainer} />
+				<Route path='/join/:gameId' component={PlayerContainer} />
 				<Route exact path='/game/:gameId' component={GameContainer} />
 			</Switch>
 		</div>

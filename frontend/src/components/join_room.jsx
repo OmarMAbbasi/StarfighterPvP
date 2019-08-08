@@ -6,7 +6,7 @@ class JoinRoom extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			roomId: "",
+			roomId: this.props.match.params.gameId || "",
 			userTag: ""
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,7 +37,6 @@ class JoinRoom extends React.Component {
 		const shownView = () => (
 			<h1 className="enter-room">Press enter to continue</h1>
 		);
-
 		return (
 			<div className="player-form">
 				<audio src={backSound} autoPlay loop />
@@ -60,7 +59,7 @@ class JoinRoom extends React.Component {
 					<input
 						className="room-input"
 						type="text"
-						value={this.state.room_id}
+						value={this.state.roomId}
 						onChange={this.updateType("roomId")}
 						placeholder="Room ID"
 					/>
