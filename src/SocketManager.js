@@ -23,10 +23,10 @@ module.exports = function(socket) {
 	});
 
 	socket.on("playerInput", data => {
-        player = PLAYER_LIST[socket.id];
-        if (player) {
-            player.setInputs(data);
-        }
+		player = PLAYER_LIST[socket.id];
+		if (player) {
+			player.setInputs(data);
+		}
 	});
 
 	socket.on("submitMessage", data => {
@@ -45,10 +45,12 @@ module.exports = function(socket) {
 		}
 		let roomId = PLAYER_LIST[socket.id].gameId;
 		let game = ROOM_LIST[roomId];
-		game.removePlayer(socket.id);
-		delete PLAYER_LIST[socket.id];
-		if (Object.keys(game.players).length === 0) {
-			delete ROOM_LIST[roomId];
+		if (socket.id) {
+			game.removePlayer(socket.id);
+			delete PLAYER_LIST[socket.id];
+			if (Object.keys(game.players).length === 0) {
+				delete ROOM_LIST[roomId];
+			}
 		}
 	});
 
@@ -58,7 +60,7 @@ module.exports = function(socket) {
 	});
 
 	socket.on("startGame", data => {
-		console.log('Starting game');
+		console.log("Starting game");
 		ROOM_LIST[data.roomId].startGame();
 	});
 };
