@@ -1,24 +1,13 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import io from "socket.io-client";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
-
-let socketURL = "http://localhost:5000";
-
-if (process.env.NODE_ENV === "production") {
-	console.log(`process.env: ${process.env}`);
-	socketURL =
-		process.env.REACT_APP_SOCKET_URL || "https://starfight.herokuapp.com/";
-}
-
 
 class JoinRoom extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			roomId: "",
-			userTag: "",
-			error: false
+			userTag: ""
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}

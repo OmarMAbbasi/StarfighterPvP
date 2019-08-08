@@ -5,7 +5,6 @@ import JoinRoomContainer from './join_room_container';
 import NextRoundContainer from './next_round_container';
 import CreateRoomContainer from './create_room_container';
 import DemoRoomContainer from './demo_room_container';
-import GameOverContainer from './game_over_container';
 
 function Modal({ modal, closeModal }) {
     if (!modal) {
@@ -23,9 +22,6 @@ function Modal({ modal, closeModal }) {
         case 'createRoom':
             component = <CreateRoomContainer />;
             break;
-        // case 'gameOver':
-        //     component = <GameOverContainer />;
-        //     break;
         case 'joinDemoRoom':
             component = <DemoRoomContainer />;
             break;
