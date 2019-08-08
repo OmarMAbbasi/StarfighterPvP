@@ -51,8 +51,6 @@ body {
     line-height: normal;
     margin-top: 5%;
     padding: 0.5% 2%;
-    /* padding: 5px 10px;
-    margin-top: 50px; */
     position: relative;
 }
 
@@ -100,8 +98,8 @@ body {
 #my-canvas {
     font-family: 'Press Start 2P', cursive;
     height: 100vh;
+    width: 100vw;
     position: fixed;
-    border: 2px solid #069304;
     display: flex;
     justify-content: center;
     vertical-align: middle;

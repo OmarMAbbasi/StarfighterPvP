@@ -56,7 +56,6 @@ class Canvas extends React.Component {
 	openSocket = () => {
 		this.socket = io(socketURL);
 		let socket = this.socket;
-		// !Socket Tests
 		socket.on("connect", () => {
         });
         
@@ -91,12 +90,8 @@ class Canvas extends React.Component {
 			this.setState({ gameStarted: true });
 		});
 
-		// socket.emit("joinRoom", {
-		// 	event: "Client Talks to Server"
-		// });
 
 		socket.on("newPosition", data => {
-			// console.log(data);
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
 			if (data.rounds === 1) {
 				this.props.history.push({
@@ -329,8 +324,8 @@ class Canvas extends React.Component {
 					<canvas
 						id="can1"
 						// ref={this.canvasRef}
-						width="1300"
-						height="750"
+						// width="1300"
+						// height="750"
 						style={{ position: "relative", top: 0 }}
 					/>
 					<canvas
