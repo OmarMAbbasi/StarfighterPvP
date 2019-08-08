@@ -63,7 +63,7 @@ PowerUps.uzi = {
         type: 'UZI',
         fireRate: 7,
         bulletSize: 4,
-        damage: 9
+        damage: 20
     }
 };
 
