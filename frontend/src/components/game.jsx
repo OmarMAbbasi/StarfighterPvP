@@ -56,7 +56,6 @@ class Canvas extends React.Component {
 	openSocket = () => {
 		this.socket = io(socketURL);
 		let socket = this.socket;
-		// !Socket Tests
 		socket.on("connect", () => {
         });
         
@@ -91,12 +90,8 @@ class Canvas extends React.Component {
 			this.setState({ gameStarted: true });
 		});
 
-		// socket.emit("joinRoom", {
-		// 	event: "Client Talks to Server"
-		// });
 
 		socket.on("newPosition", data => {
-			// console.log(data);
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
 			if (data.rounds === 1) {
 				this.props.history.push({
@@ -327,28 +322,21 @@ class Canvas extends React.Component {
 
 				</div>
 
-				<div className="main-board">
-					<ul className="side-bar">
-						<h1>Players</h1>
-						{playerList}
-					</ul>
-					<div className="board-container">
-						<canvas
-							id="can1"
-							// ref={this.canvasRef}
-							width="1300"
-							height="750"
-							style={{ position: "relative", top: 0 }}
-						/>
-						<canvas
-							id="can2"
-							// ref={this.canvasRef}
-							width="1300"
-							height="750"
-							style={{ position: "absolute", top: 0, left: 0 }}
-						/>
-					</div>
-					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
+				<div className="board-container">
+					<canvas
+						id="can1"
+						// ref={this.canvasRef}
+						// width="1300"
+						// height="750"
+						style={{ position: "relative", top: 0 }}
+					/>
+					<canvas
+						id="can2"
+						// ref={this.canvasRef}
+						width="1300"
+						height="750"
+						style={{ position: "absolute", top: 0, left: 0 }}
+					/>
 				</div>
 			</div>
 		);
