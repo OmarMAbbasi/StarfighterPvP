@@ -7,7 +7,8 @@ class JoinRoom extends React.Component {
 		super(props);
 		this.state = {
 			roomId: "",
-			userTag: ""
+			userTag: "",
+			error: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -21,8 +22,12 @@ class JoinRoom extends React.Component {
 				type: "joinRoom",
 				userTag: this.state.userTag,
 				roomId: roomId
-			});
-			this.props.closeModal();
+			})
+			.then(() => {
+				this.props.closeModal();
+			}, err => (
+				this.setState({ error: true })
+			));
 		}
 	}
 
@@ -36,6 +41,10 @@ class JoinRoom extends React.Component {
 		const shownView = () => (
 			<h1 className="enter-room">Press enter to continue</h1>
 		);
+		
+		const errorView = () => (
+			<h1 className="error">Room does not exist</h1>
+		)
 
 		return (
 			<div className="player-form">
@@ -45,8 +54,6 @@ class JoinRoom extends React.Component {
 						className="player-header"
 						src={require("../style/images/logoFinal.png")}
 						alt="logo"
-						// width="1200"
-						// height="332"
 					/>
 
 					<input
@@ -66,7 +73,8 @@ class JoinRoom extends React.Component {
 					<button className="player-btn" type="submit">
 						Play
 					</button>
-					{this.state.roomId && this.state.userTag !== "" ? shownView() : null}
+					{ this.state.roomId && this.state.userTag !== "" ? shownView() : null }
+					{ this.state.error !== "" ? errorView() : null }
 				</form>
 			</div>
 		);
