@@ -65,8 +65,8 @@ class Canvas extends React.Component {
 		});
 
 		socket.on("nullRoomError", () => {
-			throw new Error("Room does not exist")
-			.then(socket.close())
+			return true;
+			// throw new Error("Room does not exist")
 			// window.location.replace("/");
 		});
 

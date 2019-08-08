@@ -1,6 +1,16 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import io from "socket.io-client";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+
+let socketURL = "http://localhost:5000";
+
+if (process.env.NODE_ENV === "production") {
+	console.log(`process.env: ${process.env}`);
+	socketURL =
+		process.env.REACT_APP_SOCKET_URL || "https://starfight.herokuapp.com/";
+}
+
 
 class JoinRoom extends React.Component {
 	constructor(props) {
@@ -23,11 +33,7 @@ class JoinRoom extends React.Component {
 				userTag: this.state.userTag,
 				roomId: roomId
 			})
-			.then(() => {
-				this.props.closeModal();
-			}, err => (
-				this.setState({ error: true })
-			));
+			this.props.closeModal();
 		}
 	}
 
