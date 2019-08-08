@@ -21,7 +21,7 @@ class JoinRoom extends React.Component {
 				type: "joinRoom",
 				userTag: this.state.userTag,
 				roomId: roomId
-			});
+			})
 			this.props.closeModal();
 		}
 	}
@@ -45,8 +45,6 @@ class JoinRoom extends React.Component {
 						className="player-header"
 						src={require("../style/images/logoFinal.png")}
 						alt="logo"
-						// width="1200"
-						// height="332"
 					/>
 
 					<input
@@ -66,7 +64,7 @@ class JoinRoom extends React.Component {
 					<button className="player-btn" type="submit">
 						Play
 					</button>
-					{this.state.roomId && this.state.userTag !== "" ? shownView() : null}
+					{ this.state.roomId && this.state.userTag !== "" ? shownView() : null }
 				</form>
 				<button
 					onClick={() => this.props.openModal("createRoom")}

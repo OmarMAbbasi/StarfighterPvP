@@ -10,6 +10,7 @@ class PlayerForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.canvasRef = React.createRef();
+		this.redirectModal = this.props.history.location.action || null;
 	}
 
 	componentDidMount() {
@@ -60,6 +61,11 @@ class PlayerForm extends React.Component {
 	}
 
 	render() {
+		if (this.redirectModal !== null) {
+			this.props.openModal("createRoom")
+			this.redirectModal = null;
+		}
+
 		return (
 			<div className="player-form-parent">
 				<audio src={backSound} autoPlay loop controls />

@@ -28,13 +28,37 @@ body {
 }
 
 .player-form h1 {
-    color: #3500fa;
+    color: #ffffff;
     font-family: 'Press Start 2P', cursive;
     font-size: 2vw;
 }
 
 .enter-room {
     position: relative;
+    margin-top: 2%;
+}
+
+.error {
+    position: relative;
+    margin-top: 4%;
+}
+
+#back-home {
+    height: auto;
+    width: auto;
+    background: none;
+    font-size: 2vw;
+    color: #3500fa;
+    outline: none;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    bottom: 10%;
+    position: relative;
+}
+
+#back-home:hover {
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .room-input {
