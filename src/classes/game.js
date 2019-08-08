@@ -4,14 +4,14 @@ const Constants = require("./constants");
 const Bullet = require("./bullet");
 const Vector2 = require("../utils/vector2");
 const Chat = require("./chatroom");
-const PowerUps = require('./powerups');
+const PowerUps = require("./powerups");
 
 const FPS = 60;
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 const HAZARD_COUNT = 12;
 const NUM_ROUNDS = 5;
-const ROUND_LENGTH = 5;
+const ROUND_LENGTH = 60;
 const START_LOCS = [
 	{ pos: new Vector2(200, 150), dir: new Vector2(1, 0) },
 	{ pos: new Vector2(1150, 600), dir: new Vector2(-1, 0) },
@@ -49,7 +49,7 @@ class Game {
 		this.playerSockets = {};
 
 		this.timer = 0;
-        this.chat = new Chat();
+		this.chat = new Chat();
 	}
 
 	async startGame() {
@@ -95,13 +95,13 @@ class Game {
 	async selectPowerUps() {
 		// power up list
 		const powerUps = Object.values(PowerUps);
-		
+
 		// pick order based on score
 		const pickOrder = Object.values(this.players).sort(
 			(a, b) => a.totalScore - b.totalScore
 		);
 
-		for (let i=0; i < pickOrder.length; i++) {
+		for (let i = 0; i < pickOrder.length; i++) {
 			const player = pickOrder[i];
 			const choice = Math.floor(Math.random() * powerUps.length);
 			// await sleep(5000);
@@ -202,12 +202,16 @@ class Game {
 
 	addPlayer(playerId, socket, playerTag, gameId) {
 		if (this.players.length === 4 || this.started) {
-            this.playerSockets[playerId] = socket;
-            return {gameId, spectator: true}
+			this.playerSockets[playerId] = socket;
+			return { gameId, spectator: true };
 		}
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
-		let player = new Player(playerParams.pos.dup(), playerId, playerParams.dir.dup());
+		let player = new Player(
+			playerParams.pos.dup(),
+			playerId,
+			playerParams.dir.dup()
+		);
 		player.color = this.colors.shift();
 		player.playerTag = playerTag;
 		player.gameId = gameId;
@@ -216,14 +220,16 @@ class Game {
 		this.chat.joinChat(playerId, playerTag, socket);
 
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("playerJoin", { players: Object.values(this.players).map(player => ({
-				id: player.id,
-				playerTag: player.playerTag,
-				ready: player.ready,
-				pos: player.pos,
-				dir: player.dir,
-				color: player.color
-			}))});
+			socket.emit("playerJoin", {
+				players: Object.values(this.players).map(player => ({
+					id: player.id,
+					playerTag: player.playerTag,
+					ready: player.ready,
+					pos: player.pos,
+					dir: player.dir,
+					color: player.color
+				}))
+			});
 		});
 
 		return player;
@@ -231,14 +237,16 @@ class Game {
 
 	updateReady() {
 		Object.values(this.playerSockets).forEach(socket => {
-			socket.emit("readyUpdate", { players: Object.values(this.players).map(player => ({
-				id: player.id,
-				playerTag: player.playerTag,
-				ready: player.ready,
-				pos: player.pos,
-				dir: player.dir,
-				color: player.color
-			}))});
+			socket.emit("readyUpdate", {
+				players: Object.values(this.players).map(player => ({
+					id: player.id,
+					playerTag: player.playerTag,
+					ready: player.ready,
+					pos: player.pos,
+					dir: player.dir,
+					color: player.color
+				}))
+			});
 		});
 	}
 
@@ -264,7 +272,7 @@ class Game {
 		// });
 
 		let players = Object.values(this.players);
-		for (let i=0; i < players.length; i++) {
+		for (let i = 0; i < players.length; i++) {
 			players[i].pos = START_LOCS[i].pos.dup();
 			players[i].dir = START_LOCS[i].dir.dup();
 		}
