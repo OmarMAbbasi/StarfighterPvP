@@ -12,7 +12,8 @@ let socketURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === "production") {
 	console.log(`process.env: ${process.env}`);
-	socketURL = process.env.REACT_APP_SOCKET_URL || "https://starfight.herokuapp.com/";
+	socketURL =
+		process.env.REACT_APP_SOCKET_URL || "https://starfight.herokuapp.com/";
 }
 
 const PILOTS = ["Han Solo", "Starbuck", "Wash", "Joker", "Sulu", "Eagle"];
@@ -21,7 +22,7 @@ class Canvas extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: 120,
+			time: 60,
 			round: 5,
 			players: [],
 			gameStarted: false
@@ -46,7 +47,7 @@ class Canvas extends React.Component {
 		this.startGame = this.startGame.bind(this);
 		this.userTag =
 			this.props.history.location.userTag ||
-            PILOTS[Math.floor(Math.random() * Math.floor(5))];
+			PILOTS[Math.floor(Math.random() * Math.floor(5))];
 
 		this.spectator = false;
 		this.isHost = this.props.history.location.isHost;
@@ -56,21 +57,23 @@ class Canvas extends React.Component {
 	openSocket = () => {
 		this.socket = io(socketURL);
 		let socket = this.socket;
-		// !Socket Tests
-		socket.on("connect", () => {
-        });
-        
-        socket.on("roomFullOrStarted", () => {
-            this.spectator = true;
-            this.setState({gameStarted: true});
-        })
+		socket.on("connect", () => {});
+
+		socket.on("roomFullOrStarted", () => {
+			this.spectator = true;
+			this.setState({ gameStarted: true });
+		});
+
+		socket.on("nullRoomError", () => {
+			window.location.replace("/");
+		});
 
 		socket.on("playerJoin", data => {
 			this.setState({ players: data.players });
 			this.players = data.players.map(player =>
 				Object.assign(new Player(), player)
 			);
-			
+
 			if (this.isHost) this.startBtnRef.current.disabled = true;
 		});
 
@@ -87,21 +90,19 @@ class Canvas extends React.Component {
 		});
 
 		socket.on("gameStart", () => {
-			console.log('game started');
+			console.log("game started");
 			this.setState({ gameStarted: true });
 		});
 
-		// socket.emit("joinRoom", {
-		// 	event: "Client Talks to Server"
-		// });
-
 		socket.on("newPosition", data => {
-			// console.log(data);
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
 			if (data.rounds === 1) {
 				this.props.history.push({
 					pathname: "/gameover",
-					players: this.players
+					players: this.players,
+					currPlayer: this.players.filter(
+						player => player.playerTag === this.userTag
+					)[0]
 				});
 			}
 			this.players = [];
@@ -130,12 +131,11 @@ class Canvas extends React.Component {
 	};
 
 	drawObj() {
-		
-		if (this.state.round !== 0) {
-			const can1 = document.getElementById("can1");
+		const can1 = document.getElementById("can1");
+		const can2 = document.getElementById("can2");
+
+		if (this.state.round !== 0 && can1 && can2) {
 			const can1Ctx = can1.getContext("2d");
-			const can2 = document.getElementById("can2");
-			const can2Ctx = can2.getContext("2d");
 			can1Ctx.clearRect(0, 0, 1600, 900);
 			can1Ctx.rect(0, 0, 1600, 900);
 			can1Ctx.fillStyle = "black";
@@ -224,20 +224,22 @@ class Canvas extends React.Component {
 		can1Ctx.fill();
 		this.drawObj();
 
-        if (!this.spectator) {
-            document.addEventListener("keydown", event => {
-                this._handleKey(event, true);
-            });
-            document.addEventListener("keyup", event => {
-                this._handleKey(event, false);
-            });
+		if (!this.spectator) {
+			document.addEventListener("keydown", event => {
+				this._handleKey(event, true);
+			});
+			document.addEventListener("keyup", event => {
+				this._handleKey(event, false);
+			});
 		}
-		
-		if (this.isHost) this.startBtnRef.current.addEventListener('click', this.startGame);
+
+		if (this.isHost)
+			this.startBtnRef.current.addEventListener("click", this.startGame);
 	}
 
 	joinRoom() {
 		let socket = this.socket;
+		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			roomId: this.roomId,
@@ -258,7 +260,7 @@ class Canvas extends React.Component {
 		// if (this.props.timeLeft === 0) {
 		// 	this.props.openModal("nextRound");
 		// }
-
+		//TODO for between round logic
 		const roundOver = () => (
 			<div className="roundOver">
 				<h1>Round Over</h1>
@@ -268,6 +270,10 @@ class Canvas extends React.Component {
 		);
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
+		debugger;
+		// if (gamers.length < 1) {
+		// 	window.location.replace("");
+		// }
 		const playerList =
 			gamers.length !== 0 ? (
 				gamers.map(player => {
@@ -291,7 +297,7 @@ class Canvas extends React.Component {
 		// 	// const canvas = document.getElementById("can1");
 		// 	// const can1Ctx = canvas.getContext("2d");
 		// 	// can1Ctx.clearRect(0, 0, 1600, 900);
-			
+
 		// 	this.props.history.push({
 		// 		pathname: "/gameover",
 		// 		players: this.players
@@ -304,13 +310,14 @@ class Canvas extends React.Component {
 
 				<audio src={backSound} autoPlay loop />
 
-				{(this.props.history.location.isHost && !this.state.gameStarted) ? (
-					<div className="start-game-container">
-						<button id='start-game-btn' ref={this.startBtnRef}>Start Game</button>
-					</div>
-				) : null}
-				
 				<div className="board-header">
+					{this.props.history.location.isHost && !this.state.gameStarted ? (
+						<div className="start-game-container">
+							<button id="start-game-btn" ref={this.startBtnRef}>
+								Start Game
+							</button>
+						</div>
+					) : null}
 					<img
 						className="player-game-logo"
 						src={require("../style/images/newLogo.png")}
@@ -322,30 +329,31 @@ class Canvas extends React.Component {
 						<h3>Timer:{this.state.time}</h3>
 						<h3>Rounds Left:{this.state.round}</h3>
 					</div>
-
 				</div>
 
-				<div className="board-container">
-					<canvas
-						id="can1"
-						// ref={this.canvasRef}
-						width="1300"
-						height="750"
-						style={{ position: "relative", top: 0 }}
-					/>
-					<canvas
-						id="can2"
-						// ref={this.canvasRef}
-						width="1300"
-						height="750"
-						style={{ position: "absolute", top: 0, left: 0 }}
-					/>
+				<div className="main-board">
+					<ul className="side-bar">
+						<h1>Players</h1>
+						{playerList}
+					</ul>
+					<div className="board-container">
+						<canvas
+							id="can1"
+							// ref={this.canvasRef}
+							width="1300"
+							height="750"
+							style={{ position: "relative", top: 0 }}
+						/>
+						<canvas
+							id="can2"
+							// ref={this.canvasRef}
+							width="1300"
+							height="750"
+							style={{ position: "absolute", top: 0, left: 0 }}
+						/>
+					</div>
+					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 				</div>
-				<ul className="side-bar">
-					<h1>Players</h1>
-					{playerList}
-				</ul>
-				{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 			</div>
 		);
 	}

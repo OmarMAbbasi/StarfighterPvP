@@ -15,11 +15,16 @@ class PlayerForm extends React.Component {
 	componentDidMount() {
 		let canvas = this.canvasRef.current;
 		let ctx = canvas.getContext("2d");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		let width = canvas.width;
+		let height = canvas.height;
+
 		ctx.fillStyle = "#000000";
-		ctx.fillRect(0, 0, 1600, 900);
+		ctx.fillRect(0, 0, width, height);
 		let img = new Image();
 		let xPos = 0;
-		let yPos = 210;
+		let yPos = Math.floor(height * 0.35);
 		img.onload = () => {
 			let img2 = new Image();
 			let xPos2 = 1500;
@@ -27,17 +32,17 @@ class PlayerForm extends React.Component {
 			img2.onload = () => {
 				setInterval(() => {
 					ctx.save();
-					ctx.clearRect(0, 0, 1600, 900);
-					ctx.fillRect(0, 0, 1600, 900);
+					ctx.clearRect(0, 0, width, height);
+					ctx.fillRect(0, 0, width, height);
 					xPos += 12;
 					xPos2 -= 12;
 					ctx.drawImage(img, xPos, yPos, 80, 61);
 					ctx.drawImage(img2, xPos2, yPos2, 80, 61);
 
 					ctx.restore();
-					if (xPos > 1600 || yPos > 900) {
+					if (xPos > width || yPos > height) {
 						xPos = 0;
-						yPos = 210;
+						yPos = Math.floor(height * 0.35);
 					}
 
 					if (xPos2 < 0) {
@@ -62,8 +67,6 @@ class PlayerForm extends React.Component {
 				<canvas
 					ref={this.canvasRef}
 					id="my-canvas"
-					width="1600"
-					height="900"
 				></canvas>
 
 				{this.props.modal ? (
@@ -76,8 +79,8 @@ class PlayerForm extends React.Component {
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
 							alt="logo-another"
-							width="1200"
-							height="332"
+							// width="1200"
+							// height="332"
 						/>
 						<div className="btns">
 							<button
@@ -85,18 +88,18 @@ class PlayerForm extends React.Component {
 								className="room-btn"
 							>Create Room
 							</button>
+							<button
+								onClick={() => this.props.openModal("joinRoom")}
+								className="room-btn"
+							>Join Room
+							</button>
+							<button
+								onClick={() => this.props.openModal("joinDemoRoom")}
+								className="room-btn"
+								id="demo-btn"
+							>Demo Room
+							</button>
 						</div>
-						<button
-							onClick={() => this.props.openModal("joinRoom")}
-							className="room-btn"
-						>Join Room
-						</button>
-						<button
-							onClick={() => this.props.openModal("joinDemoRoom")}
-							className="room-btn"
-							id="demo-btn"
-						>Demo Room
-						</button>
 					</div>
 				)}
 			</div>

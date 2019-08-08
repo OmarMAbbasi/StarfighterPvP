@@ -1,7 +1,7 @@
 import React from "react";
 
 const PlayerListItem = ({ player, socket, gameStarted, gameId, myTag }) => (
-	<li>
+	<li className={`player-list ${gameStarted}`}>
 		<h2>{player.playerTag}</h2>
 		{!gameStarted ? (
 			player.playerTag === myTag ? (
@@ -15,8 +15,8 @@ const PlayerListItem = ({ player, socket, gameStarted, gameId, myTag }) => (
 				<p className="readyText">{player.ready ? "Ready" : "Not Ready"}</p>
 			)
 		) : (
-			<div>
-				<h3>{player.totalScore}</h3>
+			<div className="player-list-started">
+				<h3 className='player-score-ingame'>{player.totalScore}</h3>
 				{player.health > 100 ? (
 					<div
 						className="progressParent"

@@ -1,14 +1,21 @@
 .gameboard-parent {
     font-family: 'Press Start 2P', cursive;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     background: black;
     grid-template: "a a a" "b c d";
-    grid-template-columns: 1fr 1300px 1fr 
+    grid-template-columns: 1fr 1300px 1fr; 
+    height: 100vh;
 }
 
 .board-container {
-    margin: 0 auto;
+    height: 70vh;
+    width: calc(1300/750 * 70vh);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 0 auto; */
     position: relative;
     border: 2px solid #069304;
     margin-bottom: 70px;
@@ -20,6 +27,31 @@
     justify-content: center;
     align-items: center;
     grid-area: a;
+    margin: 20px 0px;
+    width: 90vw;
+    height: 12vh;
+}
+
+.main-board {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    margin-top: 10px;
+}
+
+.player-list.false {
+    display: flex;
+    align-items: center;
+}
+
+.player-list.true {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-list-started {
+    display: flex;
+    flex-direction: column;
 }
 
 .text {
@@ -27,7 +59,7 @@
     padding-left: 20px;
     color: #ffffff;
     font-family: 'Press Start 2P', cursive;
-    font-size: 24px;
+    font-size: 1.5em;
 }
 
 .text h3{
@@ -35,6 +67,7 @@
 }
 
 .player-game-logo {
+    width: 55vw;
     margin-left: 2px;
     padding: 15px;
     display: flex;
@@ -66,8 +99,9 @@
 .side-bar li > h2 {
     color: #ffffff;
     font-size: 18px;
-     overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
+    padding: 10px 0px;
 }
 
 .side-bar li > h3 {
@@ -75,19 +109,20 @@
     font-size: 16px;
 }
 
-.start-game-container {
-    margin-left: 30px;
-    margin-bottom: 110px;
-    justify-content: flex-start;
+.player-score-ingame {
+    padding-bottom: 10px;
 }
 
+.start-game-container {
+    margin: 0 20px;
+}
 
 .start-game-container button {
     background: #fe0000;
     border: 0.5px solid #ffffff;
     border-radius: 100%;
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
     color: white;
     font-size: 16px
 }
@@ -113,4 +148,14 @@
     cursor: pointer;
     background: #fcd02f;
     opacity: 0.9;
+}
+
+#can1 {
+    width: 100%;
+    height: 100%;
+}
+
+#can2 {
+    width: 100%;
+    height: 100%;
 }

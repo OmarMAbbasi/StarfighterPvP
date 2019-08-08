@@ -56,4 +56,15 @@ PowerUps.sideshot = {
     }
 };
 
+PowerUps.uzi = {
+    type: 'WEAPON',
+    name: 'Uzi',
+    options: {
+        type: 'UZI',
+        fireRate: 7,
+        bulletSize: 4,
+        damage: 9
+    }
+};
+
 module.exports = PowerUps;

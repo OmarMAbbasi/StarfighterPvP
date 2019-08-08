@@ -5,12 +5,13 @@
     justify-content: center;
     vertical-align: middle;
     z-index: 1;
+    background: black;
 }
 
 .other-ele {
     z-index: 2;
     padding: 10px;
-    height: 900px; 
+    height: 50vh; 
     display: flex; 
     flex-direction: column;
     align-items: center;
@@ -23,6 +24,8 @@
     list-style: none;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     box-sizing: border-box;
     /* padding: 8px 18px; */
 }
@@ -30,13 +33,19 @@
 .winner-announcement li {
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
     width: 100%;
-    padding: 8px 18px;
+    padding: 8px 16px;
+}
+
+.winner-head {
+    font-size: 1.75em;
+    margin-bottom: 15px;
 }
 
 .high-scorers {
     margin-top: 140px;
-    height: 900px; 
+    height: 100%; 
     display: flex;
     justify-content: center;
     vertical-align: middle; 
@@ -47,8 +56,7 @@
 }
 
 .high-scorers h2 {
-    height: 900px; 
-    font-size: 36px;
+    font-size: 2.2em;
     margin-bottom: 40px;
     display: flex;
     justify-content: center;
