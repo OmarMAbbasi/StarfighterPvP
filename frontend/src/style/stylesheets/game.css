@@ -18,8 +18,6 @@
     /* margin: 0 auto; */
     position: relative;
     border: 2px solid #069304;
-    margin-bottom: 70px;
-    grid-area: c;
 }
 
 .board-header {
@@ -141,7 +139,6 @@
     width: 70px;
     color: black;
     font-size: 13px;
-    margin-left: 18px;
 }
 
 .readyButton:hover {
@@ -158,4 +155,29 @@
 #can2 {
     width: 100%;
     height: 100%;
+}
+
+.room-code {
+    margin-top: 20px;
+    color: white;
+}
+
+.player-name {
+    margin-right: 18px;
+}
+
+.player-name.RED {
+    color: rgb(224, 24, 24);
+}
+
+.player-name.BLUE {
+    color: rgb(110, 118, 247);
+}
+
+.player-name.YELLOW {
+    color: rgb(255, 239, 73);
+}
+
+.player-name.GREEN {
+    color: rgb(0, 209, 111);
 }

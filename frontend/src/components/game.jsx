@@ -350,6 +350,9 @@ class Canvas extends React.Component {
 					</div>
 					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 				</div>
+				<div className='room-code'>
+						RoomCode: {window.location.href.split('/')[window.location.href.split('/').length - 1]}
+				</div>
 			</div>
 		);
 	}
