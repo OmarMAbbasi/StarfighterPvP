@@ -28,7 +28,6 @@ class CreateRoom extends React.Component {
 				});
 			});
 			this.props.closeModal();
-
 		}
 	}
 
@@ -68,13 +67,13 @@ class CreateRoom extends React.Component {
 						Play
 					</button>
 					{this.state.userTag !== "" ? shownView() : null}
+					<button
+						onClick={() => this.props.openModal("joinRoom")}
+						className="room-btn"
+					>
+						Join Room
+					</button>
 				</form>
-				<button
-					onClick={() => this.props.openModal("joinRoom")}
-					className="room-btn"
-				>
-					Join Room
-				</button>
 			</div>
 		);
 	}
