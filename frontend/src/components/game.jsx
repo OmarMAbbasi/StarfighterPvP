@@ -39,7 +39,7 @@ class Canvas extends React.Component {
 		this.bullets = [];
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
-		this.roomId = props.match.params;
+		this.roomId = props.match.params.gameId;
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 		this.drawObj = this.drawObj.bind(this);
@@ -204,7 +204,6 @@ class Canvas extends React.Component {
 				break;
 		}
 		this.input = input;
-		// debugger;
 	}
 
 	// updatePos = () => {
@@ -239,7 +238,6 @@ class Canvas extends React.Component {
 
 	joinRoom() {
 		let socket = this.socket;
-		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			roomId: this.roomId,
@@ -270,7 +268,6 @@ class Canvas extends React.Component {
 		);
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
-		debugger;
 		// if (gamers.length < 1) {
 		// 	window.location.replace("");
 		// }

@@ -17,7 +17,7 @@ class GameOver extends React.Component {
 
 	getWinner() {
 		let scores = [];
-		if (this.props.location.players) {
+		if (this.props.location.players[0]) {
 			this.props.location.players.forEach(player => {
 				scores.push(player.totalScore);
 			});
