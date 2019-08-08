@@ -14,7 +14,6 @@ class JoinRoom extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
 		let roomId = this.state.roomId;
 		if (roomId !== "" && this.state.userTag !== "") {
 			this.props.history.push({

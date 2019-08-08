@@ -18,7 +18,7 @@ body {
 }
 
 .player-form {
-    height: 900px; 
+    height: 100vh;
     display: flex; 
     flex-direction: column;
     align-items: center;
@@ -27,45 +27,11 @@ body {
 .player-form h1 {
     color: #3500fa;
     font-family: 'Press Start 2P', cursive;
-    font-size: 24px;
+    font-size: 2vw;
 }
 
 .enter-room {
     position: relative;
-}
-
-/* .red-ship {
-    -webkit-transform: rotate(30deg);
-    -moz-transform: rotate(30deg);
-    -o-transform: rotate(30deg);
-    -ms-transform: rotate(30deg);
-    transform: rotate(30deg);
-    position: absolute;
-    top: 280px;
-    left: 320px;
-}
- */
-.red-blast1 {
-    -webkit-transform: rotate(120deg);
-    -moz-transform: rotate(120deg);
-    -o-transform: rotate(120deg);
-    -ms-transform: rotate(120deg);
-    transform: rotate(120deg);
-    position: absolute;
-    top: 280px;
-    left: 450px;
-}
-
-
-.red-blast2 {
-    -webkit-transform: rotate(120deg);
-    -moz-transform: rotate(120deg);
-    -o-transform: rotate(120deg);
-    -ms-transform: rotate(120deg);
-    transform: rotate(120deg);
-    position: absolute;
-    top: 450px;
-    left: 450px;
 }
 
 .room-input {
@@ -96,22 +62,21 @@ body {
 }
 
 .room-btn {
-    min-height: 36px;
-    min-width: 355px;
+    height: auto;
+    width: auto;
     background: none;
-    font-size: 46px;
+    font-size: 4.5vw;
     color: #3500fa;
     outline: none;
     border: none;
     font-family: 'Press Start 2P', cursive;
-    padding: 30px 50px;
+    padding-top: 4%;
     position: relative;
     display: flex;
-   
 }
 
 .btns {
-    margin-top: 300px;
+    margin-top: 12%;
 }
 
 .room-btn:hover {
@@ -121,68 +86,12 @@ body {
 
 #blue-ship {
     position: absolute;
-    top: 500px;
-    right: 140px;
+    top: 50%;
     -webkit-transform: rotate(200deg);
     -moz-transform: rotate(200deg);
     -o-transform: rotate(200deg);
     -ms-transform: rotate(200deg);
     transform: rotate(200deg);
-}
-
-/* 
-.star1 {
-    display: flex;
-    position: relative;
-    float: left;
-}
-
-
-.star2 {
-    display: flex;
-    position: relative;
-    justify-content: center;
-}
-
-.star3 {
-    position: relative;
-    top: 500px;
-    right: 500px;
-
-}  */
-
-.ast-1 {
-    position: absolute;
-    top: 400px;
-    right: 400px;
-}
-
-.ast-2 {
-    position: absolute;
-    left: 540px;
-    top: 540px;
-}
-
-.blue-blast1 {
-    position: absolute;
-    top: 400px;
-    right: 200px;
-    -webkit-transform: rotate(290deg);
-    -moz-transform: rotate(290deg);
-    -o-transform: rotate(290deg);
-    -ms-transform: rotate(290deg);
-    transform: rotate(290deg);
-}
-
-.blue-blast2 {
-    position: absolute;
-    top: 520px;
-    right: 300px;
-    -webkit-transform: rotate(290deg);
-    -moz-transform: rotate(290deg);
-    -o-transform: rotate(290deg);
-    -ms-transform: rotate(290deg);
-    transform: rotate(290deg);
 }
 
 #my-canvas {
@@ -196,7 +105,6 @@ body {
 }
 
 audio { 
-  /* visibility: hidden; */
   display: none;
 }
 
@@ -215,8 +123,4 @@ audio {
     font-family: 'Press Start 2P', cursive;
     font-size: 28px;
     color: #3500fa;
-}
-
-#demo-btn {
-    margin-top: 25px;
 }
