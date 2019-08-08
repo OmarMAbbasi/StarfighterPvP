@@ -8,6 +8,11 @@
 }
 
 .board-container {
+    height: 70vh;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
     position: relative;
     border: 2px solid #069304;
