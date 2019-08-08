@@ -17,9 +17,6 @@ body {
     position: relative;
     width: auto;
     height: 40vh;
-    /* width="1200"
-    height="332" */
-
 }
 
 .player-form {
@@ -40,20 +37,22 @@ body {
 }
 
 .room-input {
-    min-height: 36px;
-    min-width: 355px;
+    min-height: 6%;
+    min-width: auto;
     font-family: 'Press Start 2P', cursive;
     cursor: text;
     color: #ffffff;
     outline: none;
     border: 3px solid #3500fa;
     background: #000000;
-    font-size: 24px;
+    font-size: 2vw;
     border-radius: 5px;
     display: flex;
     line-height: normal;
-    padding: 5px 10px;
-    margin-top: 50px;
+    margin-top: 5%;
+    padding: 0.5% 2%;
+    /* padding: 5px 10px;
+    margin-top: 50px; */
     position: relative;
 }
 
