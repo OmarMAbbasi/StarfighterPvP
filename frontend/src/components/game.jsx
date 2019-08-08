@@ -64,6 +64,10 @@ class Canvas extends React.Component {
 			this.setState({ gameStarted: true });
 		});
 
+		socket.on("nullRoomError", () => {
+			window.location.replace("/");
+		});
+
 		socket.on("playerJoin", data => {
 			this.setState({ players: data.players });
 			this.players = data.players.map(player =>
@@ -235,6 +239,7 @@ class Canvas extends React.Component {
 
 	joinRoom() {
 		let socket = this.socket;
+		debugger;
 		const payload = {
 			type: this.props.history.location.type,
 			roomId: this.roomId,
@@ -265,9 +270,10 @@ class Canvas extends React.Component {
 		);
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
-		if (gamers.length < 1) {
-			window.location.replace("");
-		}
+		debugger;
+		// if (gamers.length < 1) {
+		// 	window.location.replace("");
+		// }
 		const playerList =
 			gamers.length !== 0 ? (
 				gamers.map(player => {
