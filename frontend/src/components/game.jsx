@@ -99,8 +99,8 @@ class Canvas extends React.Component {
 		});
 
 		socket.on("newPosition", data => {
-			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1 });
-			if (data.rounds === 1) {
+			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1, gameStatus: data.gameState});
+			if (data.rounds === 0) {
 				this.props.history.push({
 					pathname: "/gameover",
 					players: this.players,
@@ -377,11 +377,11 @@ class Canvas extends React.Component {
 				);
 			case "STARTING":
 				return (
-					<p>ROUND STARTING</p>
+					<p>ROUND {5 - this.state.round} STARTING</p>
 				);
 			case "ENDING":
 				return (
-					<p>ROUND OVER</p>
+					<p>ROUND {5 - this.state.round} OVER</p>
 				);
 			default:
 				return null;

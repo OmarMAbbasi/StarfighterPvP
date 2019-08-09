@@ -11,7 +11,7 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 const HAZARD_COUNT = 12;
 const NUM_ROUNDS = 5;
-const ROUND_LENGTH = 60;
+const ROUND_LENGTH = 30;
 const START_LOCS = [
 	{ pos: new Vector2(200, 150), dir: new Vector2(1, 0) },
 	{ pos: new Vector2(1150, 600), dir: new Vector2(-1, 0) },
@@ -28,6 +28,7 @@ class Game {
 		roundLength = ROUND_LENGTH
 	) {
 		this.started = false;
+		this.gameState = "WAITING";
 		// set game parameters
 		this.rounds = numRounds;
 		this.roundLength = roundLength;
@@ -71,8 +72,14 @@ class Game {
 	}
 
 	async playRound() {
+		this.gameState = "STARTING";
 		this.initRound();
 
+		this._emitGameState();
+
+		await sleep(3500);
+
+		this.gameState = "PLAYING";
 		this.lastUpdate = Date.now();
 		while (this.timer > 0) {
 			this.update();
@@ -80,11 +87,9 @@ class Game {
 			await sleep(1000 / FPS);
 		}
 
-		// set player stats back to defaults
-		Object.values(this.players).forEach(player => {
-			player.setDefaults();
-		});
-
+		this.gameState = "ENDING";
+		this._emitGameState();
+		
 		if (this.rounds === 1) {
 			return;
 		} else {
@@ -104,7 +109,7 @@ class Game {
 		for (let i=0; i < pickOrder.length; i++) {
 			const player = pickOrder[i];
 			const choice = Math.floor(Math.random() * powerUps.length);
-			// await sleep(5000);
+			await sleep(3000);
 			player.applyPowerUp(powerUps[choice]);
 			powerUps.splice(choice, 1);
 		}
@@ -159,9 +164,14 @@ class Game {
 		});
 
 		// update clients with new positions
+		this._emitGameState();
+	}
+
+	_emitGameState() {
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
 			socket.emit("newPosition", {
+				gameState: this.gameState,
 				players: Object.values(this.players).map(player => ({
 					id: player.id,
 					playerTag: player.playerTag,
@@ -267,6 +277,7 @@ class Game {
 		for (let i=0; i < players.length; i++) {
 			players[i].pos = START_LOCS[i].pos.dup();
 			players[i].dir = START_LOCS[i].dir.dup();
+			players[i].setDefaults();
 		}
 
 		this.timer = this.roundLength;
