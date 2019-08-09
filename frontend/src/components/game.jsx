@@ -52,6 +52,7 @@ class Canvas extends React.Component {
 		this.spectator = false;
 		this.isHost = this.props.history.location.isHost;
 		this.startBtnRef = React.createRef();
+		this.state.gameStatus = "WAITING";
 	}
 
 	openSocket = () => {
@@ -91,7 +92,10 @@ class Canvas extends React.Component {
 
 		socket.on("gameStart", () => {
 			console.log("game started");
-			this.setState({ gameStarted: true });
+			this.setState({ 
+				gameStarted: true,
+				gameStatus: "STARTING"
+			});
 		});
 
 		socket.on("newPosition", data => {
@@ -301,9 +305,11 @@ class Canvas extends React.Component {
 		// 	});
 		// }
 
+		let screenText = <div id="infoTextContainer">{this._infoText()}</div>;
+
 		return (
 			<div className="gameboard-parent">
-				{this.props.modal ? <Modal /> : null}
+				{/* {this.props.modal ? <Modal /> : null} */}
 
 				<audio src={backSound} autoPlay loop />
 
@@ -348,11 +354,38 @@ class Canvas extends React.Component {
 							height="750"
 							style={{ position: "absolute", top: 0, left: 0 }}
 						/>
+						{screenText}
 					</div>
 					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
 				</div>
 			</div>
 		);
+	}
+
+	_infoText() {
+		switch (this.state.gameStatus) {
+			case "WAITING":
+				return (
+					<p>
+						<h1>INSTRUCTIONS</h1>
+						<ul>
+							<li><span class='key'>W</span> : Move</li>
+							<li><span class='key'>A</span>/<span class='key'>D</span> : Turn</li>
+							<li><span class='key'>SPACE</span> : Shoot</li>
+						</ul>
+					</p>
+				);
+			case "STARTING":
+				return (
+					<p>ROUND STARTING</p>
+				);
+			case "ENDING":
+				return (
+					<p>ROUND OVER</p>
+				);
+			default:
+				return null;
+		};
 	}
 }
 
