@@ -255,10 +255,9 @@ class Canvas extends React.Component {
 		let joinLink = window.location.href.replace('game', 'join')
 		let text = document.createElement("TEXTAREA");
 		text.setAttribute('id', 'join-link');
-		debugger
+		
 		text.innerHTML = joinLink;
 		// let code = document.getElementsByClassName('room-code');
-		debugger
 		document.body.appendChild(text);
 		let copyLink = document.getElementById("join-link");
 		copyLink.select();

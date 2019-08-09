@@ -40,7 +40,7 @@ class Player extends MovingObject {
 	}
 
 	drawDeath(ctx) {
-		// debugger
+		// 
 		let boom = new Image();
 		boom.src = boomImg;
 		ctx.drawImage(boom, this.pos.x - 17, this.pos.y - 17, 25, 25);
