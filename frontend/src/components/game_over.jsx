@@ -26,56 +26,61 @@ class GameOver extends React.Component {
 			return this.props.location.players[idx].id;
 		} else {
 			console.log(hostname);
-			window.location.replace("");
+			window.location.replace("#/highscores");
 		}
 	}
 
 	componentDidMount() {
-		this.props.createPlayer({
-			tag: this.props.location.currPlayer.playerTag,
-			score: this.props.location.currPlayer.totalScore
-		});
-		this.props.fetchPlayers();
-		let canvas = this.canvasRef.current;
-		let ctx = canvas.getContext("2d");
-		ctx.fillStyle = "#000000";
-		ctx.fillRect(0, 0, 1600, 900);
-		let img = new Image();
-		let xPos = 0;
-		let yPos = 210;
-		img.onload = () => {
-			let img2 = new Image();
-			let xPos2 = 1500;
-			let yPos2 = 800;
-			img2.onload = () => {
-				setInterval(() => {
-					ctx.save();
-					ctx.clearRect(0, 0, 1600, 900);
-					ctx.fillRect(0, 0, 1600, 900);
-					xPos += 12;
-					xPos2 -= 12;
-					ctx.drawImage(img, xPos, yPos, 80, 61);
-					ctx.drawImage(img2, xPos2, yPos2, 80, 61);
+		if (this.props.location.players && this.props.location.currPlayer) {
+			debugger;
+			this.props.createPlayer({
+				tag: this.props.location.currPlayer.playerTag,
+				score: this.props.location.currPlayer.totalScore
+			});
+			this.props.fetchPlayers();
+			let canvas = this.canvasRef.current;
+			let ctx = canvas.getContext("2d");
+			ctx.fillStyle = "#000000";
+			ctx.fillRect(0, 0, 1600, 900);
+			let img = new Image();
+			let xPos = 0;
+			let yPos = 210;
+			img.onload = () => {
+				let img2 = new Image();
+				let xPos2 = 1500;
+				let yPos2 = 800;
+				img2.onload = () => {
+					setInterval(() => {
+						ctx.save();
+						ctx.clearRect(0, 0, 1600, 900);
+						ctx.fillRect(0, 0, 1600, 900);
+						xPos += 12;
+						xPos2 -= 12;
+						ctx.drawImage(img, xPos, yPos, 80, 61);
+						ctx.drawImage(img2, xPos2, yPos2, 80, 61);
 
-					ctx.restore();
-					if (xPos > 1600 || yPos > 900) {
-						xPos = 0;
-						yPos = 210;
-					}
+						ctx.restore();
+						if (xPos > 1600 || yPos > 900) {
+							xPos = 0;
+							yPos = 210;
+						}
 
-					if (xPos2 < 0) {
-						xPos2 = 1500;
-					}
+						if (xPos2 < 0) {
+							xPos2 = 1500;
+						}
 
-					if (yPos2 < 0) {
-						yPos2 = 800;
-					}
-				}, 100 / 3);
+						if (yPos2 < 0) {
+							yPos2 = 800;
+						}
+					}, 100 / 3);
+				};
+				img2.src = blueShip;
 			};
-			img2.src = blueShip;
-		};
-		img.src = redShip;
-		this.getWinner();
+			img.src = redShip;
+			this.getWinner();
+		} else {
+			window.location.replace("#/highscores");
+		}
 	}
 
 	render() {
@@ -90,23 +95,28 @@ class GameOver extends React.Component {
 						return <TopPlayer key={player.id + "" + idx} player={player} />;
 				  })
 				: null;
-
-		const currentPlayers = this.props.location.players.map((player, idx) => {
-			let victor;
-			if (this.winningPlayer === player.id) {
-				victor = true;
-			} else {
-				victor = false;
-			}
-			return (
-				<PlayerListItemScores
-					key={player.id + "" + idx}
-					tag={player.playerTag}
-					score={player.totalScore}
-					winner={victor}
-				/>
-			);
-		});
+		debugger;
+		let currentPlayers = [];
+		if (this.props.location.players) {
+			currentPlayers = this.props.location.players.map((player, idx) => {
+				let victor;
+				if (this.winningPlayer === player.id) {
+					victor = true;
+				} else {
+					victor = false;
+				}
+				return (
+					<PlayerListItemScores
+						key={player.id + "" + idx}
+						tag={player.playerTag}
+						score={player.totalScore}
+						winner={victor}
+					/>
+				);
+			});
+		} else {
+			return null;
+		}
 
 		return (
 			<div className="game_over">

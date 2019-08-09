@@ -105,6 +105,12 @@ class HighScore extends React.Component {
 						<h2>Astronaut Hall of Fame</h2>
 						{playerList}
 					</ul>
+					<button
+						onClick={() => window.location.replace("#/create")}
+						className="room-btn"
+					>
+						Play Game
+					</button>
 				</div>
 			</div>
 		);
