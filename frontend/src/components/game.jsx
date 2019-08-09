@@ -138,7 +138,7 @@ class Canvas extends React.Component {
 		const can1 = document.getElementById("can1");
 		const can2 = document.getElementById("can2");
 
-		if (this.state.round !== 0 && can1 && can2) {
+		if (can1 && can2) {
 			const can1Ctx = can1.getContext("2d");
 			can1Ctx.clearRect(0, 0, 1600, 900);
 			can1Ctx.rect(0, 0, 1600, 900);
