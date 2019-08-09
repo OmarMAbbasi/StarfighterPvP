@@ -9,7 +9,7 @@ const PowerUps = require('./powerups');
 const FPS = 60;
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-const HAZARD_COUNT = 6;
+let hazardCount = 6;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 60;
 const START_LOCS = [
@@ -63,6 +63,7 @@ class Game {
 		});
 
 		this.started = true;
+		hazardCount = 6;
 		while (this.rounds > 0) {
 			await this.playRound();
 			this.rounds--;
@@ -250,7 +251,7 @@ class Game {
 
 	populateHazards() {
 		this.hazards = [];
-		for (let i = 0; i < HAZARD_COUNT; i++) {
+		for (let i = 0; i < hazardCount; i++) {
 			const hazard = new Hazard();
 			this.hazards.push(hazard);
 		}
@@ -258,6 +259,7 @@ class Game {
 
 	initRound() {
 		this.populateHazards();
+		hazardCount += 2;
 		this.bullets = [];
 		// Object.values(this.players).forEach(player => {
 		// 	player.applyPowerUp(PowerUps.shotgun);
