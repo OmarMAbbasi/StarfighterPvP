@@ -109,6 +109,10 @@ class Game {
 			(a, b) => a.totalScore - b.totalScore
 		);
 
+		// remove player power ups
+		Object.values(this.players).forEach(player => player.setDefaults());
+
+		// assign random power up
 		for (let i=0; i < pickOrder.length; i++) {
 			const player = pickOrder[i];
 			const choice = Math.floor(Math.random() * powerUps.length);
@@ -279,7 +283,6 @@ class Game {
 		for (let i=0; i < players.length; i++) {
 			players[i].pos = START_LOCS[i].pos.dup();
 			players[i].dir = START_LOCS[i].dir.dup();
-			players[i].setDefaults();
 		}
 
 		this.timer = this.roundLength;
