@@ -86,12 +86,12 @@ class GameOver extends React.Component {
 		const topPlayers = this.props.players;
 		const playerList =
 			topPlayers.length !== 0
-				? topPlayers.slice(0, 10).map(player => {
-						return <TopPlayer key={player.id} player={player} />;
+				? topPlayers.slice(0, 10).map((player, idx) => {
+					return <TopPlayer key={player.id + "" + idx} player={player} />;
 				  })
 				: null;
 
-		const currentPlayers = this.props.location.players.map(player => {
+		const currentPlayers = this.props.location.players.map((player, idx) => {
 			let victor;
 			if (this.winningPlayer === player.id) {
 				victor = true;
@@ -100,7 +100,7 @@ class GameOver extends React.Component {
 			}
 			return (
 				<PlayerListItemScores
-					key={player.id}
+					key={player.id + "" + idx}
 					tag={player.playerTag}
 					score={player.totalScore}
 					winner={victor}

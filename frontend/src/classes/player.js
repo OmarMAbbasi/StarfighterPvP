@@ -1,8 +1,6 @@
 import MovingObject from "./movingObject";
 import boomImg from "../style/images/boom.png";
-import xplo from "../style/images/explosion3.png";
-import Bullet from "./bullet";
-import Hazard from "./hazard";
+// import xplo from "../style/images/explosion3.png";
 
 const redShip = require("../style/images/redshipfire.png");
 const blueShip = require("../style/images/blueshipfire.png");
@@ -15,10 +13,10 @@ const greenGod = require("../style/images/greengod.png");
 const yellowGod = require("../style/images/yellowgod.png");
 
 const PLAYER_RADIUS = 15;
-const PLAYER_SPEED = 30;
-const ROTATE_SPEED = 90;
+// const PLAYER_SPEED = 30;
+// const ROTATE_SPEED = 90;
 
-const COLORS = ["RED", "BLUE", "YELLOW", "GREEN"];
+// const COLORS = ["RED", "BLUE", "YELLOW", "GREEN"];
 
 //merge onto mattDev
 //npm run dev before commit

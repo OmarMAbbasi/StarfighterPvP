@@ -6,7 +6,6 @@ import Hazard from "../classes/hazard";
 import Bullet from "../classes/bullet";
 import PlayerListItem from "./player_list_item";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
-import Modal from "./modal";
 
 let socketURL = "http://localhost:5000";
 
@@ -278,13 +277,13 @@ class Canvas extends React.Component {
 		// 	this.props.openModal("nextRound");
 		// }
 		//TODO for between round logic
-		const roundOver = () => (
-			<div className="roundOver">
-				<h1>Round Over</h1>
-				<h2>Player 1</h2>
-				<h2>Player 2</h2>
-			</div>
-		);
+		// const roundOver = () => (
+		// 	<div className="roundOver">
+		// 		<h1>Round Over</h1>
+		// 		<h2>Player 1</h2>
+		// 		<h2>Player 2</h2>
+		// 	</div>
+		// );
 
 		let gamers = this.state.gameStarted ? this.players : this.state.players;
 		// if (gamers.length < 1) {
@@ -385,14 +384,14 @@ class Canvas extends React.Component {
 		switch (this.state.gameStatus) {
 			case "WAITING":
 				return (
-					<p>
+					<div>
 						<h1>INSTRUCTIONS</h1>
 						<ul>
-							<li><span class='key'>W</span> : Move</li>
-							<li><span class='key'>A</span>/<span class='key'>D</span> : Turn</li>
-							<li><span class='key'>SPACE</span> : Shoot</li>
+							<li><span className='key'>W</span> : Move</li>
+							<li><span className='key'>A</span>/<span className='key'>D</span> : Turn</li>
+							<li><span className='key'>SPACE</span> : Shoot</li>
 						</ul>
-					</p>
+					</div>
 				);
 			case "STARTING":
 				return (

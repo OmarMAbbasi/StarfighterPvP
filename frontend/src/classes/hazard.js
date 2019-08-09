@@ -1,9 +1,6 @@
 import MovingObject from "./movingObject";
-import Bullet from "./bullet";
 import hazard1 from "../style/images/asteroid1.png";
-import hazard2 from "../style/images/asteroid2.png";
 import boomImg from "../style/images/boom.png";
-const HAZARDS = [hazard1, hazard2];
 
 // const HAZARD1_RADIUS = 10;
 // const HAZARD2_RADIUS = 12;
