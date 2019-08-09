@@ -6,7 +6,7 @@ import './style/stylesheets/game.css';
 import GameContainer from "./components/game_container";
 import GameOverContainer from "./components/game_over_container";
 import PlayerContainer from './components/player_container';
-// import JoinRoomErrorContainer from './components/join_room_error_container';
+import JoinRoomErrorContainer from './components/join_room_error_container';
 import { Switch, Route } from 'react-router-dom';
 
 
@@ -15,6 +15,7 @@ function App() {
 		<div className="App">
 			<Switch>
 				<Route exact path='/' component={PlayerContainer} />
+				<Route exact path='/game/error' component={JoinRoomErrorContainer} />
 				<Route path='/gameover' component={GameOverContainer} />
 				<Route path='/join/:gameId' component={PlayerContainer} />
 				<Route exact path='/game/:gameId' component={GameContainer} />
