@@ -14,6 +14,9 @@ class PlayerForm extends React.Component {
 	}
 
 	componentDidMount() {
+		if (this.props.match.params.gameId) {
+			this.props.openModal("joinRoom");
+		}
 		let canvas = this.canvasRef.current;
 		let ctx = canvas.getContext("2d");
 		canvas.width = window.innerWidth;

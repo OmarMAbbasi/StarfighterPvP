@@ -53,6 +53,7 @@ class Canvas extends React.Component {
 		this.isHost = this.props.history.location.isHost;
 		this.startBtnRef = React.createRef();
 		this.state.gameStatus = "WAITING";
+		this.copyToClipboard = this.copyToClipboard.bind(this);
 	}
 
 	openSocket = () => {
@@ -254,6 +255,20 @@ class Canvas extends React.Component {
 		this.socket.emit("startGame", { roomId: this.roomId });
 	}
 
+	copyToClipboard() {
+		let joinLink = window.location.href.replace('game', 'join')
+		let text = document.createElement("TEXTAREA");
+		text.setAttribute('id', 'join-link');
+		
+		text.innerHTML = joinLink;
+		// let code = document.getElementsByClassName('room-code');
+		document.body.appendChild(text);
+		let copyLink = document.getElementById("join-link");
+		copyLink.select();
+		document.execCommand("copy");
+		document.body.removeChild(text);
+	}
+
 	render() {
 		if (!this.props) {
 			return null;
@@ -357,6 +372,10 @@ class Canvas extends React.Component {
 						{screenText}
 					</div>
 					{/* <Chatform socket={socket} roomId = {this.props.history.location.roomId}	nickname = {this.userTag} message = {'somestring'} /> */}
+				</div>
+				<div className='room-code'>
+						RoomCode: {window.location.href.split('/')[window.location.href.split('/').length - 1]}
+						<button className="copy-to-clipboard" onClick={this.copyToClipboard}>Copy to Clipboard</button>
 				</div>
 			</div>
 		);

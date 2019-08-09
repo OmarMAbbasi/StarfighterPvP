@@ -17,8 +17,6 @@
     align-items: center;
     position: relative;
     border: 2px solid #069304;
-    margin-bottom: 70px;
-    grid-area: c;
 }
 
 .board-header {
@@ -140,13 +138,17 @@
     width: 70px;
     color: black;
     font-size: 13px;
-    margin-left: 18px;
 }
 
 .readyButton:hover {
     cursor: pointer;
     background: #fcd02f;
     opacity: 0.9;
+}
+
+.readyButton:active {
+    outline: none;
+    background: white;
 }
 
 #can1 {
@@ -196,4 +198,65 @@
     vertical-align: middle;
     margin-right: 3px;
     margin-left: 2px;
+}
+
+.room-code {
+    margin-top: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.player-name {
+    margin-right: 18px;
+}
+
+.player-name.RED {
+    color: rgb(224, 24, 24);
+}
+
+.player-name.BLUE {
+    color: rgb(110, 118, 247);
+}
+
+.player-name.YELLOW {
+    color: rgb(255, 239, 73);
+}
+
+.player-name.GREEN {
+    color: rgb(0, 209, 111);
+}
+
+#join-link {
+    /* display: none; */
+    background: black;
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+}
+
+.copy-to-clipboard {
+    background: #fcd02f;
+    border: 0.5px solid #ffffff;
+    border-radius: 10px;
+    height: 20px;
+    width: 8vw;
+    color: black;
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+.copy-to-clipboard:hover {
+    cursor: pointer;
+    background: #fcd02f;
+    opacity: 0.9;
+}
+
+.copy-to-clipboard:active {
+    outline: none;
+    background: white;
 }

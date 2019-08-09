@@ -2,7 +2,7 @@ import React from "react";
 
 const PlayerListItem = ({ player, socket, gameStarted, gameId, myTag }) => (
 	<li className={`player-list ${gameStarted}`}>
-		<h2>{player.playerTag}</h2>
+		<h2 className={`player-name ${player.color}`}>{player.playerTag}</h2>
 		{!gameStarted ? (
 			player.playerTag === myTag ? (
 				<button

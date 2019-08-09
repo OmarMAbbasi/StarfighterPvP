@@ -30,6 +30,7 @@ body {
 .player-form h1 {
     color: #ffffff;
     font-family: 'Press Start 2P', cursive;
+    margin-top: 15px;
     font-size: 2vw;
 }
 
