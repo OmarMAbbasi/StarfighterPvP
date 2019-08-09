@@ -14,7 +14,6 @@ class JoinRoom extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		//* Get game tag from somewhere. 'game' is placeholder. Probably this.props.roomId
 		let roomId = this.state.roomId;
 		if (roomId !== "" && this.state.userTag !== "") {
 			this.props.history.push({
@@ -68,6 +67,12 @@ class JoinRoom extends React.Component {
 					</button>
 					{this.state.roomId && this.state.userTag !== "" ? shownView() : null}
 				</form>
+				<button
+					onClick={() => this.props.openModal("createRoom")}
+					className="room-btn"
+				>
+					Create Room
+				</button>
 			</div>
 		);
 	}

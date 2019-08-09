@@ -24,8 +24,8 @@ class CreateRoom extends React.Component {
 					pathname: `/game/${roomId}`,
 					type: "createRoom",
 					userTag: userTag,
-                    roomId: roomId,
-                    isHost: true
+					roomId: roomId,
+					isHost: true
 				});
 			});
 		}
@@ -68,6 +68,12 @@ class CreateRoom extends React.Component {
 					</button>
 					{this.state.userTag !== "" ? shownView() : null}
 				</form>
+				<button
+					onClick={() => this.props.openModal("joinRoom")}
+					className="room-btn"
+				>
+					Join Room
+				</button>
 			</div>
 		);
 	}

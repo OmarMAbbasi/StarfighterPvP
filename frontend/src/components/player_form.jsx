@@ -18,11 +18,16 @@ class PlayerForm extends React.Component {
 		}
 		let canvas = this.canvasRef.current;
 		let ctx = canvas.getContext("2d");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		let width = canvas.width;
+		let height = canvas.height;
+
 		ctx.fillStyle = "#000000";
-		ctx.fillRect(0, 0, 1600, 900);
+		ctx.fillRect(0, 0, width, height);
 		let img = new Image();
 		let xPos = 0;
-		let yPos = 210;
+		let yPos = Math.floor(height * 0.35);
 		img.onload = () => {
 			let img2 = new Image();
 			let xPos2 = 1500;
@@ -30,17 +35,17 @@ class PlayerForm extends React.Component {
 			img2.onload = () => {
 				setInterval(() => {
 					ctx.save();
-					ctx.clearRect(0, 0, 1600, 900);
-					ctx.fillRect(0, 0, 1600, 900);
+					ctx.clearRect(0, 0, width, height);
+					ctx.fillRect(0, 0, width, height);
 					xPos += 12;
 					xPos2 -= 12;
 					ctx.drawImage(img, xPos, yPos, 80, 61);
 					ctx.drawImage(img2, xPos2, yPos2, 80, 61);
 
 					ctx.restore();
-					if (xPos > 1600 || yPos > 900) {
+					if (xPos > width || yPos > height) {
 						xPos = 0;
-						yPos = 210;
+						yPos = Math.floor(height * 0.35);
 					}
 
 					if (xPos2 < 0) {
@@ -57,24 +62,16 @@ class PlayerForm extends React.Component {
 		img.src = redShip;
 	}
 
-
 	render() {
 		return (
 			<div className="player-form-parent">
 				<audio src={backSound} autoPlay loop controls />
-				<canvas
-					ref={this.canvasRef}
-					id="my-canvas"
-					width="1600"
-					height="900"
-				></canvas>
+				<canvas ref={this.canvasRef} id="my-canvas"></canvas>
 
 				{this.props.modal ? (
-
 					<Modal />
 				) : (
 					<div className="player-form">
-
 						<img
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
@@ -86,18 +83,21 @@ class PlayerForm extends React.Component {
 							<button
 								onClick={() => this.props.openModal("createRoom")}
 								className="room-btn"
-							>Create Room
+							>
+								Create Room
 							</button>
 							<button
 								onClick={() => this.props.openModal("joinRoom")}
 								className="room-btn"
-							>Join Room
+							>
+								Join Room
 							</button>
 							<button
 								onClick={() => this.props.openModal("joinDemoRoom")}
 								className="room-btn"
 								id="demo-btn"
-							>Demo Room
+							>
+								Demo Room
 							</button>
 						</div>
 					</div>
