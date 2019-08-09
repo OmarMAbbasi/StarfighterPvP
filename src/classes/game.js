@@ -9,7 +9,7 @@ const PowerUps = require('./powerups');
 const FPS = 60;
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-const HAZARD_COUNT = 12;
+const HAZARD_COUNT = 6;
 const NUM_ROUNDS = 5;
 const ROUND_LENGTH = 60;
 const START_LOCS = [
