@@ -8,23 +8,15 @@ let PLAYER_LIST = {};
 module.exports = function(socket) {
 	socket.on("joinRoom", data => {
 		socket.id = Math.random();
-		console.log(data.roomId.gameId);
+		console.log(data.roomId);
 		if (data.type === "createRoom") {
-			game = ROOM_LIST[data.roomId.gameId] = new Game(
-				data.roomId.gameId,
-				socket.id
-			);
+			game = ROOM_LIST[data.roomId] = new Game(data.roomId, socket.id);
 		} else {
-			game = ROOM_LIST[data.roomId.gameId];
+			game = ROOM_LIST[data.roomId];
 		}
 		let player;
 		if (game) {
-			player = game.addPlayer(
-				socket.id,
-				socket,
-				data.userTag,
-				data.roomId.gameId
-			);
+			player = game.addPlayer(socket.id, socket, data.userTag, data.roomId);
 		} else socket.emit("nullRoomError");
 
 		if (player && !player.spectator) {
@@ -43,11 +35,7 @@ module.exports = function(socket) {
 
 	socket.on("submitMessage", data => {
 		let player = PLAYER_LIST[socket.id];
-		ROOM_LIST[data.roomId.gameId].chat.getMessage(
-			player,
-			data.body,
-			data.nickname
-		);
+		ROOM_LIST[data.roomId].chat.getMessage(player, data.body, data.nickname);
 	});
 
 	// socket.on("shoot", data => {
@@ -72,11 +60,11 @@ module.exports = function(socket) {
 
 	socket.on("playerReady", data => {
 		PLAYER_LIST[socket.id].ready = !PLAYER_LIST[socket.id].ready;
-		ROOM_LIST[data.roomId.gameId].updateReady();
+		ROOM_LIST[data.roomId].updateReady();
 	});
 
 	socket.on("startGame", data => {
 		console.log("Starting game");
-		ROOM_LIST[data.roomId.gameId].startGame();
+		ROOM_LIST[data.roomId].startGame();
 	});
 };

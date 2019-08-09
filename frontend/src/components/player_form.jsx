@@ -60,7 +60,6 @@ class PlayerForm extends React.Component {
 		img.src = redShip;
 	}
 
-
 	render() {
 		if (this.redirectModal !== null) {
 			this.props.openModal("createRoom")
@@ -70,17 +69,12 @@ class PlayerForm extends React.Component {
 		return (
 			<div className="player-form-parent">
 				<audio src={backSound} autoPlay loop controls />
-				<canvas
-					ref={this.canvasRef}
-					id="my-canvas"
-				></canvas>
+				<canvas ref={this.canvasRef} id="my-canvas"></canvas>
 
 				{this.props.modal ? (
-
 					<Modal />
 				) : (
 					<div className="player-form">
-
 						<img
 							className="player-header"
 							src={require("../style/images/logoFinal.png")}
@@ -92,18 +86,21 @@ class PlayerForm extends React.Component {
 							<button
 								onClick={() => this.props.openModal("createRoom")}
 								className="room-btn"
-							>Create Room
+							>
+								Create Room
 							</button>
 							<button
 								onClick={() => this.props.openModal("joinRoom")}
 								className="room-btn"
-							>Join Room
+							>
+								Join Room
 							</button>
 							<button
 								onClick={() => this.props.openModal("joinDemoRoom")}
 								className="room-btn"
 								id="demo-btn"
-							>Demo Room
+							>
+								Demo Room
 							</button>
 						</div>
 					</div>

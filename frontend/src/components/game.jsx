@@ -39,7 +39,7 @@ class Canvas extends React.Component {
 		this.bullets = [];
 		this.socket = null;
 		this.openSocket = this.openSocket.bind(this);
-		this.roomId = props.match.params;
+		this.roomId = props.match.params.gameId;
 		this._handleKey = this._handleKey.bind(this);
 		this.canvasRef = React.createRef();
 		this.drawObj = this.drawObj.bind(this);
