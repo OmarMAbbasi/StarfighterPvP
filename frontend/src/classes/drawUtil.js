@@ -58,6 +58,7 @@ function _drawShip(ctx, player) {
             img.src = yellowShip;
         }
     }
+    console.log(player.color);
     ctx.save();
     ctx.translate(player.pos.x, player.pos.y);
     ctx.rotate(rotateDir);

@@ -194,7 +194,8 @@ class Game {
 					pos: player.pos,
 					dir: player.dir,
 					invuln: player.invuln,
-					color: player.color
+					color: player.color,
+					radius: player.radius
 				}))
 			});
 			// emite hazard positions
@@ -296,7 +297,7 @@ class Game {
 
 	initRound() {
 		this.populateHazards();
-		hazardCount += 2;
+		hazardCount++;
 		this.bullets = [];
 		// Object.values(this.players).forEach(player => {
 		// 	player.applyPowerUp(PowerUps.shotgun);

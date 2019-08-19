@@ -113,34 +113,15 @@ class Canvas extends React.Component {
 		});
 
 		socket.on("playerPositions", data => {
-			this.players = [];
-			let players = data.players;
-			players.forEach(player => {
-				let p = new Player();
-				p = Object.assign(p, player);
-				this.players.push(p);
-			});
+			this.players = data.players;
 		});
 
 		socket.on("hazardPositions", data => {
-			this.hazards = [];
-			let hazards = data.hazards;
-			hazards.forEach(hazard => {
-				let h = new Hazard();
-				h = Object.assign(h, hazard);
-				this.hazards.push(h);
-			});
+			this.hazards = data.hazards;
 		});
 
 		socket.on("bulletPositions", data => {
-			this.bullets = [];
-			let bullets = data.bullets;
-
-			bullets.forEach(bullet => {
-				let b = new Bullet();
-				b = Object.assign(b, bullet);
-				this.bullets.push(b);
-			});
+			this.bullets = data.bullets;
 		});
 	};
 
