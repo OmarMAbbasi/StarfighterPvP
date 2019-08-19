@@ -51,6 +51,8 @@ class Game {
 
 		this.timer = 0;
 		this.chat = new Chat();
+
+		this.demo = false;
 	}
 
 	async startGame() {
@@ -177,8 +179,13 @@ class Game {
 	_emitGameState() {
 		Object.values(this.playerSockets).forEach(socket => {
 			// emit game state to client
-			socket.emit("newPosition", {
+			socket.emit("gameUpdate", {
 				gameState: this.gameState,
+				timer: this.timer,
+				rounds: this.rounds
+			});
+			// emit player positions
+			socket.emit("playerPositions", {
 				players: Object.values(this.players).map(player => ({
 					id: player.id,
 					playerTag: player.playerTag,
@@ -188,21 +195,25 @@ class Game {
 					dir: player.dir,
 					invuln: player.invuln,
 					color: player.color
-				})),
+				}))
+			});
+			// emite hazard positions
+			socket.emit("hazardPositions", {
 				hazards: this.hazards.map(hazard => ({
 					pos: hazard.pos,
 					dir: hazard.dir,
 					radius: hazard.radius,
 					health: hazard.health
-				})),
+				}))
+			});
+			// emite bullet positions
+			socket.emit("bulletPositions", {
 				bullets: this.bullets.map(bullet => ({
 					pos: bullet.pos,
 					vel: bullet.vel,
 					radius: bullet.radius,
 					color: bullet.color
-				})),
-				timer: this.timer,
-				rounds: this.rounds
+				}))
 			});
 		});
 	}
@@ -222,6 +233,8 @@ class Game {
 			this.playerSockets[playerId] = socket;
 			return { gameId, spectator: true };
 		}
+
+		if (playerTag === 'Demo') this.demo = true;
 
 		let playerParams = START_LOCS[Object.keys(this.players).length];
 		let player = new Player(
@@ -295,7 +308,7 @@ class Game {
 			players[i].dir = START_LOCS[i].dir.dup();
 		}
 
-		this.timer = this.roundLength;
+		this.timer = this.demo ? 30 : this.roundLength;
 	}
 
 	allObjects() {

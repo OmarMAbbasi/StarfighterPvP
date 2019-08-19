@@ -6,6 +6,7 @@ import Hazard from "../classes/hazard";
 import Bullet from "../classes/bullet";
 import PlayerListItem from "./player_list_item";
 import backSound from "../style/sounds/InterplanetaryOdyssey.ogg";
+import * as DrawUtil from '../classes/drawUtil';
 
 let socketURL = "http://localhost:5000";
 
@@ -98,7 +99,7 @@ class Canvas extends React.Component {
 			});
 		});
 
-		socket.on("newPosition", data => {
+		socket.on("gameUpdate", data => {
 			this.setState({ time: Math.ceil(data.timer), round: data.rounds - 1, gameStatus: data.gameState});
 			if (data.rounds === 0) {
 				this.props.history.push({
@@ -109,6 +110,9 @@ class Canvas extends React.Component {
 					)[0]
 				});
 			}
+		});
+
+		socket.on("playerPositions", data => {
 			this.players = [];
 			let players = data.players;
 			players.forEach(player => {
@@ -116,6 +120,9 @@ class Canvas extends React.Component {
 				p = Object.assign(p, player);
 				this.players.push(p);
 			});
+		});
+
+		socket.on("hazardPositions", data => {
 			this.hazards = [];
 			let hazards = data.hazards;
 			hazards.forEach(hazard => {
@@ -123,6 +130,9 @@ class Canvas extends React.Component {
 				h = Object.assign(h, hazard);
 				this.hazards.push(h);
 			});
+		});
+
+		socket.on("bulletPositions", data => {
 			this.bullets = [];
 			let bullets = data.bullets;
 
@@ -144,16 +154,19 @@ class Canvas extends React.Component {
 			can1Ctx.rect(0, 0, 1600, 900);
 			can1Ctx.fillStyle = "black";
 			can1Ctx.fill();
-			let objects = this.players.concat(this.hazards).concat(this.bullets);
-			objects.forEach(object => {
-				if (object instanceof Player) {
-					object.draw(can1Ctx, object);
-				} else if (object instanceof Bullet) {
-					object.draw(can1Ctx, object.color);
-				} else {
-					object.draw(can1Ctx);
-				}
-			});
+			this.players.forEach(player => DrawUtil.drawPlayer(can1Ctx, player));
+			this.hazards.forEach(hazard => DrawUtil.drawHazard(can1Ctx, hazard));
+			this.bullets.forEach(bullet => DrawUtil.drawBullet(can1Ctx, bullet));
+			// let objects = this.bullets;
+			// objects.forEach(object => {
+			// 	if (object instanceof Player) {
+			// 		object.draw(can1Ctx, object);
+			// 	} else if (object instanceof Bullet) {
+			// 		object.draw(can1Ctx, object.color);
+			// 	} else {
+			// 		object.draw(can1Ctx);
+			// 	}
+			// });
 			requestAnimationFrame(this.drawObj);
 		}
 		// can2Ctx.drawImage(can1, 0, 0);
