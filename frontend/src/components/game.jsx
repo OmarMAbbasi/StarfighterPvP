@@ -378,13 +378,14 @@ class Canvas extends React.Component {
 		switch (this.state.gameStatus) {
 			case "WAITING":
 				return (
-					<div>
+					<div class='instructions'>
 						<h1>INSTRUCTIONS</h1>
 						<ul>
 							<li><span className='key'>W</span> : Move</li>
 							<li><span className='key'>A</span>/<span className='key'>D</span> : Turn</li>
 							<li><span className='key'>SPACE</span> : Shoot</li>
 						</ul>
+						<div><p>Game can be started once</p><p>all players are ready.</p></div>
 					</div>
 				);
 			case "STARTING":

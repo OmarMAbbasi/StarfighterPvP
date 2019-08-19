@@ -260,3 +260,17 @@
     outline: none;
     background: white;
 }
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.instructions div {
+    margin-top: 2em;
+}
+
+.instructions p {
+    line-height: 1.5em;
+}
