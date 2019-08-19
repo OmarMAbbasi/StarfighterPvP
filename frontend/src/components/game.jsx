@@ -154,9 +154,9 @@ class Canvas extends React.Component {
 			can1Ctx.rect(0, 0, 1600, 900);
 			can1Ctx.fillStyle = "black";
 			can1Ctx.fill();
+			this.bullets.forEach(bullet => DrawUtil.drawBullet(can1Ctx, bullet));
 			this.players.forEach(player => DrawUtil.drawPlayer(can1Ctx, player));
 			this.hazards.forEach(hazard => DrawUtil.drawHazard(can1Ctx, hazard));
-			this.bullets.forEach(bullet => DrawUtil.drawBullet(can1Ctx, bullet));
 			// let objects = this.bullets;
 			// objects.forEach(object => {
 			// 	if (object instanceof Player) {
